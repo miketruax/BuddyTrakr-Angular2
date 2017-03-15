@@ -1,0 +1,28 @@
+<div *ngFor="let buddy of buddies" (click)="selected.emit(buddy)"
+     class="col-xs-12" style="margin-top: 10px !important; margin-bottom: 10px !important;">
+    <img class="col-xs-4 img-responsive" style="max-height: 65px; width: auto;" [src]="buddy.checkedOut ? 'assets/img/buddyCheckedOut.png' : 'assets/img/buddyCheckedIn.png'" />
+    <div class="col-xs-8 text-centered">
+      <h2>{{buddy.name}}</h2>
+    </div>
+    <div class="col-xs-8 col-xs-offset-2">
+      <div class="col-xs-12"> Species: {{buddy.species}} <span *ngIf="buddy.binomial">({{buddy.binomial}})</span> </div>
+      <div class="col-xs-12" *ngIf="buddy.description"> Description: {{buddy.description}} </div>
+      <div class="col-xs-12"> Last Out:
+        <span *ngIf="buddy.lastOutDate">{{buddy.lastOutDate | date}} for {{buddy.lastOutDays}} days.</span>
+        <span *ngIf="!buddy.lastOutDate"> Your buddy hasn't been out yet. You should rectify that!</span>
+      </div>
+      <div class="col-xs-12" *ngIf="buddy.timesOut"> Out {{buddy.timesOut}} times for a total of {{buddy.totalDaysOut}} days. </div>
+      <div class="col-xs-12"> Owner: {{buddy.owner.local.username}}</div>
+    </div>
+  <div class="col-xs-8 col-xs-offset-2">
+    <!--<button (click)="edit.emit(buddy); $event.stopPropagation();">-->
+      <!--<i>Edit</i>-->
+    <!--</button>-->
+    <button class="col-xs-5" (click)="checker.emit(buddy); $event.stopPropagation();">
+      <i>Check {{buddy.checkedOut ? 'In' : 'Out'}} this buddy</i>
+    </button>
+    <button class="col-xs-5 col-xs-offset-1" (click)="deleted.emit(buddy); $event.stopPropagation();">
+      <i>Delete</i>
+    </button>
+  </div>
+</div>

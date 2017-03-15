@@ -1,0 +1,38 @@
+<div class="recipe-card">
+  <div>
+    <h2 *ngIf="selectedBuddy._id">Editing {{originalTitle}}</h2>
+    <h2 *ngIf="!selectedBuddy._id">Create New Buddy</h2>
+  </div>
+  <div>
+    <form novalidate>
+        <div>
+          <label>Buddy Name</label>
+          <input [(ngModel)]="selectedBuddy.name"
+            placeholder="Enter a name" type="text">
+        </div>
+        <div>
+          <label>Species</label>
+          <input [(ngModel)]="selectedBuddy.species"
+                 placeholder="Enter species" type="text">
+        </div>
+        <div>
+          <label>Scientific Name</label>
+          <input [(ngModel)]="selectedBuddy.binomial"
+                 placeholder="Enter scientific name (if known)" type="text">
+        </div>
+        <div>
+          <label>Description</label>
+          <input [(ngModel)]="selectedBuddy.description"
+                 placeholder="Enter a name" type="text">
+        </div>
+    </form>
+  </div>
+  <div>
+      <button type="submit" (click)="cancelled.emit(selectedBuddy)">
+        Cancel
+      </button>
+      <button type="submit" (click)="saved.emit(selectedBuddy)">
+        Save
+      </button>
+  </div>
+</div>
