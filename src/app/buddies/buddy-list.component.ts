@@ -14,7 +14,7 @@ import {Buddy} from '../stores/buddy.store';
   template: './buddy-list.html'
 })
 
-export class BuddyList {
+export class BuddyListComponent {
   @Input() buddies: Buddy[];
 
   // Event outputs for buddy interactions.

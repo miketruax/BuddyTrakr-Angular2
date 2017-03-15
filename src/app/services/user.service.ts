@@ -1,9 +1,10 @@
+///<reference path="../../../node_modules/rxjs/add/operator/map.d.ts"/>
 // user.service.ts
 import {Http, Headers} from '@angular/http';
 import {Store} from '@ngrx/store';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-
+import 'rxjs/add/operator/map'
 import * as fromRoot from '../reducers';
 import {User} from "../stores/user.store"
 import {Router} from "@angular/router";
@@ -20,12 +21,7 @@ export class UserService {
   login(username, password) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    this.http
-      .post(
-        '/api/auth/login',
-        JSON.stringify({ username, password }),
-        { headers }
-      )
+    this.http.post('/api/auth/login', JSON.stringify({ username, password }), { headers })
       .map(res => res.json())
       .map(payload => ({ type: 'SELECT_USER', payload }))
       .subscribe(action => this.store.dispatch(action))

@@ -13,6 +13,7 @@ export default (app, router, passport, auth, admin) => {
   //log in route
   router.post('/auth/login', (req, res, next) => {
     //utilizes 'local-login' authentication
+    console.log(req);
     passport.authenticate('local-login', (err, user, info) => {
 
       //in case of error, passes error to next middleware
@@ -36,6 +37,7 @@ export default (app, router, passport, auth, admin) => {
         res.status(200);
 
         // Return the user object
+        console.log('You did it!');
         res.send(req.user);
       });
 

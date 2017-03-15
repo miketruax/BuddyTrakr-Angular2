@@ -15,17 +15,17 @@ import * as selectedBuddyActions from '../actions/selectedBuddy.actions'
 
 import {Buddy} from '../stores/buddy.store';
 import {BuddyService} from '../services/buddy.service';
-import {BuddyDetails} from './buddy-details.component';
-import {BuddyList} from './buddy-list.component';
+import {BuddyDetailsComponent} from './buddy-details.component';
+import {BuddyListComponent} from './buddy-list.component';
 
 @Component({
   selector: 'buddies',
-  providers: [],
+  providers: [BuddyService],
   template: require('./buddies.html'),
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class Buddies {
+export class BuddiesComponent {
 
   buddies: Observable<Array<Buddy>>;
 

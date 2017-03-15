@@ -7,10 +7,17 @@ import { AppComponent } from './app.component';
 import {StoreModule} from "@ngrx/store";
 import {routes} from "./app.routes";
 import {RouterModule} from "@angular/router";
+import {LoginComponent} from "./login/login.component";
+import {BuddiesComponent} from "./buddies/buddies.component";
+import {AboutComponent} from "./about/about.component";
+import {BuddyListComponent} from './buddies/buddy-list.component'
+import {BuddyDetailsComponent} from './buddies/buddy-details.component'
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent, BuddiesComponent, AboutComponent,
+    BuddyDetailsComponent, BuddyListComponent
   ],
   imports: [
     BrowserModule,

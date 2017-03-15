@@ -16,7 +16,7 @@ import {Buddy} from '../stores/buddy.store';
   selector: 'buddy-detail',
   template: require('./buddy-details.html')
 })
-export class BuddyDetails {
+export class BuddyDetailsComponent {
 
   originalName: string;
   selectedBuddy: Buddy;
