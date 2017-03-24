@@ -22,4 +22,11 @@ function(state = initialState, action: Action): any{
   }
 };
 
+export const getUser = (state: State) => state;
+
+export const getUsername = (state: State) => state.username;
+
+export const getFriends = (state: State) => state.friends;
+
+export const getId = (state: State) => state._id;
 

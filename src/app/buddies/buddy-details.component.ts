@@ -22,7 +22,7 @@ export class BuddyDetailsComponent {
   selectedBuddy: Buddy;
 
 
-  @Input('buddy') set _buddy(value: Buddy) {
+  @Input('selectedBuddy') set _buddy(value: Buddy) {
     if (value) this.originalName = value.name;
     this.selectedBuddy = Object.assign({}, value);
   }

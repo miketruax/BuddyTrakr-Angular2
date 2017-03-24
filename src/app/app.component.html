@@ -13,10 +13,10 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/buddies']">Buddies</a></li>
+        <li *ngIf="(user | async)._id" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/buddies']">Buddies</a></li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/about']">About</a></li>
-        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/login']">Log In</a></li>
-        <li><a (click)="UserService.logout()">Logout</a></li>
+        <li *ngIf="!(user | async)._id" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/login']">Log In</a></li>
+        <li *ngIf="(user | async)._id"><a (click)="logout()">Logout</a></li>
       </ul>
     </div>
   </div>
@@ -24,7 +24,7 @@
 <router-outlet></router-outlet>
 
 
-<footer>
-  <img [src]="buddyLogo" class="img-responsive" style="max-height: 50px !important;">
+<footer class="col-xs-10 col-xs-offset-1 text-center">
+  <img src="/assets/img/logos/paw_logo.png" style="max-height: 50px !important;">
   <span>Buddy Trakr App created by <a [href]="url">Mike Truax</a></span>
 </footer>

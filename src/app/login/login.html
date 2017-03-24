@@ -1,6 +1,7 @@
-<div class="login jumbotron center-block">
-  <h1>Login</h1>
-  <form role="form" (submit)="login($event, username.value, password.value)">
+<div class="login col-xs-12 jumbotron center-block">
+  <img class="col-xs-8 col-xs-offset-2" src="/assets/img/logos/main_logo.png">
+  <h1 class="col-xs-10 col-xs-offset-1">Login</h1>
+  <form class="col-xs-10 col-xs-offset-1" role="form" (submit)="login($event, username.value, password.value)">
     <div class="form-group">
       <label for="username">Username</label>
       <input type="text" #username class="form-control" id="username" placeholder="Username">
@@ -12,7 +13,4 @@
     <button type="submit" class="btn btn-default">Submit</button>
     <!--<a [routerLink]="['/signup']">Click here to Signup</a>-->
   </form>
-  <button  md-button (click)="showUser()">
-    Show User
-  </button>
 </div>

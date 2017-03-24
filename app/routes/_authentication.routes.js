@@ -6,20 +6,23 @@ let ObjectId = require('mongoose').Types.ObjectId;
 export default (app, router, passport, auth, admin) => {
 
 // returns either valid user ID or 'Not Logged in' depending on user sesssion
-  router.get('/auth/loggedIn', (req, res) => {
-    res.send(req.isAuthenticated() ? req.user : {_id: 'NOT LOGGED IN'});
+  router.get('/auth/getUser', (req, res) => {
+    res.send(req.isAuthenticated() ? req.user : {});
   });
-
+  router.get('/auth/isLoggedIn', (req, res) => {
+    res.send(req.isAuthenticated());
+  });
   //log in route
   router.post('/auth/login', (req, res, next) => {
+
     //utilizes 'local-login' authentication
-    console.log(req);
     passport.authenticate('local-login', (err, user, info) => {
 
       //in case of error, passes error to next middleware
-      if (err)
+      if (err) {
+        console.log(err);
         return next(err);
-
+      }
       //if no error with search, but no user by that name found
       if (!user) {
         res.status(401);
@@ -30,6 +33,7 @@ export default (app, router, passport, auth, admin) => {
       //otherwise login using santized user (stripped of pswd hash and email hash)
       req.login(user.sanitize(), (err) => {
         if (err){
+          console.log('ERR LOGIN:', err);
           return next(err);
         }
 
@@ -37,7 +41,6 @@ export default (app, router, passport, auth, admin) => {
         res.status(200);
 
         // Return the user object
-        console.log('You did it!');
         res.send(req.user);
       });
 
@@ -65,11 +68,8 @@ export default (app, router, passport, auth, admin) => {
 
   //log out route
   router.post('/auth/logout', (req, res) => {
-    //accesses logout function
     req.logOut();
-
-    //re-routes user to front page
-    res.sendStatus(401);
+    res.send({})
   });
 
   //will send full user object (sanitized) for access
@@ -97,7 +97,6 @@ export default (app, router, passport, auth, admin) => {
         return next(err);
 
       // HTTP Status code `204 No Content`
-      res.sendStatus(204);
     });
   });
 };

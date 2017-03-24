@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map'
 import * as fromRoot from '../reducers';
 import {User} from "../stores/user.store"
 import {Router} from "@angular/router";
+import * as userActions from '../actions/user.actions'
 
 @Injectable()
 export class UserService {
@@ -21,26 +22,39 @@ export class UserService {
   login(username, password) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    this.http.post('/api/auth/login', JSON.stringify({ username, password }), { headers })
+    this.http.post('../api/auth/login', JSON.stringify({ username, password }), { headers })
       .map(res => res.json())
-      .map(payload => ({ type: 'SELECT_USER', payload }))
+      .map(payload => {
+        this.router.navigate(['/buddies']);
+        return ({ type: userActions.Actions.SELECT_USER, payload })
+      })
       .subscribe(action => this.store.dispatch(action))
   }
   public getUser(){
-    this.http.get('/api/auth/loggedIn')
+    this.http.get('/api/auth/getUser')
       .map(res => res.json())
-      .map(payload => ({ type: 'UPDATE_USER', payload }))
+      .map(payload => ({type: userActions.Actions.SELECT_USER, payload: payload}))
       .subscribe(action => this.store.dispatch(action));
 
   }
+  public isLoggedIn(): Observable<boolean>{
+    return this.http.get('/api/auth/isLoggedIn')
+      .map(res => {console.log(res); return res.json()})
+  }
+
 
   logout() {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    this.http
-      .post('/api/auth/logout', '', { headers });
-    this.getUser();
-    this.router.navigate(['Login']);
+    this.http.post('/api/auth/logout', '', { headers })
+      .subscribe(res => {
+        this.store.dispatch({type: userActions.Actions.CLEAR_USER});
+        this.router.navigate(['Login']);
+      });
+
+
+
+
   }
 
 

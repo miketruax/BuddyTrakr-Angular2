@@ -5,7 +5,7 @@ import {Store} from '@ngrx/store';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
-
+import * as buddyActions from '../actions/buddies.actions'
 import {Buddy} from '../stores/buddy.store';
 
 import * as fromRoot from '../reducers';
@@ -25,10 +25,9 @@ export class BuddyService {
   }
 
   loadBuddies() {
-
         this.http.get('/api/buddy')
             .map(res => res.json())
-            .map(payload => ({ type: 'ADD_BUDDIES', payload }))
+            .map(payload => ({ type: buddyActions.Actions.ADD_BUDDIES, payload }))
             .subscribe(action => this.store.dispatch(action));
     }
 
@@ -41,19 +40,19 @@ export class BuddyService {
 
         this.http.post('/api/buddy', JSON.stringify(buddy), HEADER)
             .map(res => res.json())
-            .map(payload => ({ type: 'CREATE_BUDDY', payload }))
+            .map(payload => ({ type: buddyActions.Actions.CREATE_BUDDY, payload }))
             .subscribe(action => this.store.dispatch(action));
     }
 
     updateBuddy(buddy: Buddy) {
 
         this.http.put(`/api/buddy/${buddy._id}`, JSON.stringify(buddy), HEADER)
-          .subscribe(action => this.store.dispatch({ type: 'UPDATE_BUDDY', payload: buddy }));
+          .subscribe(action => this.store.dispatch({ type: buddyActions.Actions.UPDATE_BUDDY, payload: buddy }));
     }
 
     deleteBuddy(buddy: Buddy) {
 
         this.http.delete(`/api/buddy/${buddy._id}`)
-          .subscribe(action => this.store.dispatch({ type: 'DELETE_RECIPE', payload: buddy }));
+          .subscribe(action => this.store.dispatch({ type: buddyActions.Actions.DELETE_BUDDY, payload: buddy }));
     }
 }

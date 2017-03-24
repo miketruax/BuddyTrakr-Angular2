@@ -12,6 +12,8 @@ import {BuddiesComponent} from "./buddies/buddies.component";
 import {AboutComponent} from "./about/about.component";
 import {BuddyListComponent} from './buddies/buddy-list.component'
 import {BuddyDetailsComponent} from './buddies/buddy-details.component'
+import {AuthService} from "./services/auth.service";
+import {UserService} from './services/user.service'
 
 @NgModule({
   declarations: [
@@ -28,7 +30,7 @@ import {BuddyDetailsComponent} from './buddies/buddy-details.component'
     }),
     StoreModule.provideStore(reducer)
   ],
-  providers: [],
+  providers: [AuthService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -160,7 +160,6 @@ export default (passport) => {
   (req, username, password, done) => {
 
     if(!checkLength(username, bounds.username.minLength, bounds.email.maxLength)) {
-
       // ### Verify Callback
       return done(null, false, { loginMessage : 'Invalid username/email length.' });
     }
@@ -175,7 +174,6 @@ export default (passport) => {
         { 'local.username' : username.toLowerCase() },
         { 'local.email' : username.toLowerCase() } ]
     }, (err, user) => {
-
       //sends errors back if err
       if (err)
         return done(err);

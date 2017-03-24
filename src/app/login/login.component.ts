@@ -26,7 +26,7 @@ import {UserService} from '../services/user.service';
 export class LoginComponent {
   private user: Observable<User>;
   constructor(private userService: UserService, private store: Store<fromRoot.State>) {
-  this.store.select('user');
+  this.user = this.store.select(fromRoot.getUserState);
   }
 
   login(e, password: string, username: string) {
@@ -35,20 +35,7 @@ export class LoginComponent {
 
   }
 
-  showUser(){
-    console.log('USER is:', this.user);
-  }
+  ngOnInit() {
 
-
-  resetUser() {
-    this.store.dispatch({
-      type: 'SELECT_USER',
-      payload: {}
-    });
-  }
-
-  logout() {
-    this.userService.logout();
-    this.resetUser();
   }
 }

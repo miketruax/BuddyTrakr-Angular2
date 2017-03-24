@@ -12,7 +12,7 @@ import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import {State} from '../reducers';
 import * as selectedBuddyActions from '../actions/selectedBuddy.actions'
-
+import * as fromRoot from '../reducers'
 import {Buddy} from '../stores/buddy.store';
 import {BuddyService} from '../services/buddy.service';
 import {BuddyDetailsComponent} from './buddy-details.component';
@@ -33,12 +33,10 @@ export class BuddiesComponent {
 
   constructor(private buddyService: BuddyService,
               private store: Store<State>) {
-
-    this.buddies = buddyService.buddies;
-
-    this.selectedBuddy = store.select('buddy');
-
     buddyService.loadBuddies();
+    this.buddies = store.select('buddies');
+
+    this.selectedBuddy = store.select('selectedBuddy');
   }
 
   selectBuddy(buddy: Buddy) {

@@ -6,23 +6,23 @@
   <div>
     <form novalidate>
         <div>
-          <label>Buddy Name</label>
-          <input [(ngModel)]="selectedBuddy.name"
+          <label for="name">Buddy Name</label>
+          <input id="name" name="name" [(ngModel)]="selectedBuddy.name"
             placeholder="Enter a name" type="text">
         </div>
         <div>
-          <label>Species</label>
-          <input [(ngModel)]="selectedBuddy.species"
+          <label for="species">Species</label>
+          <input id="species" name="species"  [(ngModel)]="selectedBuddy.species"
                  placeholder="Enter species" type="text">
         </div>
         <div>
-          <label>Scientific Name</label>
-          <input [(ngModel)]="selectedBuddy.binomial"
+          <label for="binomial">Scientific Name</label>
+          <input id="binomial" name="binomial" [(ngModel)]="selectedBuddy.binomial"
                  placeholder="Enter scientific name (if known)" type="text">
         </div>
         <div>
-          <label>Description</label>
-          <input [(ngModel)]="selectedBuddy.description"
+          <label for="description">Description</label>
+          <input id="description" name="description" [(ngModel)]="selectedBuddy.description"
                  placeholder="Enter a name" type="text">
         </div>
     </form>

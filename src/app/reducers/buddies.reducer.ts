@@ -36,4 +36,4 @@ function(state = initialState, action: Action): any{
   }
 };
 
-
+export const getBuddies = (state: State) => state;

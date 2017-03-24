@@ -1,6 +1,6 @@
 <div *ngFor="let buddy of buddies" (click)="selected.emit(buddy)"
      class="col-xs-12" style="margin-top: 10px !important; margin-bottom: 10px !important;">
-    <img class="col-xs-4 img-responsive" style="max-height: 65px; width: auto;" [src]="buddy.checkedOut ? 'assets/img/buddyCheckedOut.png' : 'assets/img/buddyCheckedIn.png'" />
+    <img class="col-xs-4 img-responsive" style="max-height: 65px; width: auto;" [src]="buddy.checkedOut ? '/assets/img/icons/checked_out.png' : 'assets/img/icons/checked_in.png'" />
     <div class="col-xs-8 text-centered">
       <h2>{{buddy.name}}</h2>
     </div>
