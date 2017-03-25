@@ -72,3 +72,5 @@ export class BuddiesComponent {
     this.resetBuddy();
   }
 }
+
+

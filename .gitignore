@@ -43,3 +43,4 @@ Thumbs.db
 /config/mongoose.conf.js
 !/config/mongoose.conf.js
 /config/config.json
+!/src/app/actions/flash.actions.ts

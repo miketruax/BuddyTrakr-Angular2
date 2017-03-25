@@ -19,32 +19,29 @@ export default (app, router, passport, auth, admin) => {
     passport.authenticate('local-login', (err, user, info) => {
 
       //in case of error, passes error to next middleware
+      let response =  {};
       if (err) {
-        console.log(err);
-        return next(err);
+         response.err = err
       }
       //if no error with search, but no user by that name found
-      if (!user) {
-        res.status(401);
+      else if (!user) {
         // Return the info message
-        return next(info.loginMessage);
+        response.err = info.loginMessage;
       }
 
-      //otherwise login using santized user (stripped of pswd hash and email hash)
-      req.login(user.sanitize(), (err) => {
-        if (err){
-          console.log('ERR LOGIN:', err);
-          return next(err);
-        }
-
-        //if no error
-        res.status(200);
-
-        // Return the user object
-        res.send(req.user);
-      });
-
+      else {
+        //otherwise login using santized user (stripped of pswd hash and email hash)
+        req.login(user.sanitize(), (err) => {
+          if (err) {
+            response.err = err;
+          }
+          // Return the user object
+          response.user = req.user;
+        });
+      }
+      res.send(response);
     }) (req, res, next);
+
   });
 
   router.post('/auth/signup', (req, res, next) => {

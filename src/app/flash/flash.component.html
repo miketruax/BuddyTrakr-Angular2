@@ -1,0 +1,8 @@
+
+<div *ngIf="(flash | async).error" class="col-xs-8 col-xs-offset-2 alert alert-danger">{{(flash | async).error}}
+  <span (click)="clearError" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+</div>
+
+<div *ngIf="(flash | async).success" class="col-xs-8 col-xs-offset-2 alert alert-danger">{{(flash | async).success}}
+  <span (click)="clearSuccess" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+</div>

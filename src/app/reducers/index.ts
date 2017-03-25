@@ -5,7 +5,7 @@ import {
 import * as fromBuddies from './buddies.reducer';
 import * as fromSelectedBuddy from './selectedBuddy.reducer'
 import * as fromUser from './user.reducer'
-import { ActionReducer } from '@ngrx/store';
+import * as fromFlash from './flash.reducer'
 import { createSelector } from 'reselect';
 import {compose} from "@ngrx/core/compose";
 
@@ -14,19 +14,22 @@ export interface State {
   buddies: fromBuddies.State,
   selectedBuddy: fromSelectedBuddy.State,
   user: fromUser.State
+  flash: fromFlash.State
 }
 
 const reducers = {
   buddies: fromBuddies.default,
   selectedBuddy: fromSelectedBuddy.default,
-  user: fromUser.default
+  user: fromUser.default,
+  flash: fromFlash.default
 };
 
 
 export default compose(combineReducers)({
   buddies: reducers.buddies,
   selectedBuddy: reducers.selectedBuddy,
-  user: reducers.user
+  user: reducers.user,
+  flash: reducers.flash
 });
 
 
@@ -52,3 +55,6 @@ export const getUserState = (state: State) => state.user;
   export const getUserFriends = createSelector(getUserState, fromUser.getFriends);
   export const getUsername = createSelector(getUserState, fromUser.getUsername);
 
+export const getFlashState = (state: State) => state.flash;
+  export const getError = createSelector(getFlashState, fromFlash.getError);
+  export const getSuccess = createSelector(getFlashState, fromFlash.getSuccess);

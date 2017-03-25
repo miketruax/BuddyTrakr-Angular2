@@ -25,8 +25,14 @@ export class UserService {
     this.http.post('../api/auth/login', JSON.stringify({ username, password }), { headers })
       .map(res => res.json())
       .map(payload => {
-        this.router.navigate(['/buddies']);
-        return ({ type: userActions.Actions.SELECT_USER, payload })
+        if(payload.err){
+          console.log(payload.err);
+          return {type: userActions.Actions.CLEAR_USER};
+        }
+        else {
+          this.router.navigate(['/buddies']);
+          return {type: userActions.Actions.SELECT_USER, payload}
+        }
       })
       .subscribe(action => this.store.dispatch(action))
   }

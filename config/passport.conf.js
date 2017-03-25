@@ -179,13 +179,12 @@ export default (passport) => {
         return done(err);
 
       //sends error back if no user found (most likely due to incorrect username spelling)
-      if (!user) {return done(null, false, { loginMessage : 'That user was not found. ' +
-          'Please enter valid user credentials.' });
+      if (!user) {return done(null, false, { loginMessage : 'Invalid username or password.' });
       }
 
       //next is to validate the password is correct
       if (!user.validPassword(password)) {
-        return done(null, false, { loginMessage : 'Invalid password entered.' });
+        return done(null, false, { loginMessage : 'Invalid username or password.' });
       }
 
       //if all validations passed, YOU DID IT!
