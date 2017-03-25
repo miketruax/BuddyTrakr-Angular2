@@ -2,26 +2,18 @@
 
 // # Buddies Component
 
-import {Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy} from '@angular/core';
-
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {Store} from '@ngrx/store';
+import {Store} from "@ngrx/store";
 import {State} from '../reducers';
-import * as selectedBuddyActions from '../actions/selectedBuddy.actions'
-import * as fromRoot from '../reducers'
+import * as selectedBuddyActions from '../actions/selectedBuddy.actions';
 import {Buddy} from '../stores/buddy.store';
 import {BuddyService} from '../services/buddy.service';
-import {BuddyDetailsComponent} from './buddy-details.component';
-import {BuddyListComponent} from './buddy-list.component';
 
 @Component({
   selector: 'buddies',
   providers: [BuddyService],
-  template: require('./buddies.html'),
+  template: require('./buddies.component.html'),
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -56,7 +48,7 @@ export class BuddiesComponent {
   }
 
 
-  deleteBuddy(buddy: Buddy) {
+  static deleteBuddy(buddy: Buddy) {
     console.log("Fake Deletion");
     //this.buddyService.deleteBuddy(buddy);
   }

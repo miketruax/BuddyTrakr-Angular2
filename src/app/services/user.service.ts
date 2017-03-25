@@ -8,7 +8,8 @@ import 'rxjs/add/operator/map'
 import * as fromRoot from '../reducers';
 import {User} from "../stores/user.store"
 import {Router} from "@angular/router";
-import * as userActions from '../actions/user.actions'
+import * as userActions from '../actions/user.actions';
+import * as flashActions from '../actions/flash.actions';
 
 @Injectable()
 export class UserService {
@@ -23,11 +24,13 @@ export class UserService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     this.http.post('../api/auth/login', JSON.stringify({ username, password }), { headers })
-      .map(res => res.json())
+      .map(res =>{
+        // this.store.dispatch({type: flashActions.Actions.CLEAR_FLASH});
+        return res.json();
+      })
       .map(payload => {
         if(payload.err){
-          console.log(payload.err);
-          return {type: userActions.Actions.CLEAR_USER};
+          return {type: flashActions.Actions.ADD_ERROR, payload: payload.err};
         }
         else {
           this.router.navigate(['/buddies']);
@@ -55,6 +58,7 @@ export class UserService {
     this.http.post('/api/auth/logout', '', { headers })
       .subscribe(res => {
         this.store.dispatch({type: userActions.Actions.CLEAR_USER});
+        this.store.dispatch({type: flashActions.Actions.ADD_SUCCESS, payload: 'Successfully Logged Out'});
         this.router.navigate(['Login']);
       });
 

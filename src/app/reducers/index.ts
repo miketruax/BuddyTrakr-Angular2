@@ -56,5 +56,6 @@ export const getUserState = (state: State) => state.user;
   export const getUsername = createSelector(getUserState, fromUser.getUsername);
 
 export const getFlashState = (state: State) => state.flash;
+  export const getFlash = createSelector(getFlashState, fromFlash.getFlash);
   export const getError = createSelector(getFlashState, fromFlash.getError);
   export const getSuccess = createSelector(getFlashState, fromFlash.getSuccess);

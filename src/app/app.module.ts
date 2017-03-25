@@ -14,10 +14,12 @@ import {BuddyListComponent} from './buddies/buddy-list.component'
 import {BuddyDetailsComponent} from './buddies/buddy-details.component'
 import {AuthService} from "./services/auth.service";
 import {UserService} from './services/user.service'
+import {FlashComponent} from "./flash/flash.component";
 
 @NgModule({
   declarations: [
     AppComponent,
+    FlashComponent,
     LoginComponent, BuddiesComponent, AboutComponent,
     BuddyDetailsComponent, BuddyListComponent
   ],

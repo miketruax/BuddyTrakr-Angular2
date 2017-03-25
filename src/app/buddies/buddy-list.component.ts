@@ -11,7 +11,7 @@ import {Buddy} from '../stores/buddy.store';
 
 @Component({
   selector: 'buddy-list',
-  template: require('./buddy-list.html')
+  template: require('./buddy-list.component.html')
 })
 
 export class BuddyListComponent {

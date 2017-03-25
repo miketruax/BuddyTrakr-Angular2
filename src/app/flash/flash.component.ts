@@ -1,28 +1,31 @@
-import {Component} from "@angular/core";
+//# Flash Component
+
+import {Component, ChangeDetectionStrategy, Input} from "@angular/core";
 import {Flash} from "../stores/flash.store";
-import {Store} from "@ngrx/store";
 import * as fromRoot from '../reducers'
-import * as FlashActions from '../actions/flash.actions';
+import * as flashActions from '../actions/flash.actions';
 import {Observable} from "rxjs";
+import {Store} from "@ngrx/store";
+
 @Component({
   selector: 'flash-component',
-  templateUrl: require('./flash.component.html'),
-  styleUrls: ['flash.component.css']
+  templateUrl: './flash.component.html',
+  styleUrls: ['flash.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class FlashComponent {
-
-  flash: Observable<Flash>;
-
+  @Input() flash: Flash;
   constructor(private store:Store<fromRoot.State>){
-    this.flash = store.select(fromRoot.getFlashState);
+  }
+  removeError(){
+    this.store.dispatch({type: flashActions.Actions.CLEAR_ERROR});
   }
 
-  clearError(){
-    this.store.dispatch({type: FlashActions.Actions.CLEAR_ERROR})
+  removeSuccess(){
+    this.store.dispatch({type: flashActions.Actions.CLEAR_SUCCESS})
   }
-
-  clearSuccess(){
-    this.store.dispatch({type: FlashActions.Actions.CLEAR_SUCCESS})
+  showFlash(){
+    console.log(this.flash);
   }
 }

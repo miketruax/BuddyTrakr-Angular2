@@ -14,10 +14,10 @@ function(state = initialState, action: Action): any{
   switch (action.type) {
 
     case errors.Actions.ADD_ERROR:
-      return action.payload;
+      return {error: action.payload, success: state.success};
 
     case errors.Actions.ADD_SUCCESS:
-      return action.payload;
+      return {success: action.payload, error: state.error};
 
     case errors.Actions.CLEAR_ERROR:
       return {success: state.success};

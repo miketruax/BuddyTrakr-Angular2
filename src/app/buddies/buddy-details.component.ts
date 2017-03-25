@@ -1,20 +1,14 @@
 import {Component,
   Input,
   Output,
-  EventEmitter,
-  ChangeDetectionStrategy
+  EventEmitter
 } from '@angular/core';
-
-import {Observable} from 'rxjs/Observable';
-import {Store} from '@ngrx/store';
-
-import {BuddyService} from '../services/buddy.service';
 import {Buddy} from '../stores/buddy.store';
 
 
 @Component({
   selector: 'buddy-detail',
-  template: require('./buddy-details.html')
+  template: require('./buddy-details.component.html')
 })
 export class BuddyDetailsComponent {
 
