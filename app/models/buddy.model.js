@@ -25,7 +25,7 @@ buddySchema.pre('save', function (next) {
 
 buddySchema.pre('save', function(next){
   if(this.isModified('checkedOut') && !this.wasNew){
-    let now = Date.now();
+    let now = new Date();
     if(this.checkedOut){
       this.lastOutDate = now;
       return next();

@@ -1,9 +1,7 @@
 
-<div *ngIf="flash.error" class="col-xs-8 col-xs-offset-2 alert alert-danger">{{flash.error}}
-  <span (click)="removeError()" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+<div *ngIf="flash.error" class="col-xs-12 alert alert-danger flash">{{flash.error}}
+  <span (click)="removeError()" class="glyphicon glyphicon-remove pointer" aria-hidden="true"></span>
 </div>
-<div *ngIf="flash.success" class="col-xs-8 col-xs-offset-2 alert alert-danger">{{flash.success}}
-  <span (click)="removeSuccess()" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+<div *ngIf="flash.success && !flash.error " class="col-xs-12 alert alert-danger flash">{{flash.success}}
+  <span (click)="removeSuccess()" class="glyphicon glyphicon-remove pointer" aria-hidden="true"></span>
 </div>
-
-<button (click)="showFlash()">Flash</button>

@@ -1,5 +1,3 @@
-///<reference path="../../../node_modules/rxjs/add/operator/map.d.ts"/>
-// user.service.ts
 import {Http, Headers} from '@angular/http';
 import {Store} from '@ngrx/store';
 import {Injectable} from '@angular/core';
@@ -16,7 +14,7 @@ export class UserService {
   private user: Observable<User>;
 
   constructor(private router: Router, private http: Http, private store: Store<fromRoot.State>) {
-    this.user = store.select('user');
+    this.user = store.select(fromRoot.getUserState);
   }
 
 
@@ -34,7 +32,7 @@ export class UserService {
         }
         else {
           this.router.navigate(['/buddies']);
-          return {type: userActions.Actions.SELECT_USER, payload}
+          return {type: userActions.Actions.SELECT_USER, payload: payload.user}
         }
       })
       .subscribe(action => this.store.dispatch(action))
@@ -58,8 +56,9 @@ export class UserService {
     this.http.post('/api/auth/logout', '', { headers })
       .subscribe(res => {
         this.store.dispatch({type: userActions.Actions.CLEAR_USER});
+        this.router.navigate(['login']);
         this.store.dispatch({type: flashActions.Actions.ADD_SUCCESS, payload: 'Successfully Logged Out'});
-        this.router.navigate(['Login']);
+
       });
 
 

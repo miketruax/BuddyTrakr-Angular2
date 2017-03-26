@@ -13,10 +13,10 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li *ngIf="(user | async)._id" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/buddies']">Buddies</a></li>
+        <li *ngIf="(userID | async)" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/buddies']">Buddies</a></li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/about']">About</a></li>
-        <li *ngIf="!(user | async)._id" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/login']">Log In</a></li>
-        <li *ngIf="(user | async)._id"><a (click)="logout()">Logout</a></li>
+        <li *ngIf="!(userID | async)" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/login']">Log In</a></li>
+        <li *ngIf="(userID | async)" class="pointer"><a (click)="logout()">Logout</a></li>
       </ul>
     </div>
   </div>
