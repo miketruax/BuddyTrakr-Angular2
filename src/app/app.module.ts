@@ -15,13 +15,17 @@ import {BuddyDetailsComponent} from './buddies/buddy-details.component'
 import {AuthService} from "./services/auth.service";
 import {UserService} from './services/user.service'
 import {FlashComponent} from "./flash/flash.component";
+import {CheckedIn} from "./pipes/checked-in.pipe";
+import {CheckedOut} from "./pipes/checked-out.pipe";
 
 @NgModule({
   declarations: [
     AppComponent,
     FlashComponent,
     LoginComponent, BuddiesComponent, AboutComponent,
-    BuddyDetailsComponent, BuddyListComponent
+    BuddyDetailsComponent, BuddyListComponent,
+    CheckedIn,
+    CheckedOut
   ],
   imports: [
     BrowserModule,
