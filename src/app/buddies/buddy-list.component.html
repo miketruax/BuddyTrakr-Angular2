@@ -1,8 +1,8 @@
 <h2 class="col-xs-12">Welcome, <span class="orange">{{user.username}}!</span><br> Let's get tracking! </h2>
 <div class="col-xs-12">
   <h5 class="col-xs-8">Search for a buddy:</h5>
-  <input [(ngModel)]="filter" type="text" class="col-xs-10 tan-input" placeholder="">
-  <span (click)="clearFilter()" class="glyphicon glyphicon-remove pointer col-xs-2" aria-hidden="true"></span>
+  <button class="btn btn-xs col-xs-3 col-xs-offset-1" (click)="clearFilter()">Clear</button>
+  <input [(ngModel)]="filter" type="text" class="form-control tan-input" placeholder="">
 </div>
 
 <h3 *ngIf="(buddies | checkedIn | buddy:filter).length > 0" class="col-xs-12"> <i>Your checked out buddies:</i></h3>
