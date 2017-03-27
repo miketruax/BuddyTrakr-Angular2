@@ -17,6 +17,7 @@ import {UserService} from './services/user.service'
 import {FlashComponent} from "./flash/flash.component";
 import {CheckedIn} from "./pipes/checked-in.pipe";
 import {CheckedOut} from "./pipes/checked-out.pipe";
+import {BuddyFilter} from "./pipes/buddy-filter.pipe";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {CheckedOut} from "./pipes/checked-out.pipe";
     LoginComponent, BuddiesComponent, AboutComponent,
     BuddyDetailsComponent, BuddyListComponent,
     CheckedIn,
-    CheckedOut
+    CheckedOut,
+    BuddyFilter
   ],
   imports: [
     BrowserModule,

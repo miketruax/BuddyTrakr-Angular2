@@ -1,10 +1,11 @@
 <div>
-  <buddy-list [buddies]="buddies | async"
-    (selected)="selectBuddy($event)" (deleted)="deleteBuddy($event)" (checker)="checkBuddy($event)">
+  <buddy-list [buddies]="buddies | async" [user]="user | async"
+    (selected)="selectBuddy($event)" (deleted)="deleteBuddy($event)" (checker)="checkBuddy($event)" (randomBuddy)="randomBuddy($event)"
+    (addbuddy)="addBuddy($event)">
   </buddy-list>
 </div>
 <div>
-  <buddy-detail
-    (saved)="saveBuddy($event)" (cancelled)="resetBuddy($event)"
-    [selectedBuddy]="selectedBuddy | async">Pick your Fancy:</buddy-detail>
+  <!--<buddy-detail-->
+    <!--(saved)="saveBuddy($event)" (cancelled)="resetBuddy($event)"-->
+    <!--[selectedBuddy]="selectedBuddy | async">Pick your Fancy:</buddy-detail>-->
 </div>

@@ -46,7 +46,7 @@ export class UserService {
   }
   public isLoggedIn(): Observable<boolean>{
     return this.http.get('/api/auth/isLoggedIn')
-      .map(res => {console.log(res); return res.json()})
+      .map(res => res.json())
   }
 
 

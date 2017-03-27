@@ -157,10 +157,9 @@ module.exports = {
       // `require("!style!css!sass!./file.scss");`
       {
         test: /\.scss$/,
-        loader: 'style!css!autoprefixer-loader?browsers=last 2 versions!sass',
-        exclude: [ helpers.root('node_modules') ]
+        exclude: [ helpers.root('node_modules')],
+        loaders: ['raw-loader', 'sass-loader']
       }
-
     ]
 
   },

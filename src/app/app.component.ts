@@ -11,7 +11,7 @@ import {Flash} from "./stores/flash.store";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['app.component.css'],
+  styleUrls: ['./styles/app.style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {

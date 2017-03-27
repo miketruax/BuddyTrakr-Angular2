@@ -9,10 +9,12 @@ import {State} from '../reducers';
 import * as selectedBuddyActions from '../actions/selectedBuddy.actions';
 import {Buddy} from '../stores/buddy.store';
 import {BuddyService} from '../services/buddy.service';
+import {User} from "../stores/user.store";
 
 @Component({
   selector: 'buddies',
   providers: [BuddyService],
+  styleUrls: ['../styles/app.style.scss'],
   template: require('./buddies.component.html'),
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -20,14 +22,14 @@ import {BuddyService} from '../services/buddy.service';
 export class BuddiesComponent {
 
   buddies: Observable<Array<Buddy>>;
-
+  user: Observable<User>;
   selectedBuddy: Observable<Buddy>;
 
   constructor(private buddyService: BuddyService,
               private store: Store<State>) {
     buddyService.loadBuddies();
     this.buddies = store.select('buddies');
-
+    this.user = store.select('user');
     this.selectedBuddy = store.select('selectedBuddy');
   }
 
@@ -47,6 +49,15 @@ export class BuddiesComponent {
     this.resetBuddy();
   }
 
+  randomBuddy(buddies: Buddy[]){
+    let inBuddies = buddies.filter(buddy => !buddy.checkedOut);
+    let buddy = buddies[Math.floor(Math.random() * buddies.length)];
+    //TODO: ADD checkBuddy(buddy) line after testing complete
+  }
+
+  addBuddy(b: boolean){
+    console.log(b);
+  }
 
   static deleteBuddy(buddy: Buddy) {
     console.log("Fake Deletion");

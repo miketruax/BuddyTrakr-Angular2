@@ -36,6 +36,7 @@ buddySchema.pre('save', function(next){
     else{
       this.lastOutDays = Math.ceil((now-this.lastOutDate)/(1000*60*60*24));
       this.totalDaysOut = this.totalDaysOut + this.lastOutDays;
+      this.timesOut++;
       this.lastOutDate = now;
       return next();
     }

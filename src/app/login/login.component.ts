@@ -20,6 +20,7 @@ import {UserService} from '../services/user.service';
   selector: 'login',
   providers: [UserService],
   template: require('./login.html'),
+  styleUrls: ['../styles/app.style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 

@@ -8,6 +8,7 @@ import {Buddy} from '../stores/buddy.store';
 
 @Component({
   selector: 'buddy-detail',
+  styleUrls: ['../styles/app.style.scss'],
   template: require('./buddy-details.component.html')
 })
 export class BuddyDetailsComponent {

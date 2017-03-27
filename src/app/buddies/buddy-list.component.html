@@ -1,56 +1,56 @@
-<h1 *ngIf="(buddies | checkedOut).length > 0" class="col-xs-12 text-center"> Currently Checked Out Buddies</h1>
-
-<div *ngFor="let buddy of (buddies | checkedOut)"
-     class="col-xs-12" style="margin-top: 10px !important; margin-bottom: 10px !important;">
-  <img class="col-xs-4 img-responsive" style="max-height: 65px; width: auto;" [src]="buddy.checkedOut ? '/assets/img/icons/checked_out.png' : 'assets/img/icons/checked_in.png'" />
-  <div class="col-xs-8 text-centered">
-    <h2>{{buddy.name}}</h2>
-  </div>
-  <div class="col-xs-12">
-    <div class="col-xs-11 col-xs-offset-1"> Species: {{buddy.species}} <span   *ngIf="buddy.binomial">({{buddy.binomial}})</span> </div>
-    <div class="col-xs-12" *ngIf="buddy.description"> Description: {{buddy.description}} </div>
-    <div class="col-xs-12"> Last Out:
-      <span >{{buddy.name}} is currently checked out</span>
-    </div>
-    <div class="col-xs-12" *ngIf="buddy.timesOut"> Out {{buddy.timesOut}} times for a total of {{buddy.totalDaysOut}} days. </div>
-    <div class="col-xs-12"> Owner: {{buddy.owner.local.username}}</div>
-  </div>
-  <div class="col-xs-8 col-xs-offset-2">
-    <button class="col-xs-10 col-xs-offset-2 btn btn-success" (click)="checker.emit(buddy); $event.stopPropagation();">
-      <i>Check {{buddy.checkedOut ? 'In' : 'Out'}} Buddy</i>
-    </button>
-  </div>
+<h2 class="col-xs-12">Welcome, <span class="orange">{{user.username}}!</span><br> Let's get tracking! </h2>
+<div class="col-xs-12">
+  <h5 class="col-xs-8">Search for a buddy:</h5>
+  <input [(ngModel)]="filter" type="text" class="col-xs-10 tan-input" placeholder="">
+  <span (click)="clearFilter()" class="glyphicon glyphicon-remove pointer col-xs-2" aria-hidden="true"></span>
 </div>
 
-<h1 class="col-xs-12 text-center"> Currently Checked In Buddies</h1>
+<h3 *ngIf="(buddies | checkedIn | buddy:filter).length > 0" class="col-xs-12"> <i>Your checked out buddies:</i></h3>
 
-
-<div *ngFor="let buddy of (buddies | checkedIn)"
-     class="col-xs-12" style="margin-top: 10px !important; margin-bottom: 10px !important;">
-    <img class="col-xs-4 img-responsive" style="max-height: 65px; width: auto;" [src]="buddy.checkedOut ? '/assets/img/icons/checked_out.png' : 'assets/img/icons/checked_in.png'" />
-    <div class="col-xs-8 text-centered">
-      <h2>{{buddy.name}}</h2>
-    </div>
-    <div class="col-xs-12">
-      <div class="col-xs-11 col-xs-offset-1"> Species: {{buddy.species}} <span   *ngIf="buddy.binomial">({{buddy.binomial}})</span> </div>
-      <div class="col-xs-12" *ngIf="buddy.description"> Description: {{buddy.description}} </div>
-      <div class="col-xs-12"> Last Out:
-        <span *ngIf="buddy.lastOutDate && !buddy.checkedOut">{{buddy.lastOutDate | date}} for {{buddy.lastOutDays}} days.</span>
-        <span *ngIf="!buddy.lastOutDate && !buddy.checkedOut"> Your buddy hasn't been out yet. You should rectify that!</span>
-        <span *ngIf="buddy.checkedOut">{{buddy.name}} is currently checked out</span>
-      </div>
-      <div class="col-xs-12" *ngIf="buddy.timesOut"> Out {{buddy.timesOut}} times for a total of {{buddy.totalDaysOut}} days. </div>
-      <div class="col-xs-12"> Owner: {{buddy.owner.local.username}}</div>
-    </div>
-  <div class="col-xs-8 col-xs-offset-2">
-    <button class="col-xs-10 col-xs-offset-2 btn btn-success" (click)="checker.emit(buddy); $event.stopPropagation();">
-      <i>Check {{buddy.checkedOut ? 'In' : 'Out'}} Buddy</i>
+<div *ngFor="let buddy of (buddies | checkedOut | buddy:filter)"
+     class="col-xs-12 buddy">
+  <div class="col-xs-12 bottom-15">
+  <img class="col-xs-1 img-responsive paw-icon" src="/assets/img/icons/checked_out.png" />
+    <h2 class="col-xs-9">{{buddy.name}}</h2>
+  </div>
+  <div class="col-xs-12"><b>Species:</b> {{buddy.species}} {{buddy.binomial}}</div>
+  <div class="col-xs-12" *ngIf="buddy.description"><b>Description:</b> {{buddy.description}} </div>
+    <div class="col-xs-12 bottom-15">Buddy has been out since: {{buddy.lastOutDate | date:'shortDate'}}</div>
+    <button class="col-xs-7 col-xs-offset-5 btn" (click)="checker.emit(buddy); $event.stopPropagation();">
+      <i>Check In</i>
     </button>
-    <button class="col-xs-6 btn btn-warning" (click)="selected.emit(buddy); $event.stopPropagation();">
+</div>
+
+
+<div class="col-xs-12">
+  <button (click)="randomBuddy.emit(buddies); $event.stopPropagation();"
+          class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-1 btn">Check out a Random Buddy</button>
+  <button (click)="addBuddy.emit(true); $event.stopPropagation();"
+          class="col-xs-10 col-xs-offset-1  col-sm-5 col-sm-offset-1 btn">Add a New Buddy</button>
+</div>
+
+<h3 *ngIf="(buddies | checkedIn | buddy:filter).length > 0" class="col-xs-12"> <i>Your checked-in buddies:</i></h3>
+
+<div *ngFor="let buddy of (buddies | checkedIn | buddy:filter)" class="col-xs-12 buddy">
+  <div class="col-xs-12 bottom-15">
+    <img class="col-xs-1 img-responsive paw-icon" src="assets/img/icons/checked_in.png" />
+    <h2 class="col-xs-9">{{buddy.name}}</h2>
+  </div>
+      <div class="col-xs-12"><b>Species:</b> {{buddy.species}} {{buddy.binomial}}</div>
+      <div class="col-xs-12" *ngIf="buddy.description"><b>Description:</b> {{buddy.description}} </div>
+      <div class="col-xs-12" *ngIf="buddy.lastOutDate"><b>Last Out:</b>
+        <span>{{buddy.lastOutDate | date}} for {{buddy.lastOutDays}} days.</span>
+      </div>
+  <div *ngIf="buddy.timesOut" class="col-xs-12"> Out {{buddy.timesOut}} times for a total of {{buddy.totalDaysOut}} days. </div>
+  <div class="col-xs-12 bottom-15" *ngIf="!buddy.lastOutDate">Your buddy hasn't been out yet. You should rectify that!</div>
+
+    <button class="col-xs-4 btn" (click)="checker.emit(buddy); $event.stopPropagation();">
+      <i>Check Out</i>
+    </button>
+    <button class="col-xs-offset-1 col-xs-3 btn" (click)="selected.emit(buddy); $event.stopPropagation();">
       <i>Edit</i>
     </button>
-    <button class="col-xs-6 btn btn-danger" (click)="deleted.emit(buddy); $event.stopPropagation();">
+    <button class="col-xs-3 btn col-xs-offset-1" (click)="deleted.emit(buddy); $event.stopPropagation();">
       <i>Delete</i>
     </button>
-  </div>
 </div>
