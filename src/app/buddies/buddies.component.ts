@@ -41,10 +41,7 @@ export class BuddiesComponent {
   }
 
   checkBuddy(buddy: Buddy){
-    console.log(buddy);
     buddy.checkedOut = !buddy.checkedOut;
-    console.log('Buddy:', buddy);
-    console.log('Checked:', buddy.checkedOut);
     this.buddyService.saveBuddy(buddy);
     this.resetBuddy();
   }

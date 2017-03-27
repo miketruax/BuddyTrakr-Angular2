@@ -23,7 +23,7 @@ export class Actions {
     }
   }
 
-  static UPDATE_BUDDY = '[Buddy] Create Buddy';
+  static UPDATE_BUDDY = '[Buddy] Update Buddy';
   updateBuddies(buddy): Action {
     return {
       type: Actions.UPDATE_BUDDY,

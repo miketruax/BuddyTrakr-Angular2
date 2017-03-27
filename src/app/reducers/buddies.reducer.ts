@@ -21,7 +21,6 @@ function(state = initialState, action: Action): any{
 
     case buddies.Actions.UPDATE_BUDDY:
       return state.map(buddy => {
-
         return buddy._id === action.payload._id
           ? Object.assign({}, buddy, action.payload) : buddy;
       });
