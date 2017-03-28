@@ -1,38 +1,36 @@
-<div class="recipe-card">
+<div class="col-xs-12">
+    <h2 class="col-xs-12" *ngIf="selectedBuddy._id">Editing {{originalName}}</h2>
+    <h2 class="col-xs-12" *ngIf="!selectedBuddy._id">Create New Buddy</h2>
   <div>
-    <h2 *ngIf="selectedBuddy._id">Editing {{originalTitle}}</h2>
-    <h2 *ngIf="!selectedBuddy._id">Create New Buddy</h2>
-  </div>
-  <div>
-    <form novalidate>
-        <div>
+    <form id="buddyForm">
+        <div class="form-group">
           <label for="name">Buddy Name</label>
-          <input id="name" name="name" [(ngModel)]="selectedBuddy.name"
-            placeholder="Enter a name" type="text">
+          <input class="form-control" id="name" name="name" [(ngModel)]="selectedBuddy.name"
+            placeholder="Buddy name" type="text">
         </div>
-        <div>
+        <div class="form-group">
           <label for="species">Species</label>
-          <input id="species" name="species"  [(ngModel)]="selectedBuddy.species"
-                 placeholder="Enter species" type="text">
+          <input class="form-control" id="species" name="species"  [(ngModel)]="selectedBuddy.species"
+                 placeholder="Species" type="text">
         </div>
-        <div>
+        <div class="form-group">
           <label for="binomial">Scientific Name</label>
-          <input id="binomial" name="binomial" [(ngModel)]="selectedBuddy.binomial"
+          <input class="form-control" id="binomial" name="binomial" [(ngModel)]="selectedBuddy.binomial"
                  placeholder="Enter scientific name (if known)" type="text">
         </div>
-        <div>
+        <div class="form-group">
           <label for="description">Description</label>
-          <input id="description" name="description" [(ngModel)]="selectedBuddy.description"
-                 placeholder="Enter a name" type="text">
+          <textarea class="form-control" name="description" rows="5" [(ngModel)]="selectedBuddy.description"
+                    placeholder="Description" id="description" form="buddyForm"></textarea>
         </div>
     </form>
   </div>
-  <div>
-      <button type="submit" (click)="cancelled.emit(selectedBuddy)">
-        Cancel
-      </button>
-      <button type="submit" (click)="saved.emit(selectedBuddy)">
+  <div class="col-xs-12">
+      <button class="btn col-xs-4 col-xs-offset-2" type="submit" (click)="saved.emit(selectedBuddy)">
         Save
       </button>
+    <button class="btn col-xs-4 col-xs-offset-2" type="submit" (click)="cancelled.emit(selectedBuddy)">
+      Cancel
+    </button>
   </div>
 </div>

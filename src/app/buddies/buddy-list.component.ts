@@ -19,13 +19,16 @@ import {User} from "../stores/user.store";
 export class BuddyListComponent {
   @Input() buddies: Buddy[];
   @Input() user: User;
-  filter: string;
+  filter: Object;
   constructor(){
-    this.filter ='';
-    console.log(this.filter);
+    this.filter = {search: '', neverOut: false};
   }
   clearFilter(){
-    this.filter = '';
+    this.filter = {search: '', neverOut: false};
+  }
+
+  showFilter(){
+    console.log(this.filter);
   }
   // Event outputs for buddy interactions.
   @Output() selected = new EventEmitter();

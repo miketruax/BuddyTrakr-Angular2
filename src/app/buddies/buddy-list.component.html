@@ -1,13 +1,19 @@
-<h2 class="col-xs-12">Welcome, <span class="orange">{{user.username}}!</span><br> Let's get tracking! </h2>
+<h2 class="col-xs-12 bottom-15">Welcome, <span class="orange">{{user.username}}!</span><br> Let's get tracking! </h2>
+
 <div class="col-xs-12">
-  <h5 class="col-xs-8">Search for a buddy:</h5>
-  <button class="btn btn-xs col-xs-3 col-xs-offset-1" (click)="clearFilter()">Clear</button>
-  <input [(ngModel)]="filter" type="text" class="form-control tan-input" placeholder="">
+  <input class="form-control tan-input" placeholder="Search by name, species, or scientific name" type="text" [(ngModel)]="filter.search">
+  <div class="checkbox col-xs-9">
+    <label>
+      <input type="checkbox" (click)="showFilter()" [(ngModel)]="filter.neverOut"> Only buddies who have never been out
+    </label>
+  </div>
+  <button class="btn btn-xs col-xs-3" (click)="clearFilter()">Clear</button>
 </div>
 
-<h3 *ngIf="(buddies | checkedIn | buddy:filter).length > 0" class="col-xs-12"> <i>Your checked out buddies:</i></h3>
 
-<div *ngFor="let buddy of (buddies | checkedOut | buddy:filter)"
+<h3 *ngIf="(buddies | checkedIn | buddySearch:filter.search).length > 0" class="col-xs-12"> <i>Your checked out buddies:</i></h3>
+
+<div *ngFor="let buddy of (buddies | checkedOut | buddySearch:filter.search)"
      class="col-xs-12 buddy">
   <div class="col-xs-12 bottom-15">
   <img class="col-xs-1 img-responsive paw-icon" src="/assets/img/icons/checked_out.png" />
@@ -25,13 +31,13 @@
 <div class="col-xs-12">
   <button (click)="randomBuddy.emit(buddies); $event.stopPropagation();"
           class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-1 btn">Check out a Random Buddy</button>
-  <button (click)="addBuddy.emit(true); $event.stopPropagation();"
+  <button (click)="addBuddy.emit(buddies); $event.stopPropagation();"
           class="col-xs-10 col-xs-offset-1  col-sm-5 col-sm-offset-1 btn">Add a New Buddy</button>
 </div>
 
-<h3 *ngIf="(buddies | checkedIn | buddy:filter).length > 0" class="col-xs-12"> <i>Your checked-in buddies:</i></h3>
+<h3 *ngIf="(buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length > 0" class="col-xs-12"> <i>Your checked-in buddies:</i></h3>
 
-<div *ngFor="let buddy of (buddies | checkedIn | buddy:filter)" class="col-xs-12 buddy">
+<div *ngFor="let buddy of (buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut)" class="col-xs-12 buddy">
   <div class="col-xs-12 bottom-15">
     <img class="col-xs-1 img-responsive paw-icon" src="assets/img/icons/checked_in.png" />
     <h2 class="col-xs-9">{{buddy.name}}</h2>

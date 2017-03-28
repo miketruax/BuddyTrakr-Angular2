@@ -1,11 +1,12 @@
 <div class="background">
-  <buddy-list [buddies]="buddies | async" [user]="user | async"
+  <buddy-list  *ngIf="!details" [buddies]="buddies | async" [user]="user | async"
     (selected)="selectBuddy($event)" (deleted)="deleteBuddy($event)" (checker)="checkBuddy($event)" (randomBuddy)="randomBuddy($event)"
     (addbuddy)="addBuddy($event)">
+    LOADING BUDDIES.... Please Standby...
   </buddy-list>
 </div>
 <div>
-  <!--<buddy-detail-->
-    <!--(saved)="saveBuddy($event)" (cancelled)="resetBuddy($event)"-->
-    <!--[selectedBuddy]="selectedBuddy | async">Pick your Fancy:</buddy-detail>-->
+  <buddy-detail *ngIf="details"
+    (saved)="saveBuddy($event)" (cancelled)="resetBuddy($event)"
+    [selectedBuddy]="selectedBuddy | async">Buddy Editor Loading...</buddy-detail>
 </div>
