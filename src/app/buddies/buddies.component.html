@@ -1,7 +1,7 @@
 <div class="background">
   <buddy-list  *ngIf="!details" [buddies]="buddies | async" [user]="user | async"
     (selected)="selectBuddy($event)" (deleted)="deleteBuddy($event)" (checker)="checkBuddy($event)" (randomBuddy)="randomBuddy($event)"
-    (addbuddy)="addBuddy($event)">
+    (addBuddy)="addBuddy($event)">
     LOADING BUDDIES.... Please Standby...
   </buddy-list>
 </div>

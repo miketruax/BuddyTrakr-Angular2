@@ -63,8 +63,7 @@ export class BuddiesComponent {
     //TODO: ADD checkBuddy(buddy) line after testing complete
   }
 
-  addBuddy(){
-    console.log('addbuddy');
+  addBuddy(buddy: Buddy){
     this.details = true;
   }
 
