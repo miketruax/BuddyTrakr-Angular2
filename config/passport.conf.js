@@ -6,7 +6,7 @@ import User from '../app/models/user.model.js';
 
 export default (passport) => {
 
-  // Define length boundariess for expected parameters
+  // Define length boundaries for expected parameters
   let bounds = {
 
     username : {
@@ -33,17 +33,13 @@ export default (passport) => {
 
   // Function to check a string against a REGEX for email validity
   let validateEmail = (email) => {
-
       let re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-
       return re.test(email);
   };
 
   let checkLength = (string, min, max) => {
-
     if(string.length > max || string.length < min)
       return false;
-
     else
       return true;
   };
@@ -73,11 +69,8 @@ export default (passport) => {
 
 
   passport.use('local-signup', new LocalStrategy({
-
     usernameField : 'username',
-
     passwordField : 'password',
-
     passReqToCallback : true
   },
 
@@ -85,11 +78,6 @@ export default (passport) => {
 
     //ensures name length requirements are met
     if(!checkLength(username, bounds.username.minLength, bounds.username.maxLength)) {
-
-      // ### Verify Callback
-
-      // Invoke `done` with `false` to indicate authentication
-      // failure
       return done(null, false, { signupMessage : 'Invalid username length.' });
     }
 
@@ -98,16 +86,14 @@ export default (passport) => {
       return done(null, false, { signupMessage : 'Invalid password length.' });
     }
 
-    //checks e-mail length
+    //checks email length
     if(!checkLength(req.body.email, bounds.email.minLength, bounds.email.maxLength)) {
       return done(null, false, { signupMessage : 'Invalid email length.' });
     }
 
-    //simple regex for e-mail validation
     //TODO: validation e-mail sent to person signing up with validated field
     if(!validateEmail(req.body.email)) {
-
-      return done(null, false, { signupMessage : 'Invalid email address.' });
+      return done(null, false, { signupMessage : 'Invalid email address.'});
     }
 
     // Asynchronous
@@ -131,10 +117,9 @@ export default (passport) => {
         } else {
           //if no errors to this point
           let newUser = new User();
-
           newUser.local.username = username.toLowerCase();
           newUser.local.email = req.body.email.toLowerCase();
-          newUser.local.password = password
+          newUser.local.password = password;
           newUser.save((err) => {
             if (err)
               throw err;

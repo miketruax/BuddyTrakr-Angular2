@@ -23,7 +23,7 @@ export class UserService {
     headers.append('Content-Type', 'application/json');
     this.http.post('../api/auth/login', JSON.stringify({ username, password }), { headers })
       .map(res =>{
-        // this.store.dispatch({type: flashActions.Actions.CLEAR_FLASH});
+        this.store.dispatch({type: flashActions.Actions.CLEAR_FLASH});
         return res.json();
       })
       .map(payload => {
@@ -49,6 +49,26 @@ export class UserService {
       .map(res => res.json())
   }
 
+  signup(username, password, email){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    this.http.post('../api/auth/signup', JSON.stringify({username, password, email}), {headers})
+      .map(res=>{
+        this.store.dispatch({type: flashActions.Actions.CLEAR_FLASH});
+        return res.json();
+      })
+      .map(payload => {
+        if(payload.err){
+          console.log(payload.err);
+          return {type: flashActions.Actions.ADD_ERROR, payload: payload.err};
+        }
+        else{
+          this.router.navigate(['/login']);
+          return {type: flashActions.Actions.ADD_SUCCESS, payload: 'Successfully signed up, please log in!'};
+        }
+      })
+      .subscribe(action=> this.store.dispatch(action));
+  }
 
   logout() {
     let headers = new Headers();

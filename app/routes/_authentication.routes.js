@@ -30,7 +30,7 @@ export default (app, router, passport, auth, admin) => {
       }
 
       else {
-        //otherwise login using santized user (stripped of pswd hash and email hash)
+        //otherwise login using sanitized user (stripped of pswd hash and email hash)
         req.login(user.sanitize(), (err) => {
           if (err) {
             response.err = err;
@@ -45,23 +45,26 @@ export default (app, router, passport, auth, admin) => {
   });
 
   router.post('/auth/signup', (req, res, next) => {
+
     //utilizes local-signup information to ensure proper info
     passport.authenticate('local-signup', (err, user, info) => {
-
-      if (err)
-        return next(err);
-
-      // If no user is returned...
-      if (!user) {
-        res.status(401);
-        return next(info.signupMessage);
+      let response = {};
+      //if error, add error message and move on
+      if (err) {
+        response.err = err;
       }
 
+      // If no user is returned...
+      else if (!user) {
+        response.err = info.signupMessage;
+      }
       //if no errors, send response and move on.
-      res.sendStatus(204);
+      res.send(response);
 
     }) (req, res, next);
   });
+
+
 
   //log out route
   router.post('/auth/logout', (req, res) => {

@@ -18,7 +18,9 @@
       <ul class="nav navbar-nav">
         <li *ngIf="(userID | async)" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/buddies']">Buddies</a></li>
         <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/about']">About</a></li>
+        <li *ngIf="(userID | async)" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/settings']">Settings</a></li>
         <li *ngIf="!(userID | async)" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/login']">Log In</a></li>
+        <li *ngIf="!(userID | async)" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['/signup']">Signup</a></li>
         <li *ngIf="(userID | async)" class="pointer"><a (click)="logout()">Logout</a></li>
       </ul>
     </div>

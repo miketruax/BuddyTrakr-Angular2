@@ -1,0 +1,30 @@
+<div class="login col-xs-12 jumbotron center-block">
+  <h1 class="col-xs-10 col-xs-offset-1">Sign up</h1>
+  <form class="col-xs-10 col-xs-offset-1" role="form" (submit)="signup($event)">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" class="form-control tan-input" id="username" placeholder="Username" [(ngModel)]="user.username" name="username">
+      <div class="col-xs-12 alert alert-danger" *ngIf="errors.username">{{errors.username}}</div>
+    </div>
+    <div class="form-group">
+      <label for="email">E-mail</label>
+      <input type="email" class="form-control tan-input" id="email" placeholder="Email" [(ngModel)]="user.email" name="email">
+      <div class="col-xs-12 alert alert-danger" *ngIf="errors.email">{{errors.email}}</div>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control tan-input" id="password" placeholder="Password" [(ngModel)]="user.password" name="password">
+      <div class="col-xs-12 alert alert-danger" *ngIf="errors.password">{{errors.password}}</div>
+    </div>
+    <div class="form-group">
+      <label for="password">Confirm Password</label>
+      <input type="password" class="form-control tan-input" id="confirmpassword" placeholder="Confirm Password" [(ngModel)]="confirmPswd" name="cPassword">
+      <div class="col-xs-12 alert alert-danger" *ngIf="errors.cPassword">{{errors.cPassword}}</div>
+    </div>
+    <button type="submit" class="btn col-xs-6 col-xs-offset-6">Sign-up!</button>
+  </form>
+  <div class="col-xs-6 col-xs-offset-6">
+  Already a tracker? <a [routerLink]="['/login']" class="orange">Login</a>
+  </div>
+
+</div>

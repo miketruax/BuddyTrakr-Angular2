@@ -19,6 +19,7 @@ import {CheckedIn} from "./pipes/checked-in.pipe";
 import {CheckedOut} from "./pipes/checked-out.pipe";
 import {BuddySearch} from "./pipes/buddy-search.pipe";
 import {NeverOut} from "./pipes/never-out.pipe";
+import {SignupComponent} from "./signup/signup.component";
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import {NeverOut} from "./pipes/never-out.pipe";
     AppComponent,
     FlashComponent,
     LoginComponent, BuddiesComponent, AboutComponent,
-    BuddyDetailsComponent, BuddyListComponent,
+    BuddyDetailsComponent, BuddyListComponent, SignupComponent,
     CheckedIn,
     CheckedOut,
     BuddySearch,

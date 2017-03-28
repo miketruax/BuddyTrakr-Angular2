@@ -30,9 +30,9 @@ export class LoginComponent {
   this.user = this.store.select(fromRoot.getUserState);
   }
 
-  login(e, password: string, username: string) {
+  login(e, username: string, password: string) {
     e.preventDefault();
-    this.userService.login(password, username);
+    this.userService.login(username, password);
 
   }
 
