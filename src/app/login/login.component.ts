@@ -18,7 +18,6 @@ import {UserService} from '../services/user.service';
 
 @Component({
   selector: 'login',
-  providers: [UserService],
   template: require('./login.html'),
   styleUrls: ['../styles/app.style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -37,6 +36,5 @@ export class LoginComponent {
   }
 
   ngOnInit() {
-
   }
 }

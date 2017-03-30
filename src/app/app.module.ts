@@ -12,7 +12,7 @@ import {BuddiesComponent} from "./buddies/buddies.component";
 import {AboutComponent} from "./about/about.component";
 import {BuddyListComponent} from './buddies/buddy-list.component'
 import {BuddyDetailsComponent} from './buddies/buddy-details.component'
-import {AuthService} from "./services/auth.service";
+import {AuthProtected} from "./services/auth-protected.service";
 import {UserService} from './services/user.service'
 import {FlashComponent} from "./flash/flash.component";
 import {CheckedIn} from "./pipes/checked-in.pipe";
@@ -20,6 +20,7 @@ import {CheckedOut} from "./pipes/checked-out.pipe";
 import {BuddySearch} from "./pipes/buddy-search.pipe";
 import {NeverOut} from "./pipes/never-out.pipe";
 import {SignupComponent} from "./signup/signup.component";
+import {AuthGeneric} from "./services/auth-generic.service";
 
 
 @NgModule({
@@ -42,7 +43,7 @@ import {SignupComponent} from "./signup/signup.component";
     }),
     StoreModule.provideStore(reducer)
   ],
-  providers: [AuthService, UserService],
+  providers: [UserService, AuthProtected, AuthGeneric],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

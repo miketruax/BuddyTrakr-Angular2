@@ -4,17 +4,17 @@ import {Observable} from "rxjs";
 import {UserService} from "./user.service";
 
 @Injectable()
-export class AuthService implements CanActivate {
+export class AuthGeneric implements CanActivate {
   constructor(private userService:UserService, private router:Router) { }
 
   canActivate(next:ActivatedRouteSnapshot, state:RouterStateSnapshot) {
-    return this.userService.isLoggedIn().map(r => {
-      if (r) {
-        return true;
-      }
-    }).catch(() => {
-      this.router.navigate(['/login']);
-      return Observable.of(false);
-    });
+    if(this.userService.isLoggedIn){
+      this.router.navigate(['/buddies']);
+      return false
+    }
+    else{
+      return true;
+    }
   }
 }
+

@@ -16,7 +16,6 @@ import {UserService} from '../services/user.service';
 
 @Component({
   selector: 'signup',
-  providers: [UserService],
   template: require('./signup.html'),
   styleUrls: ['../styles/app.style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

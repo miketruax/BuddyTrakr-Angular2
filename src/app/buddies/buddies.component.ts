@@ -14,7 +14,6 @@ import * as flashActions from "../actions/flash.actions";
 
 @Component({
   selector: 'buddies',
-  providers: [BuddyService],
   styleUrls: ['../styles/app.style.scss'],
   template: require('./buddies.component.html'),
   changeDetection: ChangeDetectionStrategy.OnPush
