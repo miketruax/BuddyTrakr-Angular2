@@ -27,7 +27,7 @@ const METADATA = {
 };
 
 //# Environment Config Object
-var envConfig = require('./config.json');
+var envConfig = require('./config.js');
 
 module.exports = webpackMerge(commonConfig, {
   // Merged metadata from webpack.common.js for index.html
