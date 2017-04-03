@@ -1,16 +1,17 @@
-import config from './config.json';
+import config from './config';
+config.build();
 export function envValidator() {
   if(!process.env.NODE_ENV) {
-    process.env.NODE_ENV = config.ENV;
+    process.env.NODE_ENV = process.ENV.defaultENV;
   }
 
   //ensures valid environment || switches to development
   validateNodeEnv();
   if (!process.env.SESSION_SECRET)
-    process.env.SESSION_SECRET = config.SESSION_SECRET;
+    process.env.SESSION_SECRET = process.ENV.SESSION_SECRET;
 
   if (!process.env.PORT)
-    process.env.PORT = config.PORT;
+    process.env.PORT = process.ENV.defaultPORT;
 
   // Set the appropriate MongoDB URI
   validateMongoUri();
@@ -63,19 +64,19 @@ function validateMongoUri() {
 
       case 'development':
 
-        process.env.MONGO_URI = config.MONGO_URI.DEVELOPMENT;
+        process.env.MONGO_URI = process.ENV.MONGO_URI.DEVELOPMENT;
         console.log(`MONGO_URI set for ${process.env.NODE_ENV}`);
         break;
 
       case 'production':
 
-        process.env.MONGO_URI = config.MONGO_URI.PRODUCTION;
+        process.env.MONGO_URI = process.ENV.MONGO_URI.PRODUCTION;
         console.log(`MONGO_URI set for ${process.env.NODE_ENV}`);
         break;
 
       case 'test':
 
-        process.env.MONGO_URI = config.MONGO_URI.TEST;
+        process.env.MONGO_URI = process.ENV.MONGO_URI.TEST;
         console.log(`MONGO_URI set for ${process.env.NODE_ENV}`);
         break;
 
