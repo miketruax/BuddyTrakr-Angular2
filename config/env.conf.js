@@ -64,19 +64,19 @@ function validateMongoUri() {
 
       case 'development':
 
-        process.env.MONGO_URI = process.ENV.MONGO_URI.DEVELOPMENT;
+        process.env.MONGO_URI = process.ENV.MONGODEV;
         console.log(`MONGO_URI set for ${process.env.NODE_ENV}`);
         break;
 
       case 'production':
 
-        process.env.MONGO_URI = process.ENV.MONGO_URI.PRODUCTION;
+        process.env.MONGO_URI = process.ENV.MONGOPROD;
         console.log(`MONGO_URI set for ${process.env.NODE_ENV}`);
         break;
 
       case 'test':
 
-        process.env.MONGO_URI = process.ENV.MONGO_URI.TEST;
+        process.env.MONGO_URI = process.ENV.MONGOTEST;
         console.log(`MONGO_URI set for ${process.env.NODE_ENV}`);
         break;
 
