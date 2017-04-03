@@ -20,7 +20,7 @@ import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 
-let mongoStore  = require('connect-mongo')(session);
+let mongoStore  = require('connect-mongo/es5')(session);
 import base from './sockets/base';
 
 base(io);
