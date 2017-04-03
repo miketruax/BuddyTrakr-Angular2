@@ -1,5 +1,10 @@
-.background{
-  background-image: url('/assets/backgrounds/main_background.png');
+.grey-paw-background{
+  background-image: url('/assets/img/backgrounds/grey_paws.png');
   background-attachment: fixed !important;
   background-repeat: repeat-y !important;
+}
+
+.jumbotron{
+  margin-top: 25px !important;
+  margin-bottom: 25px !important;
 }

@@ -9,9 +9,12 @@ export default (app, router, passport, auth, admin) => {
   router.get('/auth/getUser', (req, res) => {
     res.send(req.isAuthenticated() ? req.user : {});
   });
+
   router.get('/auth/isLoggedIn', (req, res) => {
     res.send(req.isAuthenticated());
   });
+
+
   //log in route
   router.post('/auth/login', (req, res, next) => {
 
@@ -64,6 +67,30 @@ export default (app, router, passport, auth, admin) => {
     }) (req, res, next);
   });
 
+  router.post('/auth/changeSettings', (req, res, next) => {
+    User.findOne({'_id': req.user._id}, (err, user)=>{
+      if(err){
+        res.send({err: 'Something went wrong, please try again later.'});
+      }
+      else if(!user.validPassword(req.body.currentPassword)){
+        res.send({err: 'Your current password was incorrect, please try again.'})
+      }
+      else{
+        user.local.password = req.body.newPassword;
+        user.save((err)=>{
+          if(err){
+            res.send({err: 'The server encountered an error, please try again later.'})
+          }
+          else{
+            res.send({});
+          }
+        });
+      }
+    });
+
+
+
+  });
 
 
   //log out route

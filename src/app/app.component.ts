@@ -5,7 +5,7 @@ import * as flashActions from './actions/flash.actions'
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 import {User} from "./stores/user.store";
-import {Router, NavigationEnd} from "@angular/router";
+import {Router, NavigationEnd, NavigationStart} from "@angular/router";
 import {Flash} from "./stores/flash.store";
 import {BuddyService} from "./services/buddy.service";
 
@@ -24,7 +24,9 @@ export class AppComponent {
     this.flash = store.select(fromRoot.getFlash);
     this.userService.getUser();
     this.router.events.subscribe((val) => {
-      store.dispatch({type: flashActions.Actions.CLEAR_FLASH});
+      if(event instanceof NavigationStart) {
+        store.dispatch({type: flashActions.Actions.CLEAR_FLASH});
+      }
     });
   }
   logout(){

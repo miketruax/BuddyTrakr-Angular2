@@ -120,12 +120,12 @@ export default (passport) => {
           newUser.local.username = username.toLowerCase();
           newUser.local.email = req.body.email.toLowerCase();
           newUser.local.password = password;
-          // newUser.save((err) => {
-          //   if (err)
-          //     throw err;
-          //   return done(null, newUser);
-          // });
-          return done(null, newUser)
+          newUser.save((err) => {
+            if (err) {
+              throw err;
+            }
+            return done(null, newUser);
+          });
         }
       });
     });

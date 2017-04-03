@@ -4,10 +4,11 @@ import mongoose from 'mongoose';
 let buddySchema = new mongoose.Schema({
   name: { type : String, required: [true, 'Name required for your buddy!'] },
   species: { type: String, required: [true, 'Species required for your buddy!'] },
-  binomial: { type: String},
+  binomial: { type: String, default: ''},
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   description: { type : String },
   timesOut: {type: Number, default: 0},
+  dateAdded: {type: Date, default: Date.now()},
   checkedOut: {type: Boolean, default: false, set: function(bdy){
     this._prevOut = this.checkedOut;
     return bdy;

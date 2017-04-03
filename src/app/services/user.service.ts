@@ -65,12 +65,31 @@ export class UserService {
       })
       .map(payload => {
         if(payload.err){
-          console.log(payload.err);
           return {type: flashActions.Actions.ADD_ERROR, payload: payload.err};
         }
         else{
           this.router.navigate(['/login']);
           return {type: flashActions.Actions.ADD_SUCCESS, payload: 'Successfully signed up, please log in!'};
+        }
+      })
+      .subscribe(action=> this.store.dispatch(action));
+  }
+
+  changePassword(currentPassword, newPassword){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    this.http.post('../api/auth/changeSettings', JSON.stringify({currentPassword, newPassword}), {headers})
+      .map(res=>{
+        this.store.dispatch({type: flashActions.Actions.CLEAR_FLASH})
+        return res.json();
+      })
+      .map(payload=> {
+        if(payload.err){
+          return {type: flashActions.Actions.ADD_ERROR, payload: payload.err};
+        }
+        else{
+          this.router.navigate(['/buddies']);
+          return {type: flashActions.Actions.ADD_SUCCESS, payload: 'Successfully updated password.'}
         }
       })
       .subscribe(action=> this.store.dispatch(action));

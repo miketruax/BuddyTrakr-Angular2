@@ -21,6 +21,7 @@ import {BuddySearch} from "./pipes/buddy-search.pipe";
 import {NeverOut} from "./pipes/never-out.pipe";
 import {SignupComponent} from "./signup/signup.component";
 import {AuthGeneric} from "./services/auth-generic.service";
+import {SettingsComponent} from "./settings/settings.component";
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import {AuthGeneric} from "./services/auth-generic.service";
     FlashComponent,
     LoginComponent, BuddiesComponent, AboutComponent,
     BuddyDetailsComponent, BuddyListComponent, SignupComponent,
+    SettingsComponent,
     CheckedIn,
     CheckedOut,
     BuddySearch,

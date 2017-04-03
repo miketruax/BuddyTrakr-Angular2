@@ -1,9 +1,8 @@
 
 import {envValidator} from './config/env.conf.js';
 import helmet from 'helmet';
-
   envValidator();
-
+import csrf from 'csurf';
   import express from 'express';
 import socketio from 'socket.io';
 
@@ -62,6 +61,12 @@ app.use(session({
     touchAfter: 2 * 3600 // time period in seconds
   })
 }));
+
+app.use(csrf());
+app.use(function(req, res, next) {
+  res.cookie('XSRF-TOKEN', req.csrfToken());
+  next();
+});
 
 app.use(passport.initialize());
 

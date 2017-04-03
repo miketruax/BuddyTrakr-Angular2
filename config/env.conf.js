@@ -86,5 +86,5 @@ function validateMongoUri() {
     }
   }
 
-  return;
+  return null;
 }
