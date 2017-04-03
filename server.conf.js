@@ -8,11 +8,12 @@ import socketio from 'socket.io';
 let log4js = require('log4js');
 let logger = log4js.getLogger();
 
+
 // Load Node http module
 import http from 'http';
 let app = express();
-// let server = http.createServer(app);
-// let io = socketio.listen(server);
+let server = http.createServer(app);
+let io = socketio.listen(server);
 import mongoose from 'mongoose';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
@@ -25,7 +26,7 @@ import session from 'express-session';
 let mongoStore  = require('connect-mongo/es5')(session);
 import base from './sockets/base';
 
-// base(io);
+base(io);
 
 // Set the port for this app
 let port = process.env.PORT || 8080;
@@ -84,7 +85,7 @@ routes(app, router, passport);
 
 // ### Ignition Phase
 
-app.listen(port);
+server.listen(port);
 
 // Shoutout to the user
 console.log(`You're doing it you beautiful champion! It's open on port: ${port}`);
