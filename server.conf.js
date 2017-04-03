@@ -12,7 +12,7 @@ let logger = log4js.getLogger();
 import http from 'http';
 let app = express();
 // let server = http.createServer(app);
-let io = socketio.listen(server);
+// let io = socketio.listen(server);
 import mongoose from 'mongoose';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
@@ -25,7 +25,7 @@ import session from 'express-session';
 let mongoStore  = require('connect-mongo/es5')(session);
 import base from './sockets/base';
 
-base(io);
+// base(io);
 
 // Set the port for this app
 let port = process.env.PORT || 8080;
