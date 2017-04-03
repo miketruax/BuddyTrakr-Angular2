@@ -11,7 +11,7 @@ let logger = log4js.getLogger();
 // Load Node http module
 import http from 'http';
 let app = express();
-let server = http.createServer(app);
+// let server = http.createServer(app);
 let io = socketio.listen(server);
 import mongoose from 'mongoose';
 import morgan from 'morgan';
@@ -84,7 +84,7 @@ routes(app, router, passport);
 
 // ### Ignition Phase
 
-server.listen(port);
+app.listen(port);
 
 // Shoutout to the user
 console.log(`You're doing it you beautiful champion! It's open on port: ${port}`);
