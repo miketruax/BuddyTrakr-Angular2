@@ -1,27 +1,56 @@
-# BuddyTrakrAngular2
+# **BuddyTrakr Angular 2 MEAN App v 1.0**
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-beta.32.3.
 
-## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+# **What is BuddyTrakr?**
+  
+   Do you have a ton of stuffed animals in your collection? Then BuddyTrakr is for you! This site allows you to keep
+    track of all of your stuffed animals (your Buddies!) so you don't forget their names or how long they've spent time
+    with you in bed, on vacation, or just lounging about. It lets you add buddies, check them out from wherever all of them
+    call home, and then return them to be with the rest of the group when they've been out long enough. With built in searching
+    you can make sure that all of your buddies get a chance to be out, or just keep track of how many times you've had out your
+    favorite two/three/twenty-five!``
+  
 
-## Code scaffolding
+  # **Why a Stuffed Animal Tracking App?**
+  This came about as almost kind of a joke. My wife and I ended up collecting a ton of stuffed animals as a way
+    to track where we've been on vacation or just as little gifts to each other. We tried to keep track of all of them
+    since we had given them all names and backstories (a childish pursuit I know, but still fun for us) but nothing
+    seemed to work. Sometimes we'd end up having a couple chilling out on the couch with us and wanted to get a sort of rotation going
+    so that there was an even balance among all of them. This led to us first talking about just using clunky spreadsheets. Then I said,
+    "I need to pick up Angular2, why don't I just learn that by building a tracking app?". After a couple of set-backs, we finally got to
+    work on it. I provided all of the necessary coding any she provided all the assets.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+  ### Current Functions
+  - User (with username/password login) based tracking of Buddies
+  - Checking in/out of Buddies
+  - Buddy Birthday based off date added
+  - Searchable list of buddies
+  - Auto-populating number of times out/ days out
+  - Editing of most fields for each buddy
+  - Ability to change password after set-up
 
-## Build
+  ###Future Plans
+ 
+  - Deletion for buddies (heaven-forbid)
+  - E-mail validation before signing in for the first time
+  - Reset password link (currently if you forget your password you can't recover your account)
+  - Friends list with other users. Would potentially allow borrowing buddies or seeing who they have checked out
+  - More search abilities and/or more data fields for each buddy.
+  - Easy search for scientific name based off species field
+  - Link to Wikipedia through Scientific Name if field is populated
+  
+  ### Current Tech
+  
+  - Angluar 2 w/ Angular CLI for ease of scaffolding
+  - [Bootstrap](http://getbootstrap.com/) for ease of styling
+  - SCSS for custom styling
+  - Rxjs and ngrx for Observables and Stores for client-side
+  - Node.js in ES6
+  - Utilized some components via [@datatype_void](https://github.com/datatypevoid/vulgar)'s MEA2N constructor while learning Angular 2 
+  - MongoDB via [mLab](https://www.mlab.com) for off-site MongoDB storage
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
-## Running unit tests
+### No currently tracked Issues
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### Let me know if you come across any issues.
+ Currently housed at: [BuddyTrakr](buddytrakr.miketruax.com)
