@@ -5,6 +5,8 @@ import helmet from 'helmet';
 import csrf from 'csurf';
   import express from 'express';
 import socketio from 'socket.io';
+let log4js = require('log4js');
+let logger = log4js.getLogger();
 
 // Load Node http module
 import http from 'http';
