@@ -5,11 +5,12 @@
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
-    "start": "concurrently --kill-others \"ng build --watch\" \"nodemon server.js\" ",
+    "run": "concurrently --kill-others \"ng build --watch\" \"nodemon server.js\" ",
+    "start": "node server",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build && node server.js"
+    "postinstall": "ng build"
   },
   "private": true,
   "dependencies": {
