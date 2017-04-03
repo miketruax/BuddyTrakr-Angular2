@@ -1,6 +1,8 @@
 
 export default{
   build(){
+    process.ENV = {};
+
     process.ENV['defaultENV'] = "development";
     process.ENV['defaultPORT'] = 3000;
     process.ENV['MONGO_URI'] = {
