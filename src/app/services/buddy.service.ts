@@ -31,9 +31,9 @@ export class BuddyService {
             .subscribe(action => this.store.dispatch(action));
     }
 
-    saveBuddy(buddy: Buddy) {
+    saveBuddy(buddy: Buddy, bool: boolean = false) {
 
-        (buddy._id) ? this.updateBuddy(buddy) : this.createBuddy(buddy);
+        (buddy._id) ? this.updateBuddy(buddy, bool) : this.createBuddy(buddy);
     }
 
     createBuddy(buddy: Buddy) {
@@ -44,10 +44,13 @@ export class BuddyService {
             .subscribe(action => this.store.dispatch(action));
     }
 
-    updateBuddy(buddy: Buddy) {
+    updateBuddy(buddy: Buddy, bool: boolean = false) {
 
         this.http.put(`/api/buddy/${buddy._id}`, JSON.stringify(buddy), HEADER)
-          .subscribe(action => this.store.dispatch({ type: buddyActions.Actions.UPDATE_BUDDY, payload: buddy }));
+          .subscribe(action => {
+            this.store.dispatch({ type: buddyActions.Actions.UPDATE_BUDDY, payload: buddy })
+            this.loadBuddies();
+          });
     }
 
     deleteBuddy(buddy: Buddy) {

@@ -46,20 +46,20 @@ export class BuddiesComponent {
   checkBuddy(buddy: Buddy){
     let msg = buddy.name + " successfully checked " + buddy.checkedOut ? 'in.' : 'out';
     buddy.checkedOut = !buddy.checkedOut;
-    this.buddyService.saveBuddy(buddy);
+    this.buddyService.saveBuddy(buddy, true);
     this.store.dispatch({type: flashActions.Actions.ADD_SUCCESS, payload: msg});
     this.resetBuddy();
   }
 
   randomBuddy(buddies: Buddy[]){
     //List of all buddies who are currently in
-    let inBuddies = buddies.filter(buddy => (!buddy.checkedOut && buddy.timesOut === 0));
+    let inBuddies = buddies.filter(buddy => (!buddy.checkedOut));
     //list of all buddies who have never been out AND are currently in
-    let inNeverOutBuddies = inBuddies.filter(buddy=> buddy.timesOut === 0);
+    let inNeverOutBuddies = inBuddies.filter(buddy=> buddy.timesOut === 0 || !buddy.timesOut);
     //selects randomly from inNeverOut unless no buddies exist then selects from inBuddies
     let randomBuddyArray = inNeverOutBuddies.length >0 ? inNeverOutBuddies : inBuddies;
     let buddy = randomBuddyArray[Math.floor(Math.random() * randomBuddyArray.length)];
-    //TODO: ADD checkBuddy(buddy) line after testing complete
+    this.checkBuddy(buddy);
   }
 
   addBuddy(buddy: Buddy){
