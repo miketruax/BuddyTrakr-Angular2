@@ -17,17 +17,25 @@ import {BuddyService} from "./services/buddy.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  private userID: Observable<String>;
-  private flash: Observable<Flash>;
+  userID: Observable<String>;
+  flash: Observable<Flash>;
+  menuActive: boolean = false;
   constructor(private userService: UserService, private store: Store<fromRoot.State>, private router: Router){
     this.userID = store.select(fromRoot.getUserId);
     this.flash = store.select(fromRoot.getFlash);
     this.userService.getUser();
     this.router.events.subscribe((val) => {
+      if (val.url != this.router.url) {
+        this.menuActive = false;
+        window.scrollTo(0, 0);
+      }
       if(event instanceof NavigationStart) {
         store.dispatch({type: flashActions.Actions.CLEAR_FLASH});
       }
     });
+  }
+  menuClick(){
+    this.menuActive = !this.menuActive;
   }
   logout(){
     this.userService.logout();

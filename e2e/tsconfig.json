@@ -4,6 +4,7 @@
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "exclude": [ "test.ts" ],
     "lib": [
       "es2016"
     ],

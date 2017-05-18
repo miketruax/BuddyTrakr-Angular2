@@ -7,6 +7,7 @@ import {User} from "../stores/user.store"
 import {Router} from "@angular/router";
 import * as userActions from '../actions/user.actions';
 import * as flashActions from '../actions/flash.actions';
+import * as buddyActions from '../actions/buddies.actions';
 import {Store} from "@ngrx/store";
 
 @Injectable()
@@ -46,6 +47,7 @@ export class UserService {
       .map(payload => {
         if(payload._id){
           this.isLoggedIn = true;
+          this.redirect();
         }
         return {type: userActions.Actions.SELECT_USER, payload: payload}
     })
@@ -53,6 +55,11 @@ export class UserService {
 
   }
 
+  private redirect(){
+    if(this.router.url === '/login' || this.router.url === '/signup'){
+     this.router.navigate(['/buddies']);
+    }
+  }
 
 
   signup(username, password, email){
@@ -103,6 +110,7 @@ export class UserService {
         this.isLoggedIn = false;
         this.store.dispatch({type: userActions.Actions.CLEAR_USER});
         this.router.navigate(['login']);
+        this.store.dispatch({ type: buddyActions.Actions.ADD_BUDDIES, payload: []})
         this.store.dispatch({type: flashActions.Actions.ADD_SUCCESS, payload: 'Successfully Logged Out'});
 
       });

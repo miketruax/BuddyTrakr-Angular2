@@ -1,6 +1,5 @@
 import { Action } from '@ngrx/store';
 import  * as buddies  from '../actions/buddies.actions';
-import {forEach} from "@angular/router/src/utils/collection";
 import {Buddy} from "../stores/buddy.store";
 
 export type State = Buddy[]
@@ -8,8 +7,8 @@ export type State = Buddy[]
 const initialState: State = [];
 
 
-export default
-function(state = initialState, action: Action): any{
+export
+function buddyReducer (state = initialState, action: Action): any{
 
   switch (action.type) {
 

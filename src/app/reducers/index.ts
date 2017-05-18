@@ -18,10 +18,10 @@ export interface State {
 }
 
 const reducers = {
-  buddies: fromBuddies.default,
-  selectedBuddy: fromSelectedBuddy.default,
-  user: fromUser.default,
-  flash: fromFlash.default
+  buddies: fromBuddies.buddyReducer,
+  selectedBuddy: fromSelectedBuddy.selectedReducer,
+  user: fromUser.userReducer,
+  flash: fromFlash.flashReducer
 };
 
 

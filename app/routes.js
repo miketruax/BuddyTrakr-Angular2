@@ -13,12 +13,12 @@ export default (app, router, passport) => {
   });
 
   let auth = (req, res, next) => {
-
-    if (!req.isAuthenticated())
+    if (!req.isAuthenticated()) {
       res.send(401);
-
-    else
+    }
+    else {
       next();
+    }
   };
 
   //Admin routes
@@ -41,7 +41,6 @@ export default (app, router, passport) => {
 
   //ALL requests get routed through to index.html to ensure app is used
   app.get('*', (req, res) => {
-
       res.sendFile('/dist/index.html', {root: __dirname + "/../"});
   });
 };

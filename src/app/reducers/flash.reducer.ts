@@ -8,8 +8,8 @@ export type State = Flash
 const initialState: State = {};
 
 
-export default
-function(state = initialState, action: Action): any{
+export
+function flashReducer(state = initialState, action: Action): any{
 
   switch (action.type) {
 

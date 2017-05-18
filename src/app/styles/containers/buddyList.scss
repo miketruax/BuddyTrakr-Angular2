@@ -4,5 +4,11 @@
   margin-bottom: 10px !important;
   margin-top: 10px !important;
   padding-top: 15px !important;
-  background-color: rgba($tan, .3);
+  background-color: rgba($tan, .3) !important;
+  h3{
+    margin: 0 !important;
+    position: absolute;
+    top: 33%!important;
+    right: 0;
+  }
 }

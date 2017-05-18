@@ -9,20 +9,17 @@ import * as flashActions from '../actions/flash.actions';
 
 @Component({
   selector: 'settings',
-  template: require('./settings.html'),
-  styleUrls: ['../styles/app.style.scss'],
+  templateUrl: "./settings.html",
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 
 export class SettingsComponent {
-  user : Observable<User>;
-  errors: Object;
-  form: Object;
+  public user : Observable<User>;
+  public errors: any = {};
+  public form: any = {currentPassword: '', newPassword: '', confirmNewPassword: ''};
   constructor(private userService: UserService, private store: Store<fromRoot.State>){
     this.user = this.store.select(fromRoot.getUser);
-    this.errors = {};
-    this.form = {currentPassword: '', newPassword: '', confirmNewPassword: ''};
   }
 
   validate(){
@@ -45,7 +42,7 @@ export class SettingsComponent {
     return errors;
   }
 
-  changePassword(){
+  changePassword(e){
     this.errors = {};
     if(!this.validate()){
       this.userService.changePassword(this.form['currentPassword'], this.form['newPassword'])

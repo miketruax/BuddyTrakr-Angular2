@@ -4,18 +4,18 @@
 
 import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {Store} from "@ngrx/store";
+
 import {State} from '../reducers';
 import * as selectedBuddyActions from '../actions/selectedBuddy.actions';
 import {Buddy} from '../stores/buddy.store';
 import {BuddyService} from '../services/buddy.service';
 import {User} from "../stores/user.store";
 import * as flashActions from "../actions/flash.actions";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'buddies',
-  styleUrls: ['../styles/app.style.scss'],
-  template: require('./buddies.component.html'),
+  templateUrl: "./buddies.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -44,7 +44,9 @@ export class BuddiesComponent {
   }
 
   checkBuddy(buddy: Buddy){
-    let msg = buddy.name + " successfully checked " + buddy.checkedOut ? 'in.' : 'out';
+    let msg = buddy.name;
+    msg+=" successfully checked ";
+    msg+= buddy.checkedOut ? 'in.' : 'out';
     buddy.checkedOut = !buddy.checkedOut;
     this.buddyService.saveBuddy(buddy, true);
     this.store.dispatch({type: flashActions.Actions.ADD_SUCCESS, payload: msg});

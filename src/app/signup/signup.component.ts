@@ -16,18 +16,15 @@ import {UserService} from '../services/user.service';
 
 @Component({
   selector: 'signup',
-  template: require('./signup.html'),
-  styleUrls: ['../styles/app.style.scss'],
+  templateUrl: "./signup.html",
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class SignupComponent {
-  private user: User;
-  private errors: Object;
-  private confirmPswd: string;
+  user: User = {username: '', email: '', password: ''};
+  errors: any = {};
+  confirmPswd: string;
   constructor(private userService: UserService, private store: Store<fromRoot.State>) {
-    this.user = {username: '', email: '', password: ''};
-    this.errors = {};
   }
 
   validate(){

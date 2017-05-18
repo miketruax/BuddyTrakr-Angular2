@@ -5,13 +5,9 @@ import bcrypt from 'bcrypt-nodejs';
 let userSchema = mongoose.Schema({
 
   local : {
-
     username : { type : String, unique : true },
-
     password : String,
-
     friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-
     email : { type : String, unique : true }
   },
 
@@ -36,7 +32,6 @@ userSchema.methods.generateHash = function(password) {
 
 // Ensures valid password
 userSchema.methods.validPassword = function(password) {
-
   return bcrypt.compareSync(password, this.local.password);
 };
 

@@ -8,8 +8,8 @@ export type State = User
 const initialState: State = {};
 
 
-export default
-function(state = initialState, action: Action): any{
+export
+function userReducer(state = initialState, action: Action): any{
   switch (action.type) {
     case user.Actions.SELECT_USER:
       return action.payload;
