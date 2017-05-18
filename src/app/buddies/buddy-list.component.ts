@@ -12,16 +12,14 @@ import {User} from "../stores/user.store";
 
 @Component({
   selector: 'buddy-list',
-  styleUrls: ['../styles/app.style.scss'],
-  template: require('./buddy-list.component.html')
+  templateUrl: "./buddy-list.component.html"
 })
 
 export class BuddyListComponent {
   @Input() buddies: Buddy[];
   @Input() user: User;
-  filter: Object;
+  public filter: any = {search: '', neverOut: false};
   constructor(){
-    this.filter = {search: '', neverOut: false};
   }
   clearFilter(){
     this.filter = {search: '', neverOut: false};

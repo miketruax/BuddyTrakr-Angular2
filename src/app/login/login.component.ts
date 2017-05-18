@@ -18,13 +18,12 @@ import {UserService} from '../services/user.service';
 
 @Component({
   selector: 'login',
-  template: require('./login.html'),
-  styleUrls: ['../styles/app.style.scss'],
+  templateUrl: "./login.html",
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class LoginComponent {
-  private user: Observable<User>;
+  user: Observable<User>;
   constructor(private userService: UserService, private store: Store<fromRoot.State>) {
   this.user = this.store.select(fromRoot.getUserState);
   }

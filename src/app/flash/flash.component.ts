@@ -10,7 +10,6 @@ import {Store} from "@ngrx/store";
 @Component({
   selector: 'flash-component',
   templateUrl: './flash.component.html',
-  styleUrls: ['../styles/app.style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 

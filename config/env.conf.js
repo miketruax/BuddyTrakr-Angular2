@@ -1,5 +1,5 @@
-// import config from './config';
-// config.build();
+import config from './config';
+config.build();
 export function envValidator() {
   if(!process.env.NODE_ENV) {
     process.env.NODE_ENV = process.env.defaultENV;

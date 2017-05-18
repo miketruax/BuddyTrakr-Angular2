@@ -44,3 +44,7 @@ Thumbs.db
 !/config/mongoose.conf.js
 /config/config.js
 !/src/app/actions/flash.actions.ts
+/config/webpack.prod.config.js
+/config/webpack.test.config.js
+/config/webpack.dev.js
+/config/webpack.common.js

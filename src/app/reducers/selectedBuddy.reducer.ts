@@ -8,8 +8,8 @@ export type State = Buddy
 const initialState: State = {};
 
 
-export default
-function(state = initialState, action: Action): any{
+export
+function selectedReducer(state = initialState, action: Action): any{
   switch (action.type) {
     case selectedBuddy.Actions.SELECT_BUDDY: {
       return action.payload
