@@ -38,7 +38,7 @@ export class BuddyService {
 
     createBuddy(buddy: Buddy) {
 
-        this.http.post('/api/buddy', JSON.stringify(buddy), HEADER)
+        this.http.post('http://buddytrakr.herokuapp.com/api/buddy', JSON.stringify(buddy), HEADER)
             .map(res => res.json())
             .map(payload => ({ type: buddyActions.Actions.CREATE_BUDDY, payload }))
             .subscribe(action => this.store.dispatch(action));
@@ -46,7 +46,7 @@ export class BuddyService {
 
     updateBuddy(buddy: Buddy, bool: boolean = false) {
 
-        this.http.put(`/api/buddy/${buddy._id}`, JSON.stringify(buddy), HEADER)
+        this.http.put(`http://buddytrakr.herokuapp.com/api/buddy/${buddy._id}`, JSON.stringify(buddy), HEADER)
           .subscribe(action => {
             this.store.dispatch({ type: buddyActions.Actions.UPDATE_BUDDY, payload: buddy })
             this.loadBuddies();
@@ -55,7 +55,7 @@ export class BuddyService {
 
     deleteBuddy(buddy: Buddy) {
 
-        this.http.delete(`/api/buddy/${buddy._id}`)
+        this.http.delete(`http://buddytrakr.herokuapp.com/api/buddy/${buddy._id}`)
           .subscribe(action => this.store.dispatch({ type: buddyActions.Actions.DELETE_BUDDY, payload: buddy }));
     }
 }
