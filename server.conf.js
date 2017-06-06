@@ -18,7 +18,6 @@ import mongoose from 'mongoose';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import methodOverride from 'method-override';
-
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
@@ -82,13 +81,14 @@ routes(app, router, passport);
 
 
 
-
-// ### Ignition Phase
-
 server.listen(port);
 
 // Shoutout to the user
-console.log(`You're doing it you beautiful champion! It's open on port: ${port}`);
+console.log(`Internet Bears have collected buddies on port: ${port}`);
+
+setInterval(function() {
+  http.get("http://buddytrakr.herokuapp.com");
+}, 300000);
 
 // Expose app
 export {app};

@@ -6,6 +6,10 @@ let ObjectId = require('mongoose').Types.ObjectId;
 export default (app, router, passport, auth, admin) => {
 
 // returns either valid user ID or 'Not Logged in' depending on user sesssion
+  router.get('/ping', (req,res)=>{
+    res.send({success: true})
+  });
+
   router.get('/auth/getUser', (req, res) => {
     res.send(req.isAuthenticated() ? req.user : {});
   });
