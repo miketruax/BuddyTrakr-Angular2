@@ -24,7 +24,7 @@ export class UserService {
   login(username, password) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    this.http.post('../api/auth/login', JSON.stringify({ username, password }), { headers })
+    this.http.post('http://buddytrakr.herokuapp.com/api/auth/login', JSON.stringify({ username, password }), { headers })
       .map(res =>{
         this.store.dispatch({type: flashActions.Actions.CLEAR_FLASH});
         return res.json();
@@ -42,7 +42,7 @@ export class UserService {
       .subscribe(action => this.store.dispatch(action))
   }
   public getUser(){
-    this.http.get('/api/auth/getUser')
+    this.http.get('http://buddytrakr.herokuapp.com/api/auth/getUser')
       .map(res => res.json())
       .map(payload => {
         if(payload._id){
@@ -65,7 +65,7 @@ export class UserService {
   signup(username, password, email){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    this.http.post('../api/auth/signup', JSON.stringify({username, password, email}), {headers})
+    this.http.post('http://buddytrakr.herokuapp.com/api/auth/signup', JSON.stringify({username, password, email}), {headers})
       .map(res=>{
         this.store.dispatch({type: flashActions.Actions.CLEAR_FLASH});
         return res.json();
@@ -85,7 +85,7 @@ export class UserService {
   changePassword(currentPassword, newPassword){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    this.http.post('../api/auth/changeSettings', JSON.stringify({currentPassword, newPassword}), {headers})
+    this.http.post('http://buddytrakr.herokuapp.com/api/auth/changeSettings', JSON.stringify({currentPassword, newPassword}), {headers})
       .map(res=>{
         this.store.dispatch({type: flashActions.Actions.CLEAR_FLASH})
         return res.json();
@@ -105,12 +105,12 @@ export class UserService {
   logout() {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    this.http.post('/api/auth/logout', '', { headers })
+    this.http.post('http://buddytrakr.herokuapp.com/api/auth/logout', '', { headers })
       .subscribe(res => {
         this.isLoggedIn = false;
         this.store.dispatch({type: userActions.Actions.CLEAR_USER});
         this.router.navigate(['login']);
-        this.store.dispatch({ type: buddyActions.Actions.ADD_BUDDIES, payload: []})
+        this.store.dispatch({ type: buddyActions.Actions.ADD_BUDDIES, payload: []});
         this.store.dispatch({type: flashActions.Actions.ADD_SUCCESS, payload: 'Successfully Logged Out'});
 
       });
