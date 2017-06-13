@@ -7,6 +7,7 @@ import csrf from 'csurf';
 import socketio from 'socket.io';
 let log4js = require('log4js');
 let logger = log4js.getLogger();
+let cors = require('cors');
 
 
 // Load Node http module
@@ -40,7 +41,7 @@ if (process.env.NODE_ENV === 'development' ||
     process.env.NODE_ENV === 'test')
   app.use(morgan('dev'));
 
-
+app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
@@ -63,6 +64,8 @@ app.use(session({
     touchAfter: 2 * 3600 // time period in seconds
   })
 }));
+let router = express.Router();
+
 
 app.use(csrf());
 app.use(function(req, res, next) {
@@ -75,7 +78,7 @@ app.use(passport.initialize());
 // Persistent login sessions
 app.use(passport.session());
 
-let router = express.Router();
+
 import routes from './app/routes';
 routes(app, router, passport);
 
