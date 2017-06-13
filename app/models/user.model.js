@@ -8,11 +8,10 @@ let userSchema = mongoose.Schema({
     username : { type : String, unique : true },
     password : String,
     friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-    email : { type : String, unique : true }
+    email : { type : String, unique : true },
   },
-
   role : { type : String }
-});
+}, {timestamps: true});
 
 // password Hasher anytime password is changed
 userSchema.pre('save', function(next){
@@ -20,6 +19,7 @@ userSchema.pre('save', function(next){
     return next();
   }
     this.local.password = this.generateHash(this.local.password);
+  this.local.lastUpdated = Date.now();
   return next();
 
 });
