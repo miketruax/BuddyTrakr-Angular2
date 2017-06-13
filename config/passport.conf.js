@@ -49,7 +49,8 @@ export default (passport) => {
       _id: user._id,
       username: user.username,
       friends: user.friends,
-      role: user.role
+      role: user.role,
+      lastUpdated: user.lastUpdated
     };
 
     done(null, sessionUser);

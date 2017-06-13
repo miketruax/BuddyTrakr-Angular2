@@ -67,11 +67,11 @@ app.use(session({
 let router = express.Router();
 
 
-app.use(csrf());
-app.use(function(req, res, next) {
-  res.cookie('XSRF-TOKEN', req.csrfToken());
-  next();
-});
+// app.use(csrf());
+// app.use(function(req, res, next) {
+//   res.cookie('XSRF-TOKEN', req.csrfToken());
+//   next();
+// });
 
 app.use(passport.initialize());
 
