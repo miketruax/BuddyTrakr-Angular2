@@ -42,25 +42,25 @@ export default (passport) => {
       return true;
   };
 
-  // ## Serialize User
-  passport.serializeUser((user, done) => {
-
-    let sessionUser = {
-      _id: user._id,
-      username: user.username,
-      friends: user.friends,
-      role: user.role,
-      lastUpdated: user.lastUpdated
-    };
-
-    done(null, sessionUser);
-  });
-
-  // ## Deserialize User
-  passport.deserializeUser((sessionUser, done) => {
-
-    done(null, sessionUser);
-  });
+  // // ## Serialize User
+  // passport.serializeUser((user, done) => {
+  //
+  //   let sessionUser = {
+  //     _id: user._id,
+  //     username: user.username,
+  //     friends: user.friends,
+  //     role: user.role,
+  //     lastUpdated: user.lastUpdated
+  //   };
+  //
+  //   done(null, sessionUser);
+  // });
+  //
+  // // ## Deserialize User
+  // passport.deserializeUser((sessionUser, done) => {
+  //
+  //   done(null, sessionUser);
+  // });
 
 
   passport.use('local-signup', new LocalStrategy({
@@ -174,4 +174,5 @@ export default (passport) => {
         return done(null, user);
       });
     }));
+
 };

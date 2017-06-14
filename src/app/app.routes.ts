@@ -11,7 +11,7 @@ export const routes: Routes = [
   { path: 'login',  component: LoginComponent, canActivate:[AuthGeneric]},
   { path: 'buddies', component: BuddiesComponent, canActivate: [AuthProtected] },
   { path: 'about', component: AboutComponent },
-  { path: 'settings', component: SettingsComponent },
+  { path: 'settings', component: SettingsComponent, canActivate:[AuthProtected] },
   { path: 'signup', component: SignupComponent, canActivate:[AuthGeneric]},
   { path: '**',   redirectTo: '/buddies', pathMatch: 'full' },
 ];

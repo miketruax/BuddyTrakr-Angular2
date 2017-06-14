@@ -4,6 +4,7 @@ import authRoutes from './routes/_authentication.routes.js';
 
 //Imports all API routes
 import buddyRoutes from './routes/_buddy.routes.js';
+let jwt = require('jsonwebtoken');
 
 export default (app, router, passport) => {
 
@@ -13,13 +14,18 @@ export default (app, router, passport) => {
   });
 
   let auth = (req, res, next) => {
-    if (!req.isAuthenticated()) {
-      res.send(401);
-    }
-    else {
-      next();
-    }
+    jwt.verify(req.header('Authorization'), process.env.SESSION_SECRET.toString(), (err, decoded)=>{
+      if(err){
+        console.log(err);
+        res.send(401);
+      }
+      else{
+        req.user = decoded;
+       next()
+      }
+    });
   };
+
 
   //Admin routes
   let admin = (req, res, next) => {
@@ -34,7 +40,7 @@ export default (app, router, passport) => {
   authRoutes(app, router, passport, auth, admin);
 
   //applies buddy routes to router
-  buddyRoutes(app, router);
+  buddyRoutes(app, router, passport, auth);
 
 	//applies api routes
 	app.use('/api', router);

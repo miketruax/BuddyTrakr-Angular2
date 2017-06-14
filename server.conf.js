@@ -54,30 +54,10 @@ app.use(express.static(__dirname + '/dist'));
 app.use(helmet());
 
 
-app.use(session({
-  cookieName: 'session',
-  secret: process.env.SESSION_SECRET,
-  saveUninitialized: false, // don't create session until something stored
-  resave: false, //don't save session if unmodified
-  store: new mongoStore({
-    url: process.env.MONGO_URI,
-    touchAfter: 2 * 3600 // time period in seconds
-  })
-}));
 let router = express.Router();
 
 
-// app.use(csrf());
-// app.use(function(req, res, next) {
-//   res.cookie('XSRF-TOKEN', req.csrfToken());
-//   next();
-// });
-
 app.use(passport.initialize());
-
-// Persistent login sessions
-app.use(passport.session());
-
 
 import routes from './app/routes';
 routes(app, router, passport);

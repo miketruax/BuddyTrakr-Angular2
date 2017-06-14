@@ -14,7 +14,7 @@ import {Store} from "@ngrx/store";
 
 export class UserService {
   private user: Observable<User>;
-    isLoggedIn: boolean = false;
+  public isLoggedIn: boolean = false;
   constructor(private router: Router, private http: Http, private store: Store<fromRoot.State>) {
 
     this.user = store.select(fromRoot.getUserState);
@@ -24,7 +24,7 @@ export class UserService {
   login(username, password) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    this.http.post('http://buddytrakr.herokuapp.com/api/auth/login', JSON.stringify({ username, password }), { headers })
+    this.http.post('/api/auth/login', JSON.stringify({ username, password }), {headers: headers} )
       .map(res =>{
         this.store.dispatch({type: flashActions.Actions.CLEAR_FLASH});
         return res.json();
@@ -34,6 +34,7 @@ export class UserService {
           return {type: flashActions.Actions.ADD_ERROR, payload: payload.err};
         }
         else {
+          localStorage.setItem('authToken', payload.token);
           this.isLoggedIn = true;
           this.router.navigate(['/buddies']);
           return {type: userActions.Actions.SELECT_USER, payload: payload.user}
@@ -42,14 +43,21 @@ export class UserService {
       .subscribe(action => this.store.dispatch(action))
   }
   public getUser(){
-    this.http.get('http://buddytrakr.herokuapp.com/api/auth/getUser')
-      .map(res => res.json())
+    let headers = new Headers();
+    headers.append('Authorization', localStorage.getItem('authToken'));
+    this.http.get('/api/auth/getUser', headers)
+      .map((res) =>{
+      return res.json()})
       .map(payload => {
-        if(payload._id){
+        if(payload.user){
           this.isLoggedIn = true;
           this.redirect();
+          return {type: userActions.Actions.SELECT_USER, payload: payload.user}
         }
-        return {type: userActions.Actions.SELECT_USER, payload: payload}
+        else{
+          this.isLoggedIn = false;
+        }
+        return {type: userActions.Actions.CLEAR_USER}
     })
       .subscribe(action => this.store.dispatch(action));
 
@@ -65,7 +73,7 @@ export class UserService {
   signup(username, password, email){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    this.http.post('http://buddytrakr.herokuapp.com/api/auth/signup', JSON.stringify({username, password, email}), {headers})
+    this.http.post('/api/auth/signup', JSON.stringify({username, password, email}))
       .map(res=>{
         this.store.dispatch({type: flashActions.Actions.CLEAR_FLASH});
         return res.json();
@@ -85,9 +93,10 @@ export class UserService {
   changePassword(currentPassword, newPassword){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    this.http.post('http://buddytrakr.herokuapp.com/api/auth/changeSettings', JSON.stringify({currentPassword, newPassword}), {headers})
+    headers.append('Authorization', localStorage.getItem('authToken'));
+    this.http.post('/api/auth/changeSettings', JSON.stringify({currentPassword, newPassword}), {headers: headers})
       .map(res=>{
-        this.store.dispatch({type: flashActions.Actions.CLEAR_FLASH})
+        this.store.dispatch({type: flashActions.Actions.CLEAR_FLASH});
         return res.json();
       })
       .map(payload=> {
@@ -103,22 +112,11 @@ export class UserService {
   }
 
   logout() {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    this.http.post('http://buddytrakr.herokuapp.com/api/auth/logout', '', { headers })
-      .subscribe(res => {
-        this.isLoggedIn = false;
-        this.store.dispatch({type: userActions.Actions.CLEAR_USER});
-        this.router.navigate(['login']);
-        this.store.dispatch({ type: buddyActions.Actions.ADD_BUDDIES, payload: []});
-        this.store.dispatch({type: flashActions.Actions.ADD_SUCCESS, payload: 'Successfully Logged Out'});
-
-      });
-
-
-
-
+    this.isLoggedIn = false;
+    localStorage.removeItem('authToken');
+    this.store.dispatch({ type: buddyActions.Actions.ADD_BUDDIES, payload: []});
+    this.store.dispatch({type: userActions.Actions.CLEAR_USER});
+    this.store.dispatch({type: flashActions.Actions.ADD_SUCCESS, payload: 'Successfully Logged Out'});
+    this.router.navigate(['login']);
   }
-
-
 }

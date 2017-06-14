@@ -25,7 +25,9 @@ export class BuddyService {
   }
 
   loadBuddies() {
-        this.http.get('/api/buddy')
+    let headers = new Headers();
+    headers.append('Authorization', localStorage.getItem('authToken'));
+        this.http.get('/api/buddy', {headers: headers})
             .map(res => res.json())
             .map(payload => ({ type: buddyActions.Actions.ADD_BUDDIES, payload }))
             .subscribe(action => this.store.dispatch(action));
@@ -37,25 +39,30 @@ export class BuddyService {
     }
 
     createBuddy(buddy: Buddy) {
-
-        this.http.post('http://buddytrakr.herokuapp.com/api/buddy', JSON.stringify(buddy), HEADER)
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      headers.append('Authorization', localStorage.getItem('authToken'));
+        this.http.post('/api/buddy', JSON.stringify(buddy), {headers: headers})
             .map(res => res.json())
             .map(payload => ({ type: buddyActions.Actions.CREATE_BUDDY, payload }))
             .subscribe(action => this.store.dispatch(action));
     }
 
     updateBuddy(buddy: Buddy, bool: boolean = false) {
-
-        this.http.put(`http://buddytrakr.herokuapp.com/api/buddy/${buddy._id}`, JSON.stringify(buddy), HEADER)
+      let headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      headers.append('Authorization', localStorage.getItem('authToken'));
+        this.http.put(`/api/buddy/${buddy._id}`, JSON.stringify(buddy), {headers: headers})
           .subscribe(action => {
-            this.store.dispatch({ type: buddyActions.Actions.UPDATE_BUDDY, payload: buddy })
+            this.store.dispatch({ type: buddyActions.Actions.UPDATE_BUDDY, payload: buddy });
             this.loadBuddies();
           });
     }
 
     deleteBuddy(buddy: Buddy) {
-
-        this.http.delete(`http://buddytrakr.herokuapp.com/api/buddy/${buddy._id}`)
+      let headers = new Headers();
+      headers.append('Authorization', localStorage.getItem('authToken'));
+        this.http.delete(`/api/buddy/${buddy._id}`, {headers: headers})
           .subscribe(action => this.store.dispatch({ type: buddyActions.Actions.DELETE_BUDDY, payload: buddy }));
     }
 }
