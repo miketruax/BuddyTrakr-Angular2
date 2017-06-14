@@ -41,7 +41,8 @@ userSchema.methods.sanitize = function(){
     username : this.local.username,
     friends : this.local.friends,
     email: this.local.email,
-    role: this.role
+    role: this.role,
+    lastUpdated: this.lastUpdated
   }
 };
 

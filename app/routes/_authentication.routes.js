@@ -1,31 +1,38 @@
-
 import User from '../models/user.model.js';
+import jwt from 'jsonwebtoken';
 
 let ObjectId = require('mongoose').Types.ObjectId;
 
 export default (app, router, passport, auth, admin) => {
 
-
+// returns either valid user ID or 'Not Logged in' depending on user session
   router.get('/ping', (req,res)=>{
     res.send({success: true})
   });
 
-// returns either valid user ID or 'Not Logged in' depending on user session
   router.get('/auth/getUser', (req, res) => {
-    res.send(req.isAuthenticated() ? req.user : {});
-  });
+    jwt.verify(req.header('Authorization'), process.env.SESSION_SECRET, (err, decoded)=>{
+      if (err){
+        res.send({});
+      }
+      else{
+        res.send({user:decoded});
+      }
+    });
+    });
 
   router.get('/auth/isLoggedIn', (req, res) => {
-    res.send(req.isAuthenticated());
+    let secret = process.env.SESSION_SECRET;
+    jwt.verify(req.header('Authorization'), secret, (err, decoded)=>{
+      res.send(!err);
+    });
   });
-
 
   //log in route
   router.post('/auth/login', (req, res, next) => {
 
     //utilizes 'local-login' authentication
     passport.authenticate('local-login', (err, user, info) => {
-
       //in case of error, passes error to next middleware
       let response =  {};
       if (err) {
@@ -39,15 +46,11 @@ export default (app, router, passport, auth, admin) => {
 
       else {
         //otherwise login using sanitized user (stripped of pswd hash and email hash)
-        req.login(user.sanitize(), (err) => {
-          if (err) {
-            response.err = err;
-          }
-          // Return the user object
-          response.user = req.user;
+        response.token = jwt.sign(user.sanitize(), process.env.SESSION_SECRET, {expiresIn: 3600
         });
+        response.user = user.sanitize();
       }
-      res.send(response);
+      res.json(response);
     }) (req, res, next);
 
   });
@@ -72,7 +75,7 @@ export default (app, router, passport, auth, admin) => {
     }) (req, res, next);
   });
 
-  router.post('/auth/changeSettings', (req, res, next) => {
+  router.post('/auth/changeSettings',  passport.authenticate('jwt-auth', ({session: false})), (req, res, next) => {
     User.findOne({'_id': req.user._id}, (err, user)=>{
       if(err){
         res.send({err: 'Something went wrong, please try again later.'});
@@ -92,22 +95,14 @@ export default (app, router, passport, auth, admin) => {
         });
       }
     });
-
-
-
   });
 
 
   //log out route
-  router.post('/auth/logout', (req, res) => {
-    req.logOut();
-    res.send({})
-  });
-
-  //will send full user object (sanitized) for access
-  router.get('/auth/user', auth, (req, res) => {
-    res.json(req.user);
-  });
+  // router.post('/auth/logout', (req, res) => {
+  //   req.logOut();
+  //   res.send({})
+  // });
 
   //admin route to delete a user
   router.delete('/auth/delete/:uid', admin, (req, res) => {

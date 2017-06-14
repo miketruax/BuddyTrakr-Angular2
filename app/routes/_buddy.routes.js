@@ -1,9 +1,9 @@
 
 import Buddy from '../models/buddy.model';
-export default (app, router) => {
+export default (app, router, passport, auth) => {
   router.route('/buddy')
     //post for buddy creation
-    .post((req, res) => {
+    .post(auth, (req, res) => {
 
       Buddy.create({
         name : req.body.name,
@@ -28,7 +28,7 @@ export default (app, router) => {
       });
     })
     // gets all buddies based off current owner from user object (currently logged in via passport)
-    .get((req, res) => {
+    .get(auth, (req, res) => {
       Buddy.find({'owner' : req.user._id }).populate('owner', 'local.username').exec((err, buddy) => {
         if(err) {
           //sends error if there is an error
@@ -47,7 +47,7 @@ export default (app, router) => {
 
   router.route('/buddy/:buddy_id')
     //gets a single buddy by their _id
-    .get((req, res) => {
+    .get(auth, (req, res) => {
       Buddy.findOne(req.params.buddy_id, (err, buddy) => {
 
         if(err)
@@ -59,15 +59,15 @@ export default (app, router) => {
     })
 
     //put request for updating buddies
-    .put((req, res) => {
+    .put(auth, (req, res) => {
       Buddy.findOne({
-
         '_id' : req.params.buddy_id
       }, (err, buddy) => {
-
         if (err)
-          res.send(err);
-
+          return res.send(err);
+        if(req.user._id != buddy.owner){
+          return res.send({error: 'Not your buddy'});
+        }
         //Only update fields that have been edited
         if (req.body.name)
           buddy.name = req.body.name;
@@ -93,14 +93,15 @@ export default (app, router) => {
             console.log(err);
             res.send(err);
           }
-          return res.send(buddy);
-
+          else {
+            res.send(buddy);
+          }
         });
       });
     })
 
     //sad times to delete a buddy
-    .delete((req, res) => {
+    .delete(auth, (req, res) => {
 
       // debug log statement
       console.log(`Attempting to delete buddy with id: ${req.params.buddy_id}`);
@@ -108,8 +109,13 @@ export default (app, router) => {
       Buddy.remove({
         _id : req.params.buddy_id
       }, (err, buddy) => {
-        if(err)
-          res.send(err);
+        if (err || req.user._id){
+          return res.send(err);
+        }
+        if(req.user._id != buddy.owner){
+          return res.send({error: 'Not your buddy!'});
+        }
+
         else
           console.log('Buddy successfully deleted!');
         Buddy.find((err, buddies) => {
