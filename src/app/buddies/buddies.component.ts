@@ -82,7 +82,6 @@ export class BuddiesComponent {
 
   saveBuddy(buddy: Buddy) {
     this.buddyService.saveBuddy(buddy);
-    this.store.dispatch({type: flashActions.Actions.ADD_SUCCESS, payload: buddy.name + " successfully saved!"});
     this.resetBuddy();
   }
   ngOnInit(){

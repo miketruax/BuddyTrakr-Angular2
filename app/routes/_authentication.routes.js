@@ -11,22 +11,11 @@ export default (app, router, passport, auth, admin) => {
   });
 
   router.get('/auth/getUser', (req, res) => {
-    jwt.verify(req.header('Authorization'), process.env.SESSION_SECRET, (err, decoded)=>{
-      if (err){
-        res.send({});
-      }
-      else{
-        res.send({user:decoded});
-      }
+      passport.authenticate('jwt-auth', (err, user, info) =>{
+        console.log(user);
+        user ? res.send(req.user) : res.send({});
+      });
     });
-    });
-
-  router.get('/auth/isLoggedIn', (req, res) => {
-    let secret = process.env.SESSION_SECRET;
-    jwt.verify(req.header('Authorization'), secret, (err, decoded)=>{
-      res.send(!err);
-    });
-  });
 
   //log in route
   router.post('/auth/login', (req, res, next) => {
@@ -97,12 +86,6 @@ export default (app, router, passport, auth, admin) => {
     });
   });
 
-
-  //log out route
-  // router.post('/auth/logout', (req, res) => {
-  //   req.logOut();
-  //   res.send({})
-  // });
 
   //admin route to delete a user
   router.delete('/auth/delete/:uid', admin, (req, res) => {
