@@ -3,7 +3,7 @@ import Buddy from '../models/buddy.model';
 export default (app, router, passport, auth) => {
   router.route('/buddy')
     //post for buddy creation
-    .post(auth, (req, res) => {
+    .post(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
 
       Buddy.create({
         name : req.body.name,
@@ -19,27 +19,24 @@ export default (app, router, passport, auth) => {
       }, (err, buddy) => {
 
         if (err)
-          res.send(err);
+          res.send({err: 'An error occured, please try again later.'});
 
-        // DEBUG
-        console.log(`Buddy created: ${buddy}`);
-        // return the new `buddy` to our front-end
-        res.json(buddy);
+        res.json({buddy: buddy});
       });
     })
     // gets all buddies based off current owner from user object (currently logged in via passport)
-    .get(auth, (req, res) => {
+    .get(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
       Buddy.find({'owner' : req.user._id }).populate('owner', 'local.username').exec((err, buddy) => {
         if(err) {
           //sends error if there is an error
-          res.send(err);
+          res.send({err: 'An error occured, please try again later.'});
         }
         else {
           //otherwise sends buddy list!
           buddy.sort((a, b) => {
             return a.name < b.name ? -1 : a.name > b.name ? 1 : 0
           });
-          res.json(buddy);
+          res.json({buddy: buddy});
         }
       });
     });
@@ -47,26 +44,25 @@ export default (app, router, passport, auth) => {
 
   router.route('/buddy/:buddy_id')
     //gets a single buddy by their _id
-    .get(auth, (req, res) => {
+    .get(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
       Buddy.findOne(req.params.buddy_id, (err, buddy) => {
 
         if(err)
-          res.send(err);
+          res.send({err: 'An error occured, please try again later.'});
 
         else
-          res.json(buddy);
+          res.json({buddy: buddy});
       });
     })
 
     //put request for updating buddies
-    .put(auth, (req, res) => {
+    .put(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
       Buddy.findOne({
-        '_id' : req.params.buddy_id
+        '_id' : req.params.buddy_id,
+        'owner': req.user._id
       }, (err, buddy) => {
-        if (err)
-          return res.send(err);
-        if(req.user._id != buddy.owner){
-          return res.send({error: 'Not your buddy'});
+        if (err){
+          return res.send({err: 'An error occured, please try again later.'});
         }
         //Only update fields that have been edited
         if (req.body.name)
@@ -90,38 +86,32 @@ export default (app, router, passport, auth) => {
         return buddy.save((err) => {
           //either send an error back to front-end or the buddy to be re-added to store
           if (err){
-            console.log(err);
-            res.send(err);
+            res.send({err: 'An error occured, please try again later.'});
           }
           else {
-            res.send(buddy);
+            console.log(buddy);
+            res.send({buddy: buddy});
           }
         });
       });
     })
 
     //sad times to delete a buddy
-    .delete(auth, (req, res) => {
-
+    .delete(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
       // debug log statement
       console.log(`Attempting to delete buddy with id: ${req.params.buddy_id}`);
 
       Buddy.remove({
-        _id : req.params.buddy_id
+        _id : req.params.buddy_id,
+        'owner': req.user._id
       }, (err, buddy) => {
-        if (err || req.user._id){
-          return res.send(err);
+        if (err){
+          return res.send({err: 'An error occured, please try again later.'});
         }
-        if(req.user._id != buddy.owner){
-          return res.send({error: 'Not your buddy!'});
-        }
-
-        else
-          console.log('Buddy successfully deleted!');
         Buddy.find((err, buddies) => {
           if(err)
-            res.send(err);
-          res.json(buddies);
+            res.send({err: 'An error occured, please try again later.'});
+          res.json({buddy: buddies});
         });
       });
     });

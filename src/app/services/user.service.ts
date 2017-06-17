@@ -93,7 +93,7 @@ export class UserService {
   changePassword(currentPassword, newPassword){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    headers.append('Authorization', localStorage.getItem('authToken'));
+    headers.append('Authorization', `JWT ${localStorage.getItem('authToken')}`);
     this.http.post('/api/auth/changeSettings', JSON.stringify({currentPassword, newPassword}), {headers: headers})
       .map(res=>{
         this.store.dispatch({type: flashActions.Actions.CLEAR_FLASH});

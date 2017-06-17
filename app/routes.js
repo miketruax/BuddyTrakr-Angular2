@@ -14,28 +14,24 @@ export default (app, router, passport) => {
   });
 
   let auth = (req, res, next) => {
-    jwt.verify(req.header('Authorization'), process.env.SESSION_SECRET.toString(), (err, decoded)=>{
-      if(err){
-        console.log(err);
-        res.send(401);
-      }
-      else{
-        req.user = decoded;
-       next()
-      }
-    });
+    if(req.isAuthenticated()){
+      next();
+    }
+    else{
+      res.send(401);
+    }
   };
 
 
   //Admin routes
   let admin = (req, res, next) => {
-
     if (!req.isAuthenticated() || req.user.role !== 'admin')
       res.send(401);
 
     else
       next();
   };
+
   //Applies auth routes to router
   authRoutes(app, router, passport, auth, admin);
 

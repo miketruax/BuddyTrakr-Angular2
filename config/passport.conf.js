@@ -1,6 +1,9 @@
 // Load PassportJS strategies
 import LocalStrategy from 'passport-local';
 import User from '../app/models/user.model.js';
+import {Strategy} from 'passport-jwt';
+import {ExtractJwt} from 'passport-jwt';
+
 
 export default (passport) => {
 
@@ -8,23 +11,15 @@ export default (passport) => {
   let bounds = {
 
     username: {
-
       minLength: 3,
-
       maxLength: 16
     },
-
     password: {
-
       minLength: 8,
-
       maxLength: 128
     },
-
     email: {
-
       minLength: 5,
-
       maxLength: 256
     }
   };
@@ -41,26 +36,6 @@ export default (passport) => {
     else
       return true;
   };
-
-  // // ## Serialize User
-  // passport.serializeUser((user, done) => {
-  //
-  //   let sessionUser = {
-  //     _id: user._id,
-  //     username: user.username,
-  //     friends: user.friends,
-  //     role: user.role,
-  //     lastUpdated: user.lastUpdated
-  //   };
-  //
-  //   done(null, sessionUser);
-  // });
-  //
-  // // ## Deserialize User
-  // passport.deserializeUser((sessionUser, done) => {
-  //
-  //   done(null, sessionUser);
-  // });
 
 
   passport.use('local-signup', new LocalStrategy({
@@ -91,7 +66,6 @@ export default (passport) => {
         return done(null, false, {signupMessage: 'Invalid email address.'});
       }
 
-      // Asynchronous
       // User.findOne will not fire unless data is sent back
       process.nextTick(() => {
         //finds user with the person signing up's email/username
@@ -103,11 +77,11 @@ export default (passport) => {
         }, (err, user) => {
 
           // If there are any errors, return the error
-          if (err)
+          if (err) {
             return done(err);
+          }
 
           if (user) {
-
             //if a user does exist with either credential, send error
             return done(null, false, {signupMessage: 'That username/email is already taken.'});
           } else {
@@ -175,4 +149,22 @@ export default (passport) => {
       });
     }));
 
+  //JWT Authentication
+  let jwtOptions = {
+    jwtFromRequest: ExtractJwt.fromAuthHeader(),
+    secretOrKey: process.env.SESSION_SECRET
+  };
+
+  passport.use('jwt-auth', new Strategy(jwtOptions, function(jwt_payload, done) {
+    User.findOne({_id: jwt_payload._id}, function(err, user) {
+      if (err) {
+        return done(err, false);
+      }
+      if (user) {
+        return done(null, user.sanitize());
+      } else {
+        return done(null, false);
+      }
+    });
+  }));
 };
