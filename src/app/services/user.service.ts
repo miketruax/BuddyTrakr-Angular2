@@ -17,6 +17,7 @@ import {InitUserService} from "./init-user.service";
 export class UserService {
   private user: Observable<User>;
   public isLoggedIn: boolean;
+
   constructor(private initUser: InitUserService, private router: Router, private http: Http, private store: Store<fromRoot.State>) {
     this.isLoggedIn = initUser.getIsLoggedIn();
     this.store.dispatch({type: userActions.Actions.SELECT_USER, payload: initUser.getUser()});
@@ -82,6 +83,7 @@ export class UserService {
         }
         else{
           this.router.navigate(['/buddies']);
+          localStorage.setItem('authToken', payload.token);
           return {type: flashActions.Actions.ADD_SUCCESS, payload: 'Successfully updated password.'}
         }
       })
@@ -89,11 +91,19 @@ export class UserService {
   }
 
   logout() {
-    this.isLoggedIn = false;
-    localStorage.removeItem('authToken');
-    this.store.dispatch({ type: buddyActions.Actions.ADD_BUDDIES, payload: []});
-    this.store.dispatch({type: userActions.Actions.CLEAR_USER});
-    this.store.dispatch({type: flashActions.Actions.ADD_SUCCESS, payload: 'Successfully Logged Out'});
-    this.router.navigate(['login']);
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', `JWT ${localStorage.getItem('authToken')}`);
+    this.http.get('/api/auth/logout', {headers: headers})
+      .map(res => res.json())
+      .subscribe(data => {
+        this.isLoggedIn = false;
+        localStorage.removeItem('authToken');
+        this.store.dispatch({ type: buddyActions.Actions.ADD_BUDDIES, payload: []});
+        this.store.dispatch({type: userActions.Actions.CLEAR_USER});
+        this.store.dispatch({type: flashActions.Actions.ADD_SUCCESS, payload: 'Successfully Logged Out'});
+        this.router.navigate(['/login']);
+      });
+
   }
 }
