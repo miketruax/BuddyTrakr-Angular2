@@ -10,6 +10,7 @@ let userSchema = mongoose.Schema({
     friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     email : { type : String, unique : true },
   },
+  jwthash: {type: String},
   role : { type : String }
 }, {timestamps: true});
 
@@ -19,14 +20,12 @@ userSchema.pre('save', function(next){
     return next();
   }
     this.local.password = this.generateHash(this.local.password);
-  this.local.lastUpdated = Date.now();
   return next();
 
 });
 
 // Generates the hash
 userSchema.methods.generateHash = function(password) {
-
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 

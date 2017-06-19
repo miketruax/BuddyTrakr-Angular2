@@ -1,5 +1,6 @@
 import User from '../models/user.model.js';
 import jwt from 'jsonwebtoken';
+let crypto = require('crypto');
 
 let ObjectId = require('mongoose').Types.ObjectId;
 
@@ -11,10 +12,9 @@ export default (app, router, passport, auth, admin) => {
   });
 
   router.get('/auth/getUser', (req, res) => {
-    console.log('Accessing get user api');
-    jwt.verify(req.get('Authorization'), process.env.SESSION_SECRET, (err, payload)=>{
-      payload ? res.send({user: payload}) : res.send({});
-    });
+      jwt.verify(req.get('Authorization'), process.env.SESSION_SECRET, (err, payload)=>{
+        payload ? res.send({user: payload.user}) : res.send({});
+      });
     });
 
   //log in route
@@ -34,12 +34,22 @@ export default (app, router, passport, auth, admin) => {
       }
 
       else {
-        //otherwise login using sanitized user (stripped of pswd hash and email hash)
-        response.token = jwt.sign(user.sanitize(), process.env.SESSION_SECRET, {expiresIn: 3600
-        });
         response.user = user.sanitize();
+        let hash = crypto.randomBytes(20).toString('hex');
+        //otherwise login using sanitized user (stripped of pswd hash and email hash)
+        user.jwthash = hash;
+        user.save((err) =>{
+          if(err){
+            response.err = err;
+            response.user = {};
+          }
+          else{
+            response.token = jwt.sign({user: user.sanitize(), hash: hash}, process.env.SESSION_SECRET, {expiresIn: 259200
+            });
+          }
+          res.json(response);
+        });
       }
-      res.json(response);
     }) (req, res, next);
 
   });
@@ -65,6 +75,8 @@ export default (app, router, passport, auth, admin) => {
   });
 
   router.post('/auth/changeSettings',  passport.authenticate('jwt-auth', ({session: false})), (req, res, next) => {
+    let hash = crypto.randomBytes(20).toString('hex');
+
     User.findOne({'_id': req.user._id}, (err, user)=>{
       if(err){
         res.send({err: 'Something went wrong, please try again later.'});
@@ -74,18 +86,32 @@ export default (app, router, passport, auth, admin) => {
       }
       else{
         user.local.password = req.body.newPassword;
+        user.jwthash = hash;
+
         user.save((err)=>{
           if(err){
             res.send({err: 'The server encountered an error, please try again later.'})
           }
           else{
-            res.send({});
+            let token = jwt.sign({user: user.sanitize(), hash: hash}, process.env.SESSION_SECRET, {expiresIn: 259200
+            });
+            res.send({token : token});
           }
         });
       }
     });
   });
 
+  router.get('/auth/logout', passport.authenticate('jwt-auth', ({session: false})), (req, res) =>{
+    User.findOne(User.findOne({'_id': req.user._id}, (err, user)=>{
+      user.hash = null;
+      user.save(err =>{
+        res.send({success: true});
+      })
+
+    }));
+
+  });
 
   //admin route to delete a user
   router.delete('/auth/delete/:uid', admin, (req, res) => {

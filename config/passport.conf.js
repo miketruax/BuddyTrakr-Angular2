@@ -3,6 +3,7 @@ import LocalStrategy from 'passport-local';
 import User from '../app/models/user.model.js';
 import {Strategy} from 'passport-jwt';
 import {ExtractJwt} from 'passport-jwt';
+import {bcrypt} from 'bcrypt-nodejs';
 
 
 export default (passport) => {
@@ -125,7 +126,7 @@ export default (passport) => {
       if (!checkLength(password, bounds.password.minLength, bounds.password.maxLength)) {
         return done(null, false, {loginMessage: 'Invalid password length.'});
       }
-      //finds user with given criteria (uses toLowerCase for case sensitiviy issues)
+      //finds user with given criteria (uses toLowerCase for case sensitivity issues)
       User.findOne({
         $or: [
           {'local.username': username.toLowerCase()},
@@ -137,6 +138,8 @@ export default (passport) => {
 
         //sends error back if no user found (most likely due to incorrect username spelling)
         if (!user) {
+          //compares password to non-hash if no user found to help prevent timing attack
+          bcrypt.compareSync(password, 'hashthatclearlyisntahash');
           return done(null, false, {loginMessage: 'Invalid username or password.'});
         }
 
@@ -156,11 +159,13 @@ export default (passport) => {
   };
 
   passport.use('jwt-auth', new Strategy(jwtOptions, function(jwt_payload, done) {
-    User.findOne({_id: jwt_payload._id}, function(err, user) {
+    User.findOne({_id: jwt_payload.user._id}, function(err, user) {
       if (err) {
         return done(err, false);
       }
-      if (user) {
+      //gets how long since last user update. Extra cushion in case of jwt cracking and user's jwtHas wasn't reset
+     let timeDiff = (Date.now() - user.updatedAt.getTime()) / 36e5;
+      if (jwt_payload.hash === user.jwthash && timeDiff <= 48) {
         return done(null, user.sanitize());
       } else {
         return done(null, false);
