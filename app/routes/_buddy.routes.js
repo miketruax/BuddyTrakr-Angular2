@@ -89,7 +89,6 @@ export default (app, router, passport, auth) => {
             res.send({err: 'An error occured, please try again later.'});
           }
           else {
-            console.log(buddy);
             res.send({buddy: buddy});
           }
         });
