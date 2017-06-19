@@ -20,10 +20,9 @@ export class AppComponent {
   userID: Observable<String>;
   flash: Observable<Flash>;
   menuActive: boolean = false;
-  constructor(private userService: UserService, private store: Store<fromRoot.State>, private router: Router){
+  constructor(private router: Router, private userService: UserService, private store: Store<fromRoot.State>){
     this.userID = store.select(fromRoot.getUserId);
     this.flash = store.select(fromRoot.getFlash);
-    this.userService.getUser();
     this.router.events.subscribe((val) => {
       if (val.url != this.router.url) {
         this.menuActive = false;

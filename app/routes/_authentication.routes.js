@@ -11,10 +11,10 @@ export default (app, router, passport, auth, admin) => {
   });
 
   router.get('/auth/getUser', (req, res) => {
-      passport.authenticate('jwt-auth', (err, user, info) =>{
-        console.log(user);
-        user ? res.send(req.user) : res.send({});
-      });
+    console.log('Accessing get user api');
+    jwt.verify(req.get('Authorization'), process.env.SESSION_SECRET, (err, payload)=>{
+      payload ? res.send({user: payload}) : res.send({});
+    });
     });
 
   //log in route

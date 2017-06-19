@@ -9,14 +9,17 @@ import * as userActions from '../actions/user.actions';
 import * as flashActions from '../actions/flash.actions';
 import * as buddyActions from '../actions/buddies.actions';
 import {Store} from "@ngrx/store";
+import {InitUserService} from "./init-user.service";
+
 
 @Injectable()
 
 export class UserService {
   private user: Observable<User>;
-  public isLoggedIn: boolean = false;
-  constructor(private router: Router, private http: Http, private store: Store<fromRoot.State>) {
-
+  public isLoggedIn: boolean;
+  constructor(private initUser: InitUserService, private router: Router, private http: Http, private store: Store<fromRoot.State>) {
+    this.isLoggedIn = initUser.getIsLoggedIn();
+    this.store.dispatch({type: userActions.Actions.SELECT_USER, payload: initUser.getUser()});
     this.user = store.select(fromRoot.getUserState);
   }
 
@@ -41,32 +44,6 @@ export class UserService {
         }
       })
       .subscribe(action => this.store.dispatch(action))
-  }
-  public getUser(){
-    let headers = new Headers();
-    headers.append('Authorization', localStorage.getItem('authToken'));
-    this.http.get('/api/auth/getUser', headers)
-      .map((res) =>{
-      return res.json()})
-      .map(payload => {
-        if(payload.user){
-          this.isLoggedIn = true;
-          this.redirect();
-          return {type: userActions.Actions.SELECT_USER, payload: payload.user}
-        }
-        else{
-          this.isLoggedIn = false;
-        }
-        return {type: userActions.Actions.CLEAR_USER}
-    })
-      .subscribe(action => this.store.dispatch(action));
-
-  }
-
-  private redirect(){
-    if(this.router.url === '/login' || this.router.url === '/signup'){
-     this.router.navigate(['/buddies']);
-    }
   }
 
 
