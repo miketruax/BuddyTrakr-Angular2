@@ -32,7 +32,6 @@ export class LoginComponent {
   login(e) {
     e.preventDefault();
     this.userService.login(this.username, this.password);
-
   }
 
   ngOnInit() {
