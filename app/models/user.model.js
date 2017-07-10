@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 import bcrypt from 'bcrypt-nodejs';
+import crypto from 'crypto';
 
 let userSchema = mongoose.Schema({
 
@@ -20,6 +21,7 @@ userSchema.pre('save', function(next){
     return next();
   }
     this.local.password = this.generateHash(this.local.password);
+    this.jwthash = crypto.randomBytes(20).toString('hex');
   return next();
 
 });

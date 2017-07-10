@@ -23,14 +23,15 @@ import {UserService} from '../services/user.service';
 })
 
 export class LoginComponent {
-  user: Observable<User>;
-  constructor(private userService: UserService, private store: Store<fromRoot.State>) {
-  this.user = this.store.select(fromRoot.getUserState);
+  password: string;
+  username: string;
+  constructor(private userService: UserService) {
+
   }
 
-  login(e, username: string, password: string) {
+  login(e) {
     e.preventDefault();
-    this.userService.login(username, password);
+    this.userService.login(this.username, this.password);
 
   }
 
