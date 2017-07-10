@@ -3,16 +3,18 @@
   <img class="col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" src="/assets/img/logos/main_logo.png">
   <h3 class="col-xs-12 text-center">Your buddies are expecting you!</h3>
   <h4 class="col-xs-10 col-xs-offset-1">Please Sign In</h4>
-  <form class="col-xs-10 col-xs-offset-1" role="form" (submit)="login($event, username.value, password.value)">
+  <form class="col-xs-10 col-xs-offset-1" role="form" (submit)="login($event)">
     <div class="form-group">
       <label for="username">Username</label>
-      <input type="text" #username class="form-control tan-input" id="username" placeholder="Username">
+      <input type="text" name="username" class="form-control tan-input" id="username" [(ngModel)]="username" placeholder="Username">
     </div>
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" #password class="form-control tan-input" id="password" placeholder="Password">
+      <input type="password" name="password" class="form-control tan-input" id="password" [(ngModel)]="password" placeholder="Password">
     </div>
-    <button type="submit" class="btn col-xs-6 col-xs-offset-6">Get tracking!</button>
+    <button type="submit" ngClass="{{username && password ? '' : 'disabled'}}" class="btn col-xs-6 col-xs-offset-6">
+      Get tracking!
+    </button>
   </form>
   <div class="col-xs-10 col-xs-offset-1 text-center col-sm-6 col-sm-offset-6">
   Are you a new tracker? <a [routerLink]="['/signup']" class="orange">Signup</a>

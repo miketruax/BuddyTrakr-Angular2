@@ -21,7 +21,10 @@
       <input type="password" class="form-control tan-input" id="confirmpassword" placeholder="Confirm Password" [(ngModel)]="confirmPswd" name="cPassword">
       <div class="col-xs-12 alert alert-danger" *ngIf="errors.cPassword">{{errors.cPassword}}</div>
     </div>
-    <button type="submit" class="btn col-xs-6 col-xs-offset-6">Sign-up!</button>
+    <button type="submit" ngClass="{{user.username && user.email && user.password && confirmPswd ? '' : 'disabled'}}"
+            class="btn col-xs-6 col-xs-offset-6">
+      Sign-up!
+    </button>
   </form>
   <div class="col-xs-6 col-xs-offset-6">
   Already a tracker? <a [routerLink]="['/login']" class="orange">Login</a>

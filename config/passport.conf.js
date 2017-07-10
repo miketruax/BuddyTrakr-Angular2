@@ -3,7 +3,7 @@ import LocalStrategy from 'passport-local';
 import User from '../app/models/user.model.js';
 import {Strategy} from 'passport-jwt';
 import {ExtractJwt} from 'passport-jwt';
-import {bcrypt} from 'bcrypt-nodejs';
+import bcrypt from 'bcrypt-nodejs';
 
 
 export default (passport) => {
@@ -32,10 +32,7 @@ export default (passport) => {
   };
 
   let checkLength = (string, min, max) => {
-    if (string.length > max || string.length < min)
-      return false;
-    else
-      return true;
+    return !(string.length > max || string.length < min);
   };
 
 
@@ -46,6 +43,7 @@ export default (passport) => {
     },
 
     (req, username, password, done) => {
+
 
       //ensures name length requirements are met
       if (!checkLength(username, bounds.username.minLength, bounds.username.maxLength)) {
@@ -118,13 +116,13 @@ export default (passport) => {
 
       if (!checkLength(username, bounds.username.minLength, bounds.email.maxLength)) {
         // ### Verify Callback
-        return done(null, false, {loginMessage: 'Invalid username/email length.'});
+        return done(null, false, {message: 'Invalid username/email length.'});
       }
 
       // If the length of the password string is too long/short,
       // invoke verify callback
       if (!checkLength(password, bounds.password.minLength, bounds.password.maxLength)) {
-        return done(null, false, {loginMessage: 'Invalid password length.'});
+        return done(null, false, {message: 'Invalid password length.'});
       }
       //finds user with given criteria (uses toLowerCase for case sensitivity issues)
       User.findOne({
@@ -139,13 +137,14 @@ export default (passport) => {
         //sends error back if no user found (most likely due to incorrect username spelling)
         if (!user) {
           //compares password to non-hash if no user found to help prevent timing attack
-          bcrypt.compareSync(password, 'hashthatclearlyisntahash');
-          return done(null, false, {loginMessage: 'Invalid username or password.'});
+          let randomHash = bcrypt.hashSync(`${password}hash`, bcrypt.genSaltSync(8), null);
+          bcrypt.compareSync(password, randomHash);
+          return done(null, false, {message: 'Invalid username or password.'});
         }
 
         //next is to validate the password is correct
         if (!user.validPassword(password)) {
-          return done(null, false, {loginMessage: 'Invalid username or password.'});
+          return done(null, false, {message: 'Invalid username or password.'});
         }
         //if all validations passed, YOU DID IT!
         return done(null, user);

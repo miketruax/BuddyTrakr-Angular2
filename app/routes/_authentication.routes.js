@@ -23,31 +23,36 @@ export default (app, router, passport, auth, admin) => {
     //utilizes 'local-login' authentication
     passport.authenticate('local-login', (err, user, info) => {
       //in case of error, passes error to next middleware
+
+
       let response =  {};
       if (err) {
-         response.err = err
+         response.err = err;
+        return res.json(response);
       }
       //if no error with search, but no user by that name found
       else if (!user) {
         // Return the info message
-        response.err = info.loginMessage;
+        response.err = info.message;
+        return res.json(response);
       }
 
       else {
-        response.user = user.sanitize();
         let hash = crypto.randomBytes(20).toString('hex');
         //otherwise login using sanitized user (stripped of pswd hash and email hash)
         user.jwthash = hash;
         user.save((err) =>{
           if(err){
             response.err = err;
-            response.user = {};
+            return res.json(response);
           }
           else{
+            response.user = user.sanitize();
             response.token = jwt.sign({user: user.sanitize(), hash: hash}, process.env.SESSION_SECRET, {expiresIn: 259200
             });
+            return res.json(response);
           }
-          res.json(response);
+
         });
       }
     }) (req, res, next);
@@ -55,7 +60,6 @@ export default (app, router, passport, auth, admin) => {
   });
 
   router.post('/auth/signup', (req, res, next) => {
-
     //utilizes local-signup information to ensure proper info
     passport.authenticate('local-signup', (err, user, info) => {
       let response = {};
@@ -63,7 +67,6 @@ export default (app, router, passport, auth, admin) => {
       if (err) {
         response.err = err;
       }
-
       // If no user is returned...
       else if (!user) {
         response.err = info.signupMessage;
@@ -104,10 +107,10 @@ export default (app, router, passport, auth, admin) => {
 
   router.get('/auth/logout', passport.authenticate('jwt-auth', ({session: false})), (req, res) =>{
     User.findOne(User.findOne({'_id': req.user._id}, (err, user)=>{
-      user.hash = null;
+      user.hash = crypto.randomBytes(20).toString('hex');
       user.save(err =>{
         res.send({success: true});
-      })
+      });
 
     }));
 
