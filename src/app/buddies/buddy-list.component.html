@@ -4,14 +4,14 @@
   <input class="form-control tan-input" placeholder="Search by name, species, or scientific name" type="text" [(ngModel)]="filter.search">
   <div class="checkbox col-xs-9">
     <label>
-      <input type="checkbox" (click)="showFilter()" [(ngModel)]="filter.neverOut"> Only buddies who have never been out
+      <input type="checkbox" [(ngModel)]="filter.neverOut"> Only buddies who have never been out
     </label>
   </div>
   <button class="btn btn-xs col-xs-3" (click)="clearFilter()">Clear</button>
 </div>
 
 
-<h3 *ngIf="(buddies | checkedIn | buddySearch:filter.search).length > 0" class="col-xs-12"> <i>Your checked out buddies:</i></h3>
+<h3 *ngIf="(buddies | checkedIn | buddySearch:filter.search).length > 0" class="col-xs-12"> <i>Checked out buddies:</i></h3>
 
 <div *ngFor="let buddy of (buddies | checkedOut | buddySearch:filter.search)"
      class="col-xs-12 buddy">
@@ -23,7 +23,7 @@
   </div>
   <div class="col-xs-12 col-md-6 bottom-5">
     <div class="col-xs-12"><b>Species:</b> {{buddy.species}} <span *ngIf="buddy.binomial && buddy.binomial !== ' '"> ({{buddy.binomial}})</span></div>
-    <div class="col-xs-12"><b>Birthday:</b> {{buddy.dateAdded | date: 'longDate'}}</div>
+    <div class="col-xs-12"><b>Birthday:</b> {{buddy.dateAdded ? (buddy.dateAdded | date: 'longDate') : 'Unknown'}}</div>
     <div class="col-xs-12" *ngIf="buddy.description"><b>Description:</b> {{buddy.description}} </div>
     <div class="col-xs-12">Buddy has been out since: {{buddy.lastOutDate | date:'shortDate'}}</div>
   </div>
@@ -32,15 +32,14 @@
     </button>
 </div>
 
-
 <div class="col-xs-12">
   <button (click)="randomBuddy.emit(buddies); $event.stopPropagation();"
-          class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-1 btn">Check out a Random Buddy</button>
+          class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-2 btn">Check out a Random Buddy</button>
   <button (click)="addBuddy.emit(buddies); $event.stopPropagation();"
-          class="col-xs-10 col-xs-offset-1  col-sm-5 col-sm-offset-1 btn">Add a New Buddy</button>
+          class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-2 btn">Add a New Buddy</button>
 </div>
 
-<h3 *ngIf="(buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length > 0" class="col-xs-12"> <i>Your checked-in buddies:</i></h3>
+<h3 *ngIf="(buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length > 0" class="col-xs-12"> <i>Checked-in buddies:</i></h3>
 
 <div *ngFor="let buddy of (buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut)" class="col-xs-12 buddy">
 
@@ -53,7 +52,7 @@
 
   <div class="col-xs-12 col-md-6 bottom-5">
       <div class="col-xs-12"><b>Species:</b> {{buddy.species}} <span *ngIf="buddy.binomial && buddy.binomial !== ' '"> ({{buddy.binomial}})</span></div>
-      <div class="col-xs-12"><b>Birthday:</b> {{buddy.dateAdded | date: 'longDate'}}</div>
+      <div class="col-xs-12"><b>Birthday:</b> {{buddy.dateAdded ? (buddy.dateAdded | date: 'longDate') : 'Unknown'}}</div>
       <div class="col-xs-12" *ngIf="buddy.description"><b>Description:</b> {{buddy.description}} </div>
       <div class="col-xs-12" *ngIf="buddy.lastOutDate"><b>Last Out:</b>
         <span>{{buddy.lastOutDate | date}} for {{buddy.lastOutDays}} days.</span>

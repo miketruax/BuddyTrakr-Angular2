@@ -1,5 +1,7 @@
 .flash{
-  margin-top: -20px !important;
+  position: absolute !important;
+  top: 50px !important;
+  z-index: 1000;
 }
 
 .flash span{

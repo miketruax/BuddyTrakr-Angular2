@@ -14,6 +14,7 @@ import * as fromRoot from '../reducers';
 
 import {User} from '../stores/user.store';
 import {UserService} from '../services/user.service';
+import {isUndefined} from "util";
 
 
 @Component({
@@ -31,7 +32,9 @@ export class LoginComponent {
 
   login(e) {
     e.preventDefault();
-    this.userService.login(this.username, this.password);
+    if(!isUndefined(this.password) || !isUndefined(this.username)){
+      this.userService.login(this.username, this.password);
+    }
   }
 
   ngOnInit() {
