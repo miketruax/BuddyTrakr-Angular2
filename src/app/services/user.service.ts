@@ -30,7 +30,6 @@ export class UserService {
     headers.append('Content-Type', 'application/json');
     this.http.post('/api/auth/login', JSON.stringify({ username, password }), {headers: headers} )
       .map(res =>{
-        console.log(res);
         this.store.dispatch({type: flashActions.Actions.CLEAR_FLASH});
         return res.json();
       })

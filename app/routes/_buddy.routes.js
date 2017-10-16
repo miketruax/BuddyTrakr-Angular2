@@ -14,7 +14,9 @@ export default (app, router, passport, auth) => {
 
         description : req.body.description,
 
-        owner : req.user._id
+        owner : req.user._id,
+
+        dateAdded: Date.now()
 
       }, (err, buddy) => {
 

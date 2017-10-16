@@ -28,6 +28,11 @@ export class BuddyListComponent {
   showFilter(){
     console.log(this.filter);
   }
+
+  checkInfo(b){
+    console.log(b);
+  }
+
   // Event outputs for buddy interactions.
   @Output() selected = new EventEmitter();
   @Output() checker = new EventEmitter();

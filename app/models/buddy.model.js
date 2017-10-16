@@ -8,7 +8,7 @@ let buddySchema = new mongoose.Schema({
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   description: { type : String },
   timesOut: {type: Number, default: 0},
-  dateAdded: {type: Date, default: Date.now()},
+  dateAdded: {type: Date},
   checkedOut: {type: Boolean, default: false, set: function(bdy){
     this._prevOut = this.checkedOut;
     return bdy;
