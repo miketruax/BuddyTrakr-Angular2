@@ -63,27 +63,51 @@ export default (app, router, passport, auth) => {
         '_id' : req.params.buddy_id,
         'owner': req.user._id
       }, (err, buddy) => {
+
         if (err){
           return res.send({err: 'An error occured, please try again later.'});
         }
         //Only update fields that have been edited
-        if (req.body.name)
-          buddy.name = req.body.name;
+        let altered = false;
 
-        if (req.body.checkedOut !== undefined)
-          buddy.checkedOut = req.body.checkedOut;
+        Object.keys(req.body).forEach((v)=>{
+          if(req.body[v] !== buddy[v]){
+            console.log(`${v}: Body- ${req.body[v]}, Buddy- ${buddy[v]}`)
+            altered = true;
+          }
+        });
 
-        if (req.body.species)
-          buddy.species = req.body.species;
-
-        if (req.body.binomial)
-          buddy.binomial = req.body.binomial;
-
-        if (req.body.checkedOut)
-          buddy.checkedOut = req.body.checkedOut;
-
-        if (req.body.description)
-          buddy.description = req.body.description;
+        if(!altered){
+          return res.send({err: 'No changes to save'});
+        }
+        //
+        // if (req.body.name != buddy.name) {
+        //   buddy.name = req.body.name;
+        // }
+        //
+        // if (req.body.checkedOut !== undefined) {
+        //   buddy.checkedOut = req.body.checkedOut;
+        // }
+        //
+        // if (req.body.species  != buddy.species){
+        //   buddy.species = req.body.species;
+        // }
+        //
+        // if (req.body.binomial){
+        //   buddy.binomial = req.body.binomial;
+        // }
+        //
+        // if (req.body.checkedOut != buddy.checkedOut){
+        //   buddy.checkedOut = req.body.checkedOut;
+        // }
+        //
+        // if (req.body.description  != buddy.description){
+        //   buddy.description = req.body.description;
+        // }
+        //
+        // if(req.body.birthday  != buddy.dateAdded){
+        //   console.log(req.body.birthday);
+        // }
 
         return buddy.save((err) => {
           //either send an error back to front-end or the buddy to be re-added to store
