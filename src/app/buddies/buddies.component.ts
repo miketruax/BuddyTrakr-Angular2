@@ -44,9 +44,6 @@ export class BuddiesComponent {
   }
 
   checkBuddy(buddy: Buddy){
-    let msg = buddy.name;
-    msg+=" successfully checked ";
-    msg+= buddy.checkedOut ? 'in.' : 'out';
     buddy.checkedOut = !buddy.checkedOut;
     this.buddyService.saveBuddy(buddy, true);
     this.store.dispatch({type: flashActions.Actions.ADD_SUCCESS, payload: msg});

@@ -61,6 +61,14 @@ export class BuddyService {
     }
 
     updateBuddy(buddy: Buddy, bool: boolean = false) {
+      let msg: string;
+      if(bool){
+        msg = `${buddy.name} successfully checked ${buddy.checkedOut ? 'in' : 'out'}.`;
+      }
+      else{
+        msg = `${buddy.name} successfully updated!`;
+      }
+
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('Authorization', `JWT ${localStorage.getItem('authToken')}`);
@@ -70,9 +78,10 @@ export class BuddyService {
             if(payload.err){
               return ({type: flashActions.Actions.ADD_ERROR, payload: payload.err})
             }
+
             this.store.dispatch({
               type: flashActions.Actions.ADD_SUCCESS,
-              payload: `${payload.buddy.name} successfully added!`});
+              payload: msg});
             return ({ type: buddyActions.Actions.UPDATE_BUDDY, payload: payload.buddy })
           })
           .subscribe(action => {
