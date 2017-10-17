@@ -14,6 +14,7 @@ export class BuddyDetailsComponent {
 
   originalName: string;
   selectedBuddy: Buddy;
+  dateAdded: string;
 
 
   @Input('selectedBuddy') set _buddy(value: Buddy) {
@@ -28,5 +29,11 @@ export class BuddyDetailsComponent {
 
   }
 
+  saveBuddy(){
+    if(!this.selectedBuddy.dateAdded){
+      this.selectedBuddy.dateAdded = new Date(this.dateAdded);
+    }
+    this.saved.emit(this.selectedBuddy);
+  }
 
 }

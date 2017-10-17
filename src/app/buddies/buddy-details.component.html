@@ -18,9 +18,9 @@
           <input class="form-control" id="binomial" name="binomial" [(ngModel)]="selectedBuddy.binomial"
                  placeholder="Enter scientific name (if known)" type="text">
         </div>
-        <div *ngIf="!selectedBuddy.dateAdded" class="form-group">
+        <div *ngIf="!selectedBuddy.dateAdded" class="form-group" >
           <label for="description">Birthday</label>
-          <input class="form-control" name="dateAdded" rows="5"
+          <input class="form-control" name="dateAdded" rows="5" [(ngModel)]="dateAdded"
                     placeholder="Description" id="dateAdded" form="buddyForm" type="date">
         </div>
         <div class="form-group">
@@ -31,7 +31,7 @@
     </form>
   </div>
   <div class="col-xs-12">
-      <button class="btn col-xs-4 col-xs-offset-2" type="submit" (click)="saved.emit(selectedBuddy)">
+      <button class="btn col-xs-4 col-xs-offset-2" type="submit" (click)="saveBuddy()">
         Save
       </button>
     <button class="btn col-xs-4 col-xs-offset-2" type="submit" (click)="cancelled.emit(selectedBuddy)">

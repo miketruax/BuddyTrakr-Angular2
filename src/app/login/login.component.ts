@@ -32,7 +32,7 @@ export class LoginComponent {
 
   login(e) {
     e.preventDefault();
-    if(!isUndefined(this.password) || !isUndefined(this.username)){
+    if(!isUndefined(this.password) && !isUndefined(this.username)){
       this.userService.login(this.username, this.password);
     }
   }

@@ -40,13 +40,12 @@ export class BuddiesComponent {
       type: selectedBuddyActions.Actions.SELECT_BUDDY,
       payload: buddy
     });
-    this.details = true;
+    this.changeView(true)
   }
 
   checkBuddy(buddy: Buddy){
     buddy.checkedOut = !buddy.checkedOut;
     this.buddyService.saveBuddy(buddy, true);
-    this.store.dispatch({type: flashActions.Actions.ADD_SUCCESS, payload: msg});
     this.resetBuddy();
   }
 
@@ -62,7 +61,7 @@ export class BuddiesComponent {
   }
 
   addBuddy(buddy: Buddy){
-    this.details = true;
+    this.changeView(true)
   }
 
   deleteBuddy(buddy: Buddy) {
@@ -74,13 +73,21 @@ export class BuddiesComponent {
     this.store.dispatch({
       type: selectedBuddyActions.Actions.CLEAR_BUDDY
     });
-    this.details = false;
+    this.changeView(false)
   }
 
   saveBuddy(buddy: Buddy) {
+    console.log(buddy);
     this.buddyService.saveBuddy(buddy);
     this.resetBuddy();
   }
+
+  changeView(showDetails: boolean){
+    this.details = showDetails;
+    this.store.dispatch({type: flashActions.Actions.CLEAR_FLASH})
+  }
+
+
   ngOnInit(){
       this.details = false;
       this.resetBuddy()
