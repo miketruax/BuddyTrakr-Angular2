@@ -69,45 +69,25 @@ export default (app, router, passport, auth) => {
         }
         //Only update fields that have been edited
         let altered = false;
-
-        Object.keys(req.body).forEach((v)=>{
+        let alterableFields = ['name', 'checkedOut', 'species', 'binomial', 'description'];
+        alterableFields.forEach(v=>{
           if(req.body[v] !== buddy[v]){
-            console.log(`${v}: Body- ${req.body[v]}, Buddy- ${buddy[v]}`)
             altered = true;
+            buddy[v] = req.body[v];
           }
         });
+
+        if(req.body.dateAdded !== null && !buddy.dateAdded){
+          buddy.dateAdded = req.body.dateAdded;
+          altered = true;
+        }
+
+
 
         if(!altered){
           return res.send({err: 'No changes to save'});
         }
-        //
-        // if (req.body.name != buddy.name) {
-        //   buddy.name = req.body.name;
-        // }
-        //
-        // if (req.body.checkedOut !== undefined) {
-        //   buddy.checkedOut = req.body.checkedOut;
-        // }
-        //
-        // if (req.body.species  != buddy.species){
-        //   buddy.species = req.body.species;
-        // }
-        //
-        // if (req.body.binomial){
-        //   buddy.binomial = req.body.binomial;
-        // }
-        //
-        // if (req.body.checkedOut != buddy.checkedOut){
-        //   buddy.checkedOut = req.body.checkedOut;
-        // }
-        //
-        // if (req.body.description  != buddy.description){
-        //   buddy.description = req.body.description;
-        // }
-        //
-        // if(req.body.birthday  != buddy.dateAdded){
-        //   console.log(req.body.birthday);
-        // }
+
 
         return buddy.save((err) => {
           //either send an error back to front-end or the buddy to be re-added to store

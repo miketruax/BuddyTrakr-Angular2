@@ -4,6 +4,7 @@ export interface Buddy {
   species?: string;
   binomial?: string;
   owner?: Object;
+  dateAdded?: Date;
   description?: string;
   timesOut?: number
   checkedOut?: boolean;
