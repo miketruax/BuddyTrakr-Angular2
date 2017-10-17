@@ -7,6 +7,6 @@
 </div>
 <div>
   <buddy-detail *ngIf="details"
-    (saved)="saveBuddy($event)" (cancelled)="resetBuddy($event)"
+    (saved)="saveBuddy($event)" (cancelled)="resetBuddy($event)" (deleted)="deleteBuddy($event)"
     [selectedBuddy]="selectedBuddy | async">Buddy Editor Loading...</buddy-detail>
 </div>

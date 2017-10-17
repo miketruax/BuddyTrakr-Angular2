@@ -1,14 +1,20 @@
-.buddy{
-  border-top: 1px solid $blue-green;
-  border-bottom: 1px solid $blue-green;
-  margin-bottom: 10px !important;
-  margin-top: 10px !important;
-  padding-top: 15px !important;
+.buddy {
+  border-color: $blue-green;
+  border-style: solid;
+  border-width: 1px 0 !important;
+  margin: 10px 0 !important;
+  padding: 15px 5px 0px 5px;
   background-color: rgba($tan, .3) !important;
-  h3{
-    margin: 0 !important;
-    position: absolute;
-    top: 33%!important;
-    right: 0;
-  }
 }
+
+.buddy-content{
+  margin: 10px 0 0 0 !important;
+}
+
+.buddy h3:before{
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
