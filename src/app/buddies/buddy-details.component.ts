@@ -24,6 +24,7 @@ export class BuddyDetailsComponent {
 
   @Output() saved = new EventEmitter();
   @Output() cancelled = new EventEmitter();
+  @Output() deleted = new EventEmitter();
 
   constructor() {
 

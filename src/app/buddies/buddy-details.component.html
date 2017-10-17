@@ -30,12 +30,16 @@
         </div>
     </form>
   </div>
-  <div class="col-xs-12">
-      <button class="btn col-xs-4 col-xs-offset-2" type="submit" (click)="saveBuddy()">
+  <div class="col-xs-12 buddyButtons">
+      <button class="btn col-xs-12 col-md-3" type="submit" (click)="saveBuddy()">
         Save
       </button>
-    <button class="btn col-xs-4 col-xs-offset-2" type="submit" (click)="cancelled.emit(selectedBuddy)">
+    <button class="btn col-xs-12 col-md-3 cancel" type="submit" (click)="cancelled.emit(selectedBuddy)">
       Cancel
     </button>
+    <button class="col-xs-12 btn col-md-3 delete" (click)="deleted.emit(buddy); $event.stopPropagation();">
+      <i>Delete</i>
+    </button>
   </div>
+
 </div>
