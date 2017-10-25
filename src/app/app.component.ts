@@ -4,8 +4,7 @@ import * as fromRoot from "./reducers/index";
 import * as flashActions from './actions/flash.actions'
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
-import {User} from "./stores/user.store";
-import {Router, NavigationEnd, NavigationStart} from "@angular/router";
+import {Router, NavigationStart} from "@angular/router";
 import {Flash} from "./stores/flash.store";
 import {BuddyService} from "./services/buddy.service";
 
