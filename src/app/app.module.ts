@@ -55,4 +55,5 @@ export function startupUser(startupService: InitUserService): Function {
   UserService, AuthProtected, AuthGeneric],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

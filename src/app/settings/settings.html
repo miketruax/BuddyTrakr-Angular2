@@ -1,20 +1,20 @@
-<h2 class="col-xs-12">Change password for {{(user | async).username}}</h2>
-<form class="col-xs-10 col-xs-offset-1" role="form" (submit)="changePassword($event)">
+<h2 class="col col-xs-12">Change password for {{(user | async).username}}</h2>
+<form class="col col-xs-10 col-xs-offset-1" role="form" (submit)="changePassword($event)">
   <div class="form-group">
     <label for="currentPassword">Current Password</label>
     <input type="password" class="form-control tan-input" id="currentPassword" placeholder="Current Password" [(ngModel)]="form.currentPassword" name="currentPassword">
-    <div class="col-xs-12 alert alert-danger" *ngIf="errors.currentPassword">{{errors.currentPassword}}</div>
+    <div class="col col-xs-12 alert alert-danger" *ngIf="errors.currentPassword">{{errors.currentPassword}}</div>
   </div>
   <div class="form-group">
     <label for="password">Password</label>
     <input type="password" class="form-control tan-input" id="password" placeholder="New Password" [(ngModel)]="form.newPassword" name="newPassword">
-    <div class="col-xs-12 alert alert-danger" *ngIf="errors.newPassword">{{errors.newPassword}}</div>
+    <div class="col col-xs-12 alert alert-danger" *ngIf="errors.newPassword">{{errors.newPassword}}</div>
   </div>
   <div class="form-group">
     <label for="confirmPassword">Confirm Password</label>
     <input type="password" class="form-control tan-input" id="confirmPassword" placeholder="Confirm New Password" [(ngModel)]="form.confirmNewPassword" name="confirmNewPassword">
-    <div class="col-xs-12 alert alert-danger" *ngIf="errors.confirmNewPassword">{{errors.confirmNewPassword}}</div>
+    <div class="col col-xs-12 alert alert-danger" *ngIf="errors.confirmNewPassword">{{errors.confirmNewPassword}}</div>
   </div>
-  <button type="submit" class="btn col-xs-6">Save</button>
-  <a [routerLink]="['/buddies']" class="col-xs-6"><button class="btn col-xs-12">Cancel</button></a>
+  <button type="submit" class="btn col col-xs-6">Save</button>
+  <a [routerLink]="['/buddies']" class="col col-xs-6"><button class="btn col col-xs-12">Cancel</button></a>
 </form>
