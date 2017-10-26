@@ -1,25 +1,18 @@
-<nav class="navbar navbar-toggleable-sm fixed-top">
-  <!--<button type="button" class="navbar-toggler" data-toggle="collapse" (click)="menuClick($event)"-->
-  <!--data-target="#navbar-main" [ngClass]="{'nav-menu-active': menuActive}"-->
-  <!--aria-controls="navbar-main" aria-expanded="false">-->
-  <!--<span class="sr-only">Toggle navigation</span>-->
-  <!--<span class="icon-bar"></span>-->
-  <!--<span class="icon-bar"></span>-->
-  <!--<span class="icon-bar"></span>-->
-  <!--</button>-->
+<nav class="navbar navbar-toggleable-sm fixed-top ">
+  <a class="navbar-brand" [routerLink]="['/about']">
+    <img class="brandLogo" alt="Buddy Trakr" src="/assets/img/logos/main_logo.png">
+  </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-main"
-          aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation"
+          aria-controls="navbar-main" [attr.aria-expanded]="menuActive" aria-label="Toggle navigation"
           [ngClass]="{'nav-menu-active': menuActive}" (click)="menuClick($event)">
     <span class="sr-only">Toggle navigation</span>
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
   </button>
-  <div class=" collapse navbar-collapse" id="navbar-main">
-    <a class="navbar-brand" [routerLink]="['/about']">
-      <img class="brandLogo" alt="Buddy Trakr" src="/assets/img/logos/main_logo.png">
-    </a>
-    <ul [ngClass]="{'in': menuActive}" class="nav nav-pills">
+
+  <div class=" collapse navbar-collapse justify-content-end nav-fill" id="navbar-main" [attr.aria-expanded]="menuActive">
+    <ul class="nav nav-pills ">
       <li class="nav-item" *ngIf="(userID | async)"><a routerLinkActive="active"
                                                        [routerLinkActiveOptions]="{exact:true}" class="nav-link"
                                                        [routerLink]="['/buddies']">Buddies</a></li>
@@ -44,7 +37,7 @@
   <router-outlet></router-outlet>
 </div>
 
-<footer class="col-xs-10 col-xs-offset-1 text-center">
+  <footer class="col-xs-10 offset-xs-1 text-center">
   <img src="/assets/img/logos/paw_logo.png" style="max-height: 40px !important;">
   <span>Buddy Trakr App created by <a href="http://www.miketruax.com">Mike Truax</a></span>
 </footer>

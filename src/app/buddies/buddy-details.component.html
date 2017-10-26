@@ -5,39 +5,39 @@
     <form id="buddyForm">
         <div class="form-group">
           <label for="name">Buddy Name</label>
-          <input class="form-control" id="name" name="name" [(ngModel)]="selectedBuddy.name"
+          <input class="form-control tan-input" id="name" name="name" [(ngModel)]="selectedBuddy.name"
             placeholder="Buddy name" type="text">
         </div>
         <div class="form-group">
           <label for="species">Species</label>
-          <input class="form-control" id="species" name="species"  [(ngModel)]="selectedBuddy.species"
+          <input class="form-control tan-input" id="species" name="species"  [(ngModel)]="selectedBuddy.species"
                  placeholder="Species" type="text">
         </div>
         <div class="form-group">
           <label for="binomial">Scientific Name</label>
-          <input class="form-control" id="binomial" name="binomial" [(ngModel)]="selectedBuddy.binomial"
+          <input class="form-control tan-input" id="binomial" name="binomial" [(ngModel)]="selectedBuddy.binomial"
                  placeholder="Enter scientific name (if known)" type="text">
         </div>
         <div *ngIf="!selectedBuddy.dateAdded" class="form-group" >
           <label for="description">Birthday</label>
-          <input class="form-control" name="dateAdded" rows="5" [(ngModel)]="dateAdded"
+          <input class="form-control tan-input" name="dateAdded" rows="5" [(ngModel)]="dateAdded"
                     placeholder="Description" id="dateAdded" form="buddyForm" type="date">
         </div>
         <div class="form-group">
           <label for="description">Description</label>
-          <textarea class="form-control" name="description" rows="5" [(ngModel)]="selectedBuddy.description"
+          <textarea class="form-control tan-input" name="description" rows="5" [(ngModel)]="selectedBuddy.description"
                     placeholder="Description" id="description" form="buddyForm"></textarea>
         </div>
     </form>
   </div>
   <div class="col col-xs-12 buddyButtons">
-      <button class="btn col col-xs-12 col-md-3" type="submit" (click)="saveBuddy()">
+      <button class="btn col col-xs-12 col-sm-3" type="submit" (click)="saveBuddy()">
         Save
       </button>
-    <button class="btn col col-xs-12 col-md-3 cancel" type="submit" (click)="cancelled.emit(selectedBuddy)">
+    <button class="btn col col-xs-12 col-sm-3  offset-sm-1 cancel" type="submit" (click)="cancelled.emit(selectedBuddy)">
       Cancel
     </button>
-    <button class="col col-xs-12 btn col-md-3 delete" (click)="deleted.emit(buddy); $event.stopPropagation();">
+    <button class="col col-xs-12 btn col-sm-3  offset-sm-1 delete" (click)="deleted.emit(buddy); $event.stopPropagation();">
       <i>Delete</i>
     </button>
   </div>
