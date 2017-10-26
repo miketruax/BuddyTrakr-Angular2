@@ -1,6 +1,6 @@
 <div class="login col-xs-12 jumbotron center-block">
-  <h1 class="col col-xs-10 col-xs-offset-1">Sign up</h1>
-  <form class="col col-xs-10 col-xs-offset-1" role="form" (submit)="signup($event)">
+  <h1 class="col col-xs-10 offset-xs-1">Sign up</h1>
+  <form class="col col-xs-10 offset-xs-1" role="form" (submit)="signup($event)">
     <div class="form-group">
       <label for="username">Username</label>
       <input type="text" class="form-control tan-input" id="username" placeholder="Username" [(ngModel)]="user.username" name="username">
@@ -22,11 +22,11 @@
       <div class="col col-xs-12 alert alert-danger" *ngIf="errors.cPassword">{{errors.cPassword}}</div>
     </div>
     <button type="submit" ngClass="{{user.username && user.email && user.password && confirmPswd ? '' : 'disabled'}}"
-            class="btn col col-xs-6 col-xs-offset-6">
+            class="btn col col-xs-6 offset-xs-6">
       Sign-up!
     </button>
   </form>
-  <div class="col col-xs-6 col-xs-offset-6">
+  <div class="col col-xs-6 offset-xs-6">
   Already a tracker? <a [routerLink]="['/login']" class="orange">Login</a>
   </div>
 

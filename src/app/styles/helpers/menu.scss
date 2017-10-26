@@ -13,6 +13,31 @@ nav{
   }
 }
 
+nav button{
+  position: absolute;
+  right: 5px;
+  top: 9px;
+  overflow-x: hidden !important;
+  height: 45px !important;
+  width: 45px !important;
+  border-radius: 8px;
+  border: 2px solid $tan;
+  cursor: pointer;
+  outline: 0 !important;
+  .icon-bar{
+    display: block;
+    border: 1px solid $dark-blue;
+    width: 100%;
+    margin: 4px 0 !important;
+  }
+}
+
+.navbar-brand{
+  width: 82px !important;
+  float: left !important;
+}
+
+
 #nav-menu, #main-nav, .nav-icon {
   transition: all .4s cubic-bezier(.23, .98, .01, .96);
 }
