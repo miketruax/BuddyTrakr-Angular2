@@ -12,7 +12,7 @@
       <input type="checkbox" [(ngModel)]="filter.neverOut"> Only buddies who've never been out
     </label>
   </div>
-  <button class="col btn btn-xs col-3 col-sm-4 offset-sm-8" (click)="clearFilter()">Clear</button>
+  <button class="col btn btn-xs col-3 col-sm-4 offset-sm-8 offset-9" (click)="clearFilter()">Clear</button>
 </div>
 
 <!--CHECKED OUT BUDDY HEADER AND BUDDIES-->
@@ -21,7 +21,7 @@
   out buddies:</i>
 </h3>
 <div class="flex-wrap">
-  <div *ngFor="let buddy of (buddies | checkedOut | buddySearch:filter.search)"
+  <div *ngFor="let buddy of (buddies | checkedOut )"
        class="col col-12 col-sm-10 offset-sm-1 buddy">
     <div class="col col-12 bottom-5">
       <h3 class="col col-12"><img class="paw-icon" src="/assets/img/icons/checked_out.png"/>{{buddy.name}}</h3>
@@ -58,22 +58,13 @@
 
 <h3 *ngIf="(buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length > 0"
     class="col-12 col-sm-11 offset-sm-half orange text-center" >
-  <i>Checked-in buddies: {{(buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length}} buddies found.</i></h3>
+  <i class="col-12 col-sm-5">Checked-in buddies:</i>{{(buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length}} buddies found.</h3>
 <nav class="buddy-pagination flex-wrap d-flex justify-content-center">
 
+  <h6 class="text-center text-capitalize orange col-12">Results per Page: </h6>
   <ul class="pagination">
-    <h6 class="align-self-center">Results per Page: </h6>
-    <li class="page-item">
-      <a class="pag-button pointer page-link" [ngClass]="{active : perPage===12}" (click)="setPerPage(12)" >12</a>
-    </li>
-    <li class="page-item">
-      <a class="pag-button pointer page-link" [ngClass]="{active : perPage===24}" (click)="setPerPage(24)" >24</a>
-    </li>
-    <li class="page-item">
-      <a class="pag-button pointer page-link" [ngClass]="{active : perPage===48}" (click)="setPerPage(48)" >48</a>
-    </li>
-    <li class="page-item">
-      <a class="pag-button pointer page-link" [ngClass]="{active : perPage===96}" (click)="setPerPage(96)" >96</a>
+    <li class="page-item" *ngFor="let x of [12,24,48,96]">
+      <a class="pag-button pointer page-link" [ngClass]="{active : perPage===x}" (click)="setPerPage(x)" >{{x}}</a>
     </li>
   </ul>
 </nav>
