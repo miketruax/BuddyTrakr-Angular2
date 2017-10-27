@@ -1,20 +1,20 @@
-<h2 class="col col-xs-12">Change password for <span class="orange">{{(user | async).username}}</span></h2>
-<form class="col col-xs-10 offset-xs-1" role="form" (submit)="changePassword($event)">
+<h2 class="col col-10 offset-1 col-sm-8 offset-sm-2">Change password for <span class="orange">{{(user | async).username}}</span></h2>
+<form class="col col-10 offset-1 col-sm-8 offset-sm-2" role="form" (submit)="changePassword($event)">
   <div class="form-group">
     <label for="currentPassword">Current Password</label>
     <input type="password" class="form-control tan-input" id="currentPassword" placeholder="Current Password" [(ngModel)]="form.currentPassword" name="currentPassword">
-    <div class="col col-xs-12 alert alert-danger" *ngIf="errors.currentPassword">{{errors.currentPassword}}</div>
+    <div class="col col-12 alert alert-danger" *ngIf="errors.currentPassword">{{errors.currentPassword}}</div>
   </div>
   <div class="form-group">
     <label for="password">Password</label>
     <input type="password" class="form-control tan-input" id="password" placeholder="New Password" [(ngModel)]="form.newPassword" name="newPassword">
-    <div class="col col-xs-12 alert alert-danger" *ngIf="errors.newPassword">{{errors.newPassword}}</div>
+    <div class="col col-12 alert alert-danger" *ngIf="errors.newPassword">{{errors.newPassword}}</div>
   </div>
   <div class="form-group">
     <label for="confirmPassword">Confirm Password</label>
     <input type="password" class="form-control tan-input" id="confirmPassword" placeholder="Confirm New Password" [(ngModel)]="form.confirmNewPassword" name="confirmNewPassword">
-    <div class="col col-xs-12 alert alert-danger" *ngIf="errors.confirmNewPassword">{{errors.confirmNewPassword}}</div>
+    <div class="col col-12 alert alert-danger" *ngIf="errors.confirmNewPassword">{{errors.confirmNewPassword}}</div>
   </div>
-  <button type="submit" class="btn col col-xs-6 col-sm-4 offset-sm-1">Save</button>
-  <a [routerLink]="['/buddies']"><button class="btn col col-xs-12 col-sm-4 offset-sm-2">Cancel</button></a>
+  <button type="submit" class="btn col col-6 col-sm-4 offset-sm-1">Save</button>
+  <a [routerLink]="['/buddies']"><button class="btn col col-12 col-sm-4 offset-sm-2">Cancel</button></a>
 </form>
