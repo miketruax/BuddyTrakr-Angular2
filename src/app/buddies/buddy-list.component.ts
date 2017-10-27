@@ -1,10 +1,11 @@
 // # Buddy List
 
-import {Component,
+import {
+  Component,
   Input,
   Output,
-  EventEmitter,
-  ChangeDetectionStrategy} from '@angular/core';
+  EventEmitter, SimpleChanges
+} from '@angular/core';
 
 import {Buddy} from '../stores/buddy.store';
 import {User} from "../stores/user.store";
@@ -15,22 +16,41 @@ import {User} from "../stores/user.store";
   templateUrl: "./buddy-list.component.html"
 })
 
-export class BuddyListComponent {
+export class BuddyListComponent{
   @Input() buddies: Buddy[];
   @Input() user: User;
+  activePage: number = 1;
+  perPage: number = 12;
   public filter: any = {search: '', neverOut: false};
   constructor(){
   }
   clearFilter(){
     this.filter = {search: '', neverOut: false};
+    this.resetPage();
   }
 
-  showFilter(){
-    console.log(this.filter);
+  setActive(active: number){
+    this.activePage = active;
+    document.getElementById('checkedIn').scrollIntoView();
+  }
+  resetPage(){
+    this.activePage = 1
   }
 
-  checkInfo(b){
-    console.log(b);
+  buttons(num){
+    if(num) {
+      let numButtons = Math.ceil(num / this.perPage);
+      return Array.from(Array(numButtons), (x, i) => i + 1);
+    }
+
+  }
+
+  getActivePortion(arr: Buddy[]){
+    return arr.slice(((this.activePage-1)*this.perPage), ((this.activePage)*this.perPage));
+  }
+  setPerPage(num){
+    this.perPage = num;
+    this.setActive(1);
   }
 
   // Event outputs for buddy interactions.

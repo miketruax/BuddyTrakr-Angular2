@@ -6,15 +6,14 @@
 
 <div class="col col-12 offset-sm-1 col-sm-10">
   <input class="form-control tan-input" placeholder="Search by name, species, or scientific name" type="text"
-         [(ngModel)]="filter.search">
-  <div class="col checkbox col-9">
+         [(ngModel)]="filter.search" (keypress)="resetPage()">
+  <div class="col checkbox col-12">
     <label>
-      <input type="checkbox" [(ngModel)]="filter.neverOut"> Only buddies who have never been out
+      <input type="checkbox" [(ngModel)]="filter.neverOut"> Only buddies who've never been out
     </label>
   </div>
   <button class="col btn btn-xs col-3 col-sm-4 offset-sm-8" (click)="clearFilter()">Clear</button>
 </div>
-
 
 <!--CHECKED OUT BUDDY HEADER AND BUDDIES-->
 
@@ -36,7 +35,7 @@
       <div class="col col-12" *ngIf="buddy.description"><b>Description:</b> {{buddy.description}}</div>
       <div class="col col-12">Buddy has been out since: {{buddy.lastOutDate | date:'shortDate'}}</div>
     </div>
-    <button class="col col-6 offset-6 col-sm-4 offset-sm-8 btn" (click)="checker.emit(buddy); $event.stopPropagation();">
+    <button class="col col-6 offset-6 col-sm-4 offset-sm-8 btn delete" (click)="checker.emit(buddy); $event.stopPropagation();">
       <i>Check In</i>
     </button>
   </div>
@@ -44,12 +43,12 @@
 
 <!--GENERIC BUDDY BUTTONS-->
 
-<div class="col col-12 col-sm-8 offset-sm-2 generic-buttons">
+<div class="col col-12 generic-buttons">
   <button (click)="randomBuddy.emit(buddies); $event.stopPropagation();"
-          class="col-8 offset-2 col-md-5 offset-md-0 btn">Check out a Random Buddy
+          class="col col-12 col-sm-5 offset-sm-half btn cancel">Check out a Random Buddy
   </button>
-  <button (click)="addBuddy.emit(buddies); $event.stopPropagation();"
-          class="col col-8 offset-2 col-md-5 offset-md-1 btn">Add a New Buddy
+  <button (click)="addBuddy.emit(buddies); $event.stopPropagation();" id="checkedIn"
+          class="col col-12 col-sm-5 offset-sm-1 btn cancel">Add a New Buddy
   </button>
 </div>
 
@@ -58,11 +57,29 @@
 
 
 <h3 *ngIf="(buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length > 0"
-    class="col-12 col-sm-11 offset-sm-half orange">
-  <i>Checked-in buddies:</i></h3>
+    class="col-12 col-sm-11 offset-sm-half orange text-center" >
+  <i>Checked-in buddies: {{(buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length}} buddies found.</i></h3>
+<nav class="buddy-pagination flex-wrap d-flex justify-content-center">
+
+  <ul class="pagination">
+    <h6 class="align-self-center">Results per Page: </h6>
+    <li class="page-item">
+      <a class="pag-button pointer page-link" [ngClass]="{active : perPage===12}" (click)="setPerPage(12)" >12</a>
+    </li>
+    <li class="page-item">
+      <a class="pag-button pointer page-link" [ngClass]="{active : perPage===24}" (click)="setPerPage(24)" >24</a>
+    </li>
+    <li class="page-item">
+      <a class="pag-button pointer page-link" [ngClass]="{active : perPage===48}" (click)="setPerPage(48)" >48</a>
+    </li>
+    <li class="page-item">
+      <a class="pag-button pointer page-link" [ngClass]="{active : perPage===96}" (click)="setPerPage(96)" >96</a>
+    </li>
+  </ul>
+</nav>
 <div class="d-flex align-items-stretch flex-wrap">
   <div
-    *ngFor="let buddy of (buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut); let i = index;"
+    *ngFor="let buddy of getActivePortion((buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut)); let i = index;"
     class="col col-12 col-sm-5 buddy d-flex flex-column" ngClass="{{i%2==0 ? 'offset-sm-half' : 'offset-sm-1'}}">
     <h3 class="buddyName mb-auto p-2 orange"><img class="paw-icon" src="assets/img/icons/checked_in.png"/>{{buddy.name}}</h3>
     <div class="p-2 bottom-5 buddy-content">
@@ -80,13 +97,26 @@
     </div>
     <div class="buddy-buttons  mb-auto p-2">
       <button class="col col-5 text-center btn col-sm-5"
-              (click)="checker.emit(buddy); $event.stopPropagation();">
-        <i>Check Out</i>
-      </button>
-      <button class="col offset-1 offset-sm-1 text-center col-sm-5 col-4 btn"
               (click)="selected.emit(buddy); $event.stopPropagation();">
         <i>Edit</i>
+      </button>
+      <button class="col offset-1 offset-sm-1 text-center col-sm-5 col-4 btn delete"
+              (click)="checker.emit(buddy); $event.stopPropagation();">
+        <i>Check Out</i>
+
       </button>
     </div>
   </div>
 </div>
+
+
+
+<nav class="buddy-pagination flex-wrap d-flex justify-content-center" *ngIf="(buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length > perPage">
+  <ul class="pagination">
+    <li *ngFor="let i of buttons((buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length);" class="page-item">
+      <a class="pag-button pointer page-link" [ngClass]="{active : activePage===i}" (click)="setActive(i)" >{{i}}</a>
+    </li>
+  </ul>
+</nav>
+
+
