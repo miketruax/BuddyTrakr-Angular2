@@ -12,10 +12,23 @@ export default (app, router, passport, auth, admin) => {
   });
 
   router.get('/auth/getUser', (req, res) => {
-      jwt.verify(req.get('Authorization'), process.env.SESSION_SECRET, (err, payload)=>{
-        payload ? res.send({user: payload.user}) : res.send({});
+    jwt.verify(req.get('Authorization'), process.env.SESSION_SECRET, (err, payload) => {
+
+      if (err) {
+        return res.send({});
+      }
+      User.findOne({_id: payload.user._id}, function (err, user) {
+        if (err) {
+          return res.send({});
+        }
+        let timeDiff = (Date.now() - user.updatedAt.getTime()) / 36e5;
+        if (payload.hash === user.jwthash && timeDiff <= 48) {
+          return res.send({user: payload.user});
+        }
+        res.send({});
       });
     });
+  });
 
   //log in route
   router.post('/auth/login', (req, res, next) => {
