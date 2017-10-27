@@ -1,6 +1,6 @@
-<div class="col col-xs-12">
-    <h2 class="col col-xs-12" *ngIf="selectedBuddy._id">Editing {{originalName}}</h2>
-    <h2 class="col col-xs-12" *ngIf="!selectedBuddy._id">Create New Buddy</h2>
+<div class="col col-12">
+    <h2 class="col col-12" *ngIf="selectedBuddy._id">Editing {{originalName}}</h2>
+    <h2 class="col col-12" *ngIf="!selectedBuddy._id">Create New Buddy</h2>
   <div>
     <form id="buddyForm">
         <div class="form-group">
@@ -30,14 +30,14 @@
         </div>
     </form>
   </div>
-  <div class="col col-xs-12 buddyButtons">
-      <button class="btn col col-xs-12 col-sm-3" type="submit" (click)="saveBuddy()">
+  <div class="col col-12 buddyButtons">
+      <button class="btn col col-12 col-sm-3" type="submit" (click)="saveBuddy()">
         Save
       </button>
-    <button class="btn col col-xs-12 col-sm-3  offset-sm-1 cancel" type="submit" (click)="cancelled.emit(selectedBuddy)">
+    <button class="btn col col-12 col-sm-3  offset-sm-1 cancel" type="submit" (click)="cancelled.emit(selectedBuddy)">
       Cancel
     </button>
-    <button class="col col-xs-12 btn col-sm-3  offset-sm-1 delete" (click)="deleted.emit(buddy); $event.stopPropagation();">
+    <button class="col col-12 btn col-sm-3  offset-sm-1 delete" (click)="deleted.emit(buddy); $event.stopPropagation();">
       <i>Delete</i>
     </button>
   </div>

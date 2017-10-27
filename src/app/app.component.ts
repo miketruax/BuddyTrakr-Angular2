@@ -1,4 +1,4 @@
-import {Component, state, ChangeDetectionStrategy} from '@angular/core';
+import {Component, ChangeDetectionStrategy, ElementRef, ViewChild} from '@angular/core';
 import {UserService} from './services/user.service'
 import * as fromRoot from "./reducers/index";
 import * as flashActions from './actions/flash.actions'
@@ -16,6 +16,7 @@ import {BuddyService} from "./services/buddy.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
+  @ViewChild('menu') menu:ElementRef;
   userID: Observable<String>;
   flash: Observable<Flash>;
   menuActive: boolean = false;
@@ -25,6 +26,8 @@ export class AppComponent {
     this.router.events.subscribe((val) => {
       if (val.url != this.router.url) {
         this.menuActive = false;
+        this.menu.nativeElement.setAttribute('aria-expanded', false);
+        this.menu.nativeElement.classList.remove('show');
         window.scrollTo(0, 0);
       }
       if(event instanceof NavigationStart) {
@@ -41,5 +44,3 @@ export class AppComponent {
   ngOnInit(){
   }
 }
-
-

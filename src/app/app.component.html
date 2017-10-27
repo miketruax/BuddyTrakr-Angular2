@@ -3,7 +3,7 @@
     <img class="brandLogo" alt="Buddy Trakr" src="/assets/img/logos/main_logo.png">
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-main"
-          aria-controls="navbar-main" [attr.aria-expanded]="menuActive" aria-label="Toggle navigation"
+          aria-controls="navbar-main" aria-label="Toggle navigation" id="navbar-toggler" #toggler
           [ngClass]="{'nav-menu-active': menuActive}" (click)="menuClick($event)">
     <span class="sr-only">Toggle navigation</span>
     <span class="icon-bar"></span>
@@ -11,7 +11,7 @@
     <span class="icon-bar"></span>
   </button>
 
-  <div class=" collapse navbar-collapse justify-content-end nav-fill" id="navbar-main" [attr.aria-expanded]="menuActive">
+  <div class=" collapse navbar-collapse justify-content-end nav-fill" id="navbar-main" #menu>
     <ul class="nav nav-pills ">
       <li class="nav-item" *ngIf="(userID | async)"><a routerLinkActive="active"
                                                        [routerLinkActiveOptions]="{exact:true}" class="nav-link"
@@ -37,7 +37,7 @@
   <router-outlet></router-outlet>
 </div>
 
-  <footer class="col-xs-10 offset-xs-1 text-center">
+  <footer class="col-10 offset-1 text-center">
   <img src="/assets/img/logos/paw_logo.png" style="max-height: 40px !important;">
   <span>Buddy Trakr App created by <a href="http://www.miketruax.com">Mike Truax</a></span>
 </footer>
