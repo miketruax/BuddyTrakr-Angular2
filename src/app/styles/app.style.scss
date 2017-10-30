@@ -1,5 +1,5 @@
 @import 'partials/colors';
-@import 'partials/buttons';
+@import 'partials/override-bootstrap';
 
 @import 'typography/font-colors';
 @import 'typography/font-sizes';
@@ -10,9 +10,9 @@
 @import 'containers/top-menu';
 
 @import 'helpers/forms';
-@import 'helpers/override-bootstrap';
 @import 'helpers/pagination';
 @import 'helpers/spacing';
+@import 'helpers/buttons';
 
 @import 'images/backgrounds';
 @import 'images/sizing';

@@ -13,3 +13,14 @@
   margin-top: 10px !important;
 }
 
+@media (min-width: 768px) {
+  .navbar-toggleable-sm .navbar-toggler {
+    display: none;
+  }
+  .navbar-toggleable-sm .navbar-collapse {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    width: 100%;
+  }
+}
