@@ -1,4 +1,4 @@
-<h2 class="col col-12 bottom-5 col-sm-10 offset-sm-1">Welcome, <span class="orange">{{user.username}}!</span><br>
+<h2 class="col col-12 bottom-5 col-sm-10 offset-sm-1">Welcome, <span class="text-orange">{{user.username}}!</span><br>
   Let's get tracking! </h2>
 
 
@@ -58,12 +58,12 @@
 
 <div *ngIf="(buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length > 0">
   <h3
-    class="col-12 col-sm-11 offset-sm-half orange text-center">
+    class="col-12 col-sm-11 offset-sm-half text-orange text-center">
     <i class="col-12 col-sm-5">Checked-in buddies:</i>{{(buddies | checkedIn | buddySearch:filter.search |
     neverOut:filter.neverOut).length}} buddies found.</h3>
   <nav class="buddy-pagination flex-wrap d-flex justify-content-center">
 
-    <h6 class="text-center text-capitalize orange col-12">Results per Page: </h6>
+    <h6 class="text-center text-capitalize text-orange col-12">Results per Page: </h6>
     <ul class="pagination">
       <li class="page-item" *ngFor="let x of [12,24,48,96]">
         <a class="pag-button pointer page-link" [ngClass]="{active : perPage===x}" (click)="setPerPage(x)">{{x}}</a>
@@ -75,7 +75,7 @@
   <div
     *ngFor="let buddy of getActivePortion((buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut)); let i = index;"
     class="col col-12 col-sm-5 col-lg-3 buddy checked-in-buddy d-flex flex-column">
-    <h3 class="buddyName mb-auto p-2 orange"><img class="paw-icon" src="assets/img/icons/checked_in.png"/>{{buddy.name}}
+    <h3 class="buddy-name mb-auto p-2 orange"><img class="paw-icon" src="assets/img/icons/checked_in.png"/>{{buddy.name}}
     </h3>
     <div class="p-2 bottom-5 buddy-content">
       <div><b>Species:</b> {{buddy.species}} <span *ngIf="buddy.binomial && buddy.binomial !== ' '"> ({{buddy.binomial}})</span>
