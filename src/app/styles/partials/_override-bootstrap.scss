@@ -12,15 +12,13 @@
 .btn-xs{
   margin-top: 10px !important;
 }
+.navbar-nav .nav-link {
+  padding-right: .5rem !important;
+  padding-left: .5rem !important;
+}
 
-@media (min-width: 768px) {
-  .navbar-toggleable-sm .navbar-toggler {
-    display: none;
-  }
-  .navbar-toggleable-sm .navbar-collapse {
-    display: -webkit-box !important;
-    display: -ms-flexbox !important;
-    display: flex !important;
-    width: 100%;
+.navbar-collapse{
+  @media(max-height: 575px) {
+    margin-top: 5px !important;
   }
 }
