@@ -63,7 +63,7 @@ export class BuddyService {
     updateBuddy(buddy: Buddy, bool: boolean = false) {
       let msg: string;
       if(bool){
-        msg = `${buddy.name} successfully checked ${buddy.checkedOut ? 'in' : 'out'}.`;
+        msg = `${buddy.name} successfully checked ${buddy.checkedOut ? 'out' : 'in'}.`;
       }
       else{
         msg = `${buddy.name} successfully updated!`;
