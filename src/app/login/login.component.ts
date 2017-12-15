@@ -2,19 +2,9 @@
 
 //Login Component
 
-import {Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 
-import {Observable} from 'rxjs/Observable';
-import {Store} from '@ngrx/store';
-import * as fromRoot from '../reducers';
-
-import {User} from '../stores/user.store';
 import {UserService} from '../services/user.service';
-import {isUndefined} from "util";
 
 
 @Component({
@@ -32,7 +22,7 @@ export class LoginComponent {
 
   login(e) {
     e.preventDefault();
-    if(!isUndefined(this.password) && !isUndefined(this.username)){
+    if(this.password && this.username){
       this.userService.login(this.username, this.password);
     }
   }
