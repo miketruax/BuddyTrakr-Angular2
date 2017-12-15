@@ -51,16 +51,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Override with the X-HTTP-Method-Override header in the request. Simulate DELETE/PUT
 app.use(methodOverride('X-HTTP-Method-Override'));
 
-app.configure('production', ()=>{
-  app.use((req,res,next) => {
-    if(req.header('x-forwarded-proto') !== 'https') {
+if(process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.header('x-forwarded-proto') !== 'https') {
       res.redirect(`https://${req.header('host')}${req.url}`);
     }
     else {
       next()
     }
-  })
-});
+  });
+}
+
 app.use(express.static(__dirname + '/dist'));
 app.use(helmet());
 
