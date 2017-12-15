@@ -41,6 +41,17 @@ if (process.env.NODE_ENV === 'development' ||
     process.env.NODE_ENV === 'test')
   app.use(morgan('dev'));
 
+app.configure('production', ()=>{
+  app.use((req,res,next) => {
+    if(req.header('x-forwarded-proto') !== 'https') {
+      res.redirect(`https://${req.header('host')}${req.url}`);
+    }
+    else {
+      next()
+    }
+  })
+});
+
 app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
