@@ -41,6 +41,16 @@ if (process.env.NODE_ENV === 'development' ||
     process.env.NODE_ENV === 'test')
   app.use(morgan('dev'));
 
+app.use(cors());
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+// Override with the X-HTTP-Method-Override header in the request. Simulate DELETE/PUT
+app.use(methodOverride('X-HTTP-Method-Override'));
+
 app.configure('production', ()=>{
   app.use((req,res,next) => {
     if(req.header('x-forwarded-proto') !== 'https') {
@@ -51,16 +61,6 @@ app.configure('production', ()=>{
     }
   })
 });
-
-app.use(cors());
-app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// Override with the X-HTTP-Method-Override header in the request. Simulate DELETE/PUT
-app.use(methodOverride('X-HTTP-Method-Override'));
-
 app.use(express.static(__dirname + '/dist'));
 app.use(helmet());
 
