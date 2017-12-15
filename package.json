@@ -59,7 +59,8 @@
     "sass-loader": "^6.0.3",
     "socket.io": "^1.7.3",
     "tether": "^1.4.0",
-    "zone.js": "^0.7.6"
+    "zone.js": "^0.7.6",
+    "typescript": "~2.0.0"
   },
   "devDependencies": {
     "@types/core-js": "^0.9.41",
@@ -76,7 +77,6 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
-    "tslint": "~4.4.2",
-    "typescript": "~2.0.0"
+    "tslint": "~4.4.2"
   }
 }
