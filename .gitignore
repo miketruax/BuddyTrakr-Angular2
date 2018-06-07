@@ -48,3 +48,4 @@ config/config.js
 /config/webpack.test.config.js
 /config/webpack.dev.js
 /config/webpack.common.js
+config/config.js
