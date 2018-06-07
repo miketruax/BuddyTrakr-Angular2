@@ -23,15 +23,15 @@ export class AppComponent {
   constructor(private router: Router, private userService: UserService, private store: Store<fromRoot.State>){
     this.userID = store.select(fromRoot.getUserId);
     this.flash = store.select(fromRoot.getFlash);
-    this.router.events.subscribe((val) => {
-      if (val.url != this.router.url) {
+    this.router.events.subscribe(path => {
+      if (path['url'] != this.router.url) {
         this.menuActive = false;
         this.menu.nativeElement.setAttribute('aria-expanded', false);
         this.menu.nativeElement.classList.remove('show');
         window.scrollTo(0, 0);
       }
       if(event instanceof NavigationStart) {
-        store.dispatch({type: flashActions.Actions.CLEAR_FLASH});
+        store.dispatch({type: flashActions.CLEAR_FLASH});
       }
     });
   }
