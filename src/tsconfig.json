@@ -1,7 +1,6 @@
 {
   "files": [
-    "main",
-    "..\node_modules\typescript\lib\lib.es6.d.ts"
+    "main"
   ],
   "compilerOptions": {
     "baseUrl": "",

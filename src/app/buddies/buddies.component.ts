@@ -5,7 +5,7 @@
 import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 
-import {State} from '../reducers';
+import * as fromRoot from '../reducers'
 import * as selectedBuddyActions from '../actions/selectedBuddy.actions';
 import {Buddy} from '../stores/buddy.store';
 import {BuddyService} from '../services/buddy.service';
@@ -27,17 +27,17 @@ export class BuddiesComponent {
   selectedBuddy: Observable<Buddy>;
 
   constructor(private buddyService: BuddyService,
-              private store: Store<State>) {
+              private store: Store<fromRoot.State>) {
     buddyService.loadBuddies();
     this.details = false;
-    this.buddies = store.select('buddies');
-    this.user = store.select('user');
-    this.selectedBuddy = store.select('selectedBuddy');
+    this.buddies = store.select(fromRoot.getBuddies);
+    this.user = store.select(fromRoot.getUser);
+    this.selectedBuddy = store.select(fromRoot.getSelectedBuddiesState);
   }
 
   selectBuddy(buddy: Buddy) {
     this.store.dispatch({
-      type: selectedBuddyActions.Actions.SELECT_BUDDY,
+      type: selectedBuddyActions.SELECT_BUDDY,
       payload: buddy
     });
     this.changeView(true)
@@ -71,7 +71,7 @@ export class BuddiesComponent {
 
   resetBuddy() {
     this.store.dispatch({
-      type: selectedBuddyActions.Actions.CLEAR_BUDDY
+      type: selectedBuddyActions.CLEAR_BUDDY
     });
     this.changeView(false)
   }
@@ -84,7 +84,7 @@ export class BuddiesComponent {
 
   changeView(showDetails: boolean){
     this.details = showDetails;
-    this.store.dispatch({type: flashActions.Actions.CLEAR_FLASH})
+    this.store.dispatch({type: flashActions.CLEAR_FLASH})
   }
 
 

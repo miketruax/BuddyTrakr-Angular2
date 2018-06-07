@@ -18,11 +18,11 @@ export class FlashComponent {
   constructor(private store:Store<fromRoot.State>){
   }
   removeError(){
-    this.store.dispatch({type: flashActions.Actions.CLEAR_ERROR});
+    this.store.dispatch({type: flashActions.CLEAR_FLASH});
   }
 
   removeSuccess(){
-    this.store.dispatch({type: flashActions.Actions.CLEAR_SUCCESS})
+    this.store.dispatch({type: flashActions.CLEAR_FLASH})
   }
   showFlash(){
     console.log(this.flash);
