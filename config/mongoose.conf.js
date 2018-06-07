@@ -34,7 +34,7 @@ export default (mongoose) => {
   // If the Node process ends, close the Mongoose connection
   process.on('SIGINT', gracefulExit).on('SIGTERM', gracefulExit);
 
-  mongoose.connect(process.env.MONGO_URI, (error) => {
+  mongoose.connect(process.env.MONGO_URI, {useMongoClient: true}, (error) => {
 
     if (error)
       throw error;

@@ -1,24 +1,19 @@
-import {
-  Action,
-} from '@ngrx/store';
-import {Injectable} from "@angular/core";
+import {Action} from '@ngrx/store';
+import {User} from '../stores/user.store';
 
-@Injectable()
-export class Actions {
-  static SELECT_USER = '[Selected User] Select User';
-  selectUser(user): Action {
-    return {
-      type: Actions.SELECT_USER,
-      payload: user
-    };
+export const SELECT_USER = '[Selected User] Select User';
+export const CLEAR_USER = '[User] Clear User';
+
+
+export class SelectUser implements Action {
+
+  readonly type = SELECT_USER;
+
+  constructor(public payload: User) {
   }
+}
 
-  static CLEAR_USER = '[User] Clear User';
-  clearUser(): Action {
-    return {
-      type: Actions.CLEAR_USER
-    }
-  }
-
+export class ClearUser implements Action {
+  readonly type = CLEAR_USER
 
 }

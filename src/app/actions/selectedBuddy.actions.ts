@@ -1,25 +1,16 @@
-import {
-  Action,
-} from '@ngrx/store';
-import {Injectable} from "@angular/core";
+import {Action} from '@ngrx/store';
+import {Buddy} from "../stores/buddy.store";
 
-@Injectable()
-export class Actions {
-  static SELECT_BUDDY = '[Selected Buddy] Select Buddy';
-  selectBuddy(Buddy): Action {
-    return {
-      type: Actions.SELECT_BUDDY,
-      payload: Buddy
-    };
+export const SELECT_BUDDY = '[Selected Buddy] Select Buddy';
+export const CLEAR_BUDDY = '[Selected Buddy] Clear Buddy';
+
+  export class SelectBuddy implements Action {
+    readonly type = SELECT_BUDDY;
+    constructor(public payload: Buddy){}
   }
 
-  static CLEAR_BUDDY = '[Selected Buddy] Clear Buddy';
-  clearBuddy(): Action {
-    return {
-      type: Actions.CLEAR_BUDDY
-    }
+  export class ClearBuddy implements Action{
+    readonly type = CLEAR_BUDDY;
   }
 
-
-}
 

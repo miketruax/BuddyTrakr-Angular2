@@ -1,4 +1,4 @@
 export interface Flash {
-  error?: string,
-  success?: string
+  type?: string,
+  message?: string
 }
