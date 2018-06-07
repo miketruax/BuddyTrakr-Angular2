@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import  * as errors  from '../actions/flash.actions';
+import  * as FlashActions  from '../actions/flash.actions';
 import {Flash} from "../stores/flash.store";
 
 export type State = Flash
@@ -9,30 +9,21 @@ const initialState: State = {};
 
 
 export
-function flashReducer(state = initialState, action: Action): any{
+function flashReducer(state = initialState, action: FlashActions.Actions): any{
 
   switch (action.type) {
 
-    case errors.Actions.ADD_ERROR:
-      return {error: action.payload, success: state.success};
+    case FlashActions.ADD_FLASH:
+      return {type: action.payload.type, message: action.payload.message};
 
-    case errors.Actions.ADD_SUCCESS:
-      return {success: action.payload, error: state.error};
-
-    case errors.Actions.CLEAR_ERROR:
-      return {success: state.success};
-
-    case errors.Actions.CLEAR_SUCCESS:
-      return {error: state.error};
-
-    case errors.Actions.CLEAR_FLASH:
+    case FlashActions.CLEAR_FLASH:
       return {};
 
     default:
       return state;
   }
-};
+}
 
 export const getFlash = (state: State) => state;
-export const getError = (state: State) => state.error;
-export const getSuccess = (state: State) => state.success;
+export const getType = (state: State) => state.type;
+export const getMessage = (state: State) => state.message;

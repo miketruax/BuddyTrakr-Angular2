@@ -14,6 +14,10 @@ export class SelectUser implements Action {
 }
 
 export class ClearUser implements Action {
-  readonly type = CLEAR_USER
+  readonly type = CLEAR_USER;
+  constructor(public payload: null) {
+  }
 
 }
+
+export type Actions = SelectUser | ClearUser;

@@ -1,6 +1,4 @@
-import { Action } from '@ngrx/store';
-import  * as selectedBuddy  from '../actions/selectedBuddy.actions';
-import {forEach} from "@angular/router/src/utils/collection";
+import  * as SelectedBuddyActions  from '../actions/selectedBuddy.actions';
 import {Buddy} from "../stores/buddy.store";
 
 export type State = Buddy
@@ -9,12 +7,12 @@ const initialState: State = {};
 
 
 export
-function selectedReducer(state = initialState, action: Action): any{
+function selectedReducer(state = initialState, action: SelectedBuddyActions.Actions): any{
   switch (action.type) {
-    case selectedBuddy.Actions.SELECT_BUDDY: {
+    case SelectedBuddyActions.SELECT_BUDDY: {
       return action.payload
     }
-    case selectedBuddy.Actions.CLEAR_BUDDY : {
+    case SelectedBuddyActions.CLEAR_BUDDY : {
       return {}
     }
 

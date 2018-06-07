@@ -17,7 +17,7 @@ export class AddBuddies implements Action {
 
 
 export class CreateBuddies implements Action {
-  readonly type = CREATE_BUDDY
+  readonly type = CREATE_BUDDY;
 
   constructor(public payload: Buddy) {
   }
