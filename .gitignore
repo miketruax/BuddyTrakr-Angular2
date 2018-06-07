@@ -15,7 +15,7 @@
 *.launch
 .settings/
 *.sublime-workspace
-
+C:\Users\Mike Truax\Documents\GitHub\BuddyTrakr-Angular2\config\config.js
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json
