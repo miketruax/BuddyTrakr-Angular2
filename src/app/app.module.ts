@@ -1,8 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {NgModule, APP_INITIALIZER} from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {HttpModule, Http} from '@angular/http';
-import reducer from './reducers'
+import {reducers} from './reducers'
 import { AppComponent } from './app.component';
 import {StoreModule} from "@ngrx/store";
 import {routes} from "./app.routes";
@@ -23,6 +22,7 @@ import {SignupComponent} from "./signup/signup.component";
 import {AuthGeneric} from "./services/auth-generic.service";
 import {SettingsComponent} from "./settings/settings.component";
 import {InitUserService} from "./services/init-user.service";
+import {HttpClientModule} from "@angular/common/http";
 
 export function startupUser(startupService: InitUserService): Function {
   return () => startupService.load();
@@ -43,11 +43,11 @@ export function startupUser(startupService: InitUserService): Function {
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     RouterModule.forRoot(routes, {
       useHash: true
     }),
-    StoreModule.provideStore(reducer)
+    StoreModule.forRoot(reducers)
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: startupUser, deps: [InitUserService], multi: true },
