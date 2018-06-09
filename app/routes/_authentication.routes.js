@@ -13,7 +13,6 @@ export default (app, router, passport, auth, admin) => {
 
   router.get('/auth/getUser', (req, res) => {
     jwt.verify(req.get('Authorization'), process.env.SESSION_SECRET, (err, payload) => {
-
       if (err) {
         return res.send({});
       }
@@ -92,7 +91,6 @@ export default (app, router, passport, auth, admin) => {
 
   router.post('/auth/changeSettings',  passport.authenticate('jwt-auth', ({session: false})), (req, res, next) => {
     let hash = crypto.randomBytes(20).toString('hex');
-
     User.findOne({'_id': req.user._id}, (err, user)=>{
       if(err){
         res.send({err: 'Something went wrong, please try again later.'});
@@ -103,13 +101,12 @@ export default (app, router, passport, auth, admin) => {
       else{
         user.local.password = req.body.newPassword;
         user.jwthash = hash;
-
-        user.save((err)=>{
+        user.save((err, user)=>{
           if(err){
             res.send({err: 'The server encountered an error, please try again later.'})
           }
           else{
-            let token = jwt.sign({user: user.sanitize(), hash: hash}, process.env.SESSION_SECRET, {expiresIn: 259200
+            let token = jwt.sign({user: user.sanitize(), hash: user.jwthash}, process.env.SESSION_SECRET, {expiresIn: 259200
             });
             res.send({token : token});
           }
@@ -124,9 +121,7 @@ export default (app, router, passport, auth, admin) => {
       user.save(err =>{
         res.send({success: true});
       });
-
     }));
-
   });
 
   //admin route to delete a user

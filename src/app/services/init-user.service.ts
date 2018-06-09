@@ -23,12 +23,15 @@ export class InitUserService {
 
   load(){
   let headers = new HttpHeaders().append('Authorization', localStorage.getItem('authToken'));
-  this.http.get('/api/auth/getUser', {headers: headers})
-    .map(data => {
+  const promise = this.http.get('/api/auth/getUser', {headers: headers})
+    .toPromise()
+    .then(data => {
       if(data['user']){
         this.user = data['user'];
         this.isLoggedIn = true;
       }
-    })
+      return;
+    });
+    return promise;
   }
 }

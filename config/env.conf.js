@@ -2,6 +2,7 @@ import config from './config';
 config.build();
 
 export function envValidator() {
+  process.env.NODE_ENV = process.env.NODE_ENV.trim();
   if(!process.env.NODE_ENV) {
     process.env.NODE_ENV = process.env.defaultENV;
   }

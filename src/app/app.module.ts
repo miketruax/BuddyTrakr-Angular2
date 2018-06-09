@@ -24,8 +24,9 @@ import {SettingsComponent} from "./settings/settings.component";
 import {InitUserService} from "./services/init-user.service";
 import {HttpClientModule} from "@angular/common/http";
 
-export function startupUser(startupService: InitUserService): Function {
-  return () => startupService.load();
+export function startupUser(startupService: InitUserService){
+  console.log("startup");
+  return ()=> startupService.load();
 }
 
 @NgModule({

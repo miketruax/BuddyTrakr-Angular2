@@ -22,7 +22,7 @@ export class BuddyService {
         this.http.get('/api/buddy', {headers: headers})
             .map(payload => {
               if(payload['err']){
-                return ({type: flashActions.ADD_FLASH, payload: {type: 'error', message: payload['err']}})
+                return ({type: flashActions.ADD_ERROR, payload: payload['err']})
               }
               return ({ type: buddyActions.ADD_BUDDIES, payload: payload['buddy'] })
             })
@@ -41,9 +41,9 @@ export class BuddyService {
         this.http.post('/api/buddy', JSON.stringify(buddy), {headers: headers})
           .map(payload => {
             if(payload['err']){
-              return ({type: flashActions.ADD_FLASH, payload: {type: 'error', message: payload['err']}})
+              return ({type: flashActions.ADD_ERROR, payload: payload['err']})
             }
-            this.store.dispatch({type: flashActions.ADD_FLASH, payload: {type: 'success', message:`${payload['buddy'].name} successfully saved!`}});
+            this.store.dispatch({type: flashActions.ADD_SUCCESS, payload: `${payload['buddy'].name} successfully saved!`});
             return ({ type: buddyActions.CREATE_BUDDY, payload: payload['buddy'] })
           })
             .subscribe(action => this.store.dispatch(action));
@@ -64,12 +64,12 @@ export class BuddyService {
         this.http.put(`/api/buddy/${buddy._id}`, JSON.stringify(buddy), {headers: headers})
           .map(payload => {
             if(payload['err']){
-              return ({type: flashActions.ADD_FLASH, payload: {type: 'error', message: payload['err']}})
+              return ({type: flashActions.ADD_ERROR, payload:payload['err']})
             }
 
             this.store.dispatch({
-              type: flashActions.ADD_FLASH,
-              payload: {type: 'success', message: msg}});
+              type: flashActions.ADD_SUCCESS,
+              payload: msg});
             return ({ type: buddyActions.UPDATE_BUDDY, payload: payload['buddy'] })
           })
           .subscribe(action => {
@@ -85,11 +85,11 @@ export class BuddyService {
         this.http.delete(`/api/buddy/${buddy._id}`, {headers: headers})
           .map(payload => {
             if(payload['err']){
-              return ({type: flashActions.ADD_FLASH, payload: {type: 'error', message: payload['err']}})
+              return ({type: flashActions.ADD_ERROR, payload:  payload['err']})
             }
             this.store.dispatch({
-              type: flashActions.ADD_FLASH,
-              payload: {type: 'sucess', message: `${payload['buddy'].name} successfully deleted!`}});
+              type: flashActions.ADD_SUCCESS,
+              payload: `${payload['buddy'].name} successfully deleted!`});
             return ({ type: buddyActions.DELETE_BUDDY, payload: payload['buddy'] })
           })
           .subscribe(action => this.store.dispatch(action));

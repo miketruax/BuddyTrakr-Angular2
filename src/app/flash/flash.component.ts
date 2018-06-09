@@ -17,14 +17,7 @@ export class FlashComponent {
   @Input() flash: Flash;
   constructor(private store:Store<fromRoot.State>){
   }
-  removeError(){
+  removeFlash(){
     this.store.dispatch({type: flashActions.CLEAR_FLASH});
-  }
-
-  removeSuccess(){
-    this.store.dispatch({type: flashActions.CLEAR_FLASH})
-  }
-  showFlash(){
-    console.log(this.flash);
   }
 }

@@ -34,7 +34,7 @@ export class UserService {
       })
       .map(payload => {
         if(payload['err']){
-          return {type: flashActions.ADD_FLASH, payload: {type: 'error', message: payload['err']}};
+          return {type: flashActions.ADD_ERROR, payload: payload['err']};
         }
         else {
           localStorage.setItem('authToken', payload['token']);
@@ -56,11 +56,11 @@ export class UserService {
       })
       .map(payload => {
         if(payload['err']){
-          return {type: flashActions.ADD_FLASH, payload: {type: 'error', message: payload['err']}};
+          return {type: flashActions.ADD_ERROR, payload: payload['err']};
         }
         else{
           this.router.navigate(['/login']);
-          return {type: flashActions.ADD_FLASH, payload: {type: 'success', message: 'Successfully signed up, please log in!'}};
+          return {type: flashActions.ADD_SUCCESS, payload: 'Successfully signed up, please log in!'};
         }
       })
       .subscribe(action=> this.store.dispatch(action));
@@ -77,30 +77,37 @@ export class UserService {
       })
       .map(payload=> {
         if(payload['err']){
-          return {type: flashActions.ADD_FLASH, payload:{type: 'error', message: payload['err']}};
+          return {type: flashActions.ADD_ERROR, payload:payload['err']};
         }
         else{
-          this.router.navigate(['/buddies']);
           localStorage.setItem('authToken', payload['token']);
-          return {type: flashActions.ADD_FLASH, payload: {type: 'success', message: 'Successfully updated password.'}}
+          this.router.navigate(['/buddies']);
+          return {type: flashActions.ADD_SUCCESS, payload: 'Successfully updated password.'}
         }
       })
       .subscribe(action=> this.store.dispatch(action));
   }
 
   logout() {
-    let headers = new HttpHeaders()
-    .append('Content-Type', 'application/json')
-    .append('Authorization', `JWT ${localStorage.getItem('authToken')}`);
-    this.http.get('/api/auth/logout', {headers: headers})
-      .subscribe(data => {
-        this.isLoggedIn = false;
-        localStorage.removeItem('authToken');
-        this.store.dispatch({ type: buddyActions.ADD_BUDDIES, payload: []});
-        this.store.dispatch({type: userActions.CLEAR_USER});
-        this.store.dispatch({type: flashActions.ADD_FLASH, payload:{type: 'success', message: 'Successfully Logged Out'}});
-        this.router.navigate(['/login']);
-      });
+    this.isLoggedIn = false;
+    this.store.dispatch({ type: buddyActions.ADD_BUDDIES, payload: []});
+    this.store.dispatch({type: userActions.CLEAR_USER});
+    this.store.dispatch({type: flashActions.ADD_SUCCESS, payload:'Successfully Logged Out'});
+    this.router.navigate(['/login']);
+    localStorage.removeItem('authToken');
+
+    // let headers = new HttpHeaders()
+    // .append('Content-Type', 'application/json')
+    // .append('Authorization', `JWT ${localStorage.getItem('authToken')}`);
+    // this.http.get('/api/auth/logout', {headers: headers})
+    //   .subscribe(data => {
+    //     this.isLoggedIn = false;
+    //     localStorage.removeItem('authToken');
+    //     this.store.dispatch({ type: buddyActions.ADD_BUDDIES, payload: []});
+    //     this.store.dispatch({type: userActions.CLEAR_USER});
+    //     this.store.dispatch({type: flashActions.ADD_SUCCESS, payload:'Successfully Logged Out'});
+    //     this.router.navigate(['/login']);
+    //   });
 
   }
 }

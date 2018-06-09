@@ -1,15 +1,23 @@
 import {Action} from '@ngrx/store';
 import {Flash} from '../stores/flash.store'
 
-export const ADD_FLASH = '[Flash] Add Flash';
+export const ADD_ERROR = '[Flash] Add Error';
+export const ADD_SUCCESS = '[Flash] Add Success';
 export const CLEAR_FLASH = '[Flash] Clear Flash';
 
 
 
-export class AddFlash implements Action {
-  readonly type = ADD_FLASH;
+export class AddError implements Action {
+  readonly type = ADD_ERROR;
 
-  constructor(public payload: Flash) {
+  constructor(public payload: string) {
+  }
+}
+
+export class AddSuccess implements Action {
+  readonly type = ADD_SUCCESS;
+
+  constructor(public payload: string) {
   }
 }
 
@@ -20,4 +28,4 @@ export class ClearFlash implements Action {
   }
 }
 
-export type Actions = AddFlash | ClearFlash;
+export type Actions = AddError | AddSuccess | ClearFlash;

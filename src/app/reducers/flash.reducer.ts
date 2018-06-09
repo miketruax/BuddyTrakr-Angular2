@@ -13,8 +13,12 @@ function flashReducer(state = initialState, action: FlashActions.Actions): any{
 
   switch (action.type) {
 
-    case FlashActions.ADD_FLASH:
-      return {type: action.payload.type, message: action.payload.message};
+    case FlashActions.ADD_SUCCESS:
+      return {type: 'success', message: action.payload};
+
+    case FlashActions.ADD_ERROR:
+      return {type: 'error', message: action.payload};
+
 
     case FlashActions.CLEAR_FLASH:
       return {};

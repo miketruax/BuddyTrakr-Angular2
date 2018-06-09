@@ -1,7 +1,4 @@
 
-<div *ngIf="flash.error" class="col col-12 alert alert-danger flash">{{flash.error}}
-  <span (click)="removeError()" class="glyphicon glyphicon-remove pointer" aria-hidden="true">X</span>
-</div>
-<div *ngIf="flash.success && !flash.error " class="col col-12 alert alert-success flash">{{flash.success}}
-  <span (click)="removeSuccess()" class="glyphicon glyphicon-remove pointer" aria-hidden="true">X</span>
+<div *ngIf="flash.message" class="col col-12 alert flash" ngClass="{{flash.type === 'error' ? 'alert-danger' : 'alert-success' }}">{{flash.message}}
+  <span (click)="removeFlash()" class="glyphicon glyphicon-remove pointer" aria-hidden="true">X</span>
 </div>
