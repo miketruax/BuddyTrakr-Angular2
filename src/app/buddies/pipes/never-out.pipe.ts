@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-
 import { Buddy } from '../stores/buddy.store';
+
 
 @Pipe({ name: 'neverOut' })
 export class NeverOut implements PipeTransform {

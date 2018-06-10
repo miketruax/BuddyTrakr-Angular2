@@ -7,22 +7,17 @@ import {StoreModule} from "@ngrx/store";
 import {routes} from "./app.routes";
 import {RouterModule} from "@angular/router";
 import {LoginComponent} from "./login/login.component";
-import {BuddiesComponent} from "./buddies/buddies.component";
+
 import {AboutComponent} from "./about/about.component";
-import {BuddyListComponent} from './buddies/buddy-list.component'
-import {BuddyDetailsComponent} from './buddies/buddy-details.component'
 import {AuthProtected} from "./services/auth-protected.service";
 import {UserService} from './services/user.service'
 import {FlashComponent} from "./flash/flash.component";
-import {CheckedIn} from "./pipes/checked-in.pipe";
-import {CheckedOut} from "./pipes/checked-out.pipe";
-import {BuddySearch} from "./pipes/buddy-search.pipe";
-import {NeverOut} from "./pipes/never-out.pipe";
 import {SignupComponent} from "./signup/signup.component";
 import {AuthGeneric} from "./services/auth-generic.service";
 import {SettingsComponent} from "./settings/settings.component";
 import {InitUserService} from "./services/init-user.service";
 import {HttpClientModule} from "@angular/common/http";
+import { BuddiesModule } from './buddies/buddies.module';
 
 export function startupUser(startupService: InitUserService){
   console.log("startup");
@@ -33,13 +28,9 @@ export function startupUser(startupService: InitUserService){
   declarations: [
     AppComponent,
     FlashComponent,
-    LoginComponent, BuddiesComponent, AboutComponent,
-    BuddyDetailsComponent, BuddyListComponent, SignupComponent,
-    SettingsComponent,
-    CheckedIn,
-    CheckedOut,
-    BuddySearch,
-    NeverOut
+    LoginComponent, AboutComponent,
+     SignupComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +39,8 @@ export function startupUser(startupService: InitUserService){
     RouterModule.forRoot(routes, {
       useHash: true
     }),
-    StoreModule.forRoot(reducers)
+    StoreModule.forRoot(reducers), 
+    BuddiesModule
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: startupUser, deps: [InitUserService], multi: true },

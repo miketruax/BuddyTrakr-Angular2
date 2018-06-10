@@ -3,10 +3,9 @@ import {Store} from '@ngrx/store';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
-import * as buddyActions from '../actions/buddies.actions';
-import * as flashActions from '../actions/flash.actions';
+import {flashActions, buddyActions} from '../../actions'
 import {Buddy} from '../stores/buddy.store';
-import * as fromRoot from '../reducers';
+import * as fromRoot from '../../reducers';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Injectable()

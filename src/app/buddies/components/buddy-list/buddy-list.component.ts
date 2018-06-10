@@ -7,13 +7,14 @@ import {
   EventEmitter, SimpleChanges
 } from '@angular/core';
 
-import {Buddy} from '../stores/buddy.store';
-import {User} from "../stores/user.store";
+import {Buddy} from '../../stores/buddy.store';
+import {User} from "../../../stores/user.store";
 
 
 @Component({
   selector: 'buddy-list',
-  templateUrl: "./buddy-list.component.html"
+  templateUrl: "./buddy-list.component.html",
+  styleUrls: ['./buddy-list.component.scss']
 })
 
 export class BuddyListComponent{

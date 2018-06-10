@@ -1,11 +1,11 @@
-import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { BuddiesComponent } from './buddies/buddies.component';
+import {Routes} from '@angular/router';
+import {LoginComponent} from './login/login.component';
 import {AboutComponent} from "./about/about.component";
 import {SignupComponent} from "./signup/signup.component";
 import {AuthProtected} from "./services/auth-protected.service";
 import {AuthGeneric} from "./services/auth-generic.service"
 import {SettingsComponent} from "./settings/settings.component";
+import { BuddiesComponent } from './buddies/components/main/buddies.component';
 export const routes: Routes = [
   { path: '',   redirectTo: '/buddies', pathMatch: 'full' },
   { path: 'login',  component: LoginComponent, canActivate:[AuthGeneric]},

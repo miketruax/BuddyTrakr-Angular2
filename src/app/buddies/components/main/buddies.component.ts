@@ -5,17 +5,18 @@
 import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 
-import * as fromRoot from '../reducers'
-import * as selectedBuddyActions from '../actions/selectedBuddy.actions';
-import {Buddy} from '../stores/buddy.store';
-import {BuddyService} from '../services/buddy.service';
-import {User} from "../stores/user.store";
-import * as flashActions from "../actions/flash.actions";
+import * as fromRoot from '../../../reducers'
+import * as selectedBuddyActions from '../../actions/selectedBuddy.actions';
+import {Buddy} from '../../stores/buddy.store';
+import {BuddyService} from '../../services/buddy.service';
+import {User} from "../../../stores/user.store";
+import * as flashActions from "../../../actions/flash.actions";
 import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'buddies',
   templateUrl: "./buddies.component.html",
+  styleUrls: ['buddies.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -40,7 +41,7 @@ export class BuddiesComponent {
       type: selectedBuddyActions.SELECT_BUDDY,
       payload: buddy
     });
-    this.changeView(true)
+    this.toggleDetails(true)
   }
 
   checkBuddy(buddy: Buddy){
@@ -55,13 +56,13 @@ export class BuddiesComponent {
     //list of all buddies who have never been out AND are currently in
     let inNeverOutBuddies = inBuddies.filter(buddy=> buddy.timesOut === 0 || !buddy.timesOut);
     //selects randomly from inNeverOut unless no buddies exist then selects from inBuddies
-    let randomBuddyArray = inNeverOutBuddies.length >0 ? inNeverOutBuddies : inBuddies;
+    let randomBuddyArray = inNeverOutBuddies.length > 0 ? inNeverOutBuddies : inBuddies;
     let buddy = randomBuddyArray[Math.floor(Math.random() * randomBuddyArray.length)];
     this.checkBuddy(buddy);
   }
 
   addBuddy(buddy: Buddy){
-    this.changeView(true)
+    this.toggleDetails(true)
   }
 
   deleteBuddy(buddy: Buddy) {
@@ -73,7 +74,7 @@ export class BuddiesComponent {
     this.store.dispatch({
       type: selectedBuddyActions.CLEAR_BUDDY
     });
-    this.changeView(false)
+    this.toggleDetails(false)
   }
 
   saveBuddy(buddy: Buddy) {
@@ -82,7 +83,7 @@ export class BuddiesComponent {
     this.resetBuddy();
   }
 
-  changeView(showDetails: boolean){
+  toggleDetails(showDetails: boolean){
     this.details = showDetails;
     this.store.dispatch({type: flashActions.CLEAR_FLASH})
   }

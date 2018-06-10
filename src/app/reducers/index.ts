@@ -2,8 +2,8 @@ import {
   ActionReducerMap, createSelector
 } from '@ngrx/store'
 
-import * as fromBuddies from './buddies.reducer';
-import * as fromSelectedBuddy from './selectedBuddy.reducer'
+import * as fromBuddies from '../buddies/reducers/buddies.reducer';
+import * as fromSelectedBuddy from '../buddies/reducers/selectedBuddy.reducer'
 import * as fromUser from './user.reducer'
 import * as fromFlash from './flash.reducer'
 

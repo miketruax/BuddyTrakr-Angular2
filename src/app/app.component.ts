@@ -6,13 +6,11 @@ import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 import {Router, NavigationStart} from "@angular/router";
 import {Flash} from "./stores/flash.store";
-import {BuddyService} from "./services/buddy.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./styles/app.style.scss'],
-  providers: [BuddyService],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {

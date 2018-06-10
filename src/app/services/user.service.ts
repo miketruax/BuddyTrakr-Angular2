@@ -4,9 +4,7 @@ import 'rxjs/add/operator/map'
 import * as fromRoot from '../reducers';
 import {User} from "../stores/user.store"
 import {Router} from "@angular/router";
-import * as userActions from '../actions/user.actions';
-import * as flashActions from '../actions/flash.actions';
-import * as buddyActions from '../actions/buddies.actions';
+import {flashActions, userActions, buddyActions} from '../actions';
 import {Store} from "@ngrx/store";
 import {InitUserService} from "./init-user.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
@@ -95,19 +93,5 @@ export class UserService {
     this.store.dispatch({type: flashActions.ADD_SUCCESS, payload:'Successfully Logged Out'});
     this.router.navigate(['/login']);
     localStorage.removeItem('authToken');
-
-    // let headers = new HttpHeaders()
-    // .append('Content-Type', 'application/json')
-    // .append('Authorization', `JWT ${localStorage.getItem('authToken')}`);
-    // this.http.get('/api/auth/logout', {headers: headers})
-    //   .subscribe(data => {
-    //     this.isLoggedIn = false;
-    //     localStorage.removeItem('authToken');
-    //     this.store.dispatch({ type: buddyActions.ADD_BUDDIES, payload: []});
-    //     this.store.dispatch({type: userActions.CLEAR_USER});
-    //     this.store.dispatch({type: flashActions.ADD_SUCCESS, payload:'Successfully Logged Out'});
-    //     this.router.navigate(['/login']);
-    //   });
-
   }
 }

@@ -1,20 +1,6 @@
 <h2 class="col col-12 bottom-5 col-sm-10 offset-sm-1">Welcome, <span class="text-orange">{{user.username}}!</span><br>
   Let's get tracking! </h2>
 
-
-<!--SEARCH BAR-->
-
-<div class="col col-12 offset-sm-1 col-sm-10">
-  <input class="form-control tan-input" placeholder="Search by name, species, or scientific name" type="text"
-         [(ngModel)]="filter.search" (keypress)="resetPage()">
-  <div class="col checkbox col-12">
-    <label>
-      <input type="checkbox" [(ngModel)]="filter.neverOut"> Only buddies who've never been out
-    </label>
-  </div>
-  <button class="col btn btn-xs col-3 col-sm-4 offset-sm-8 offset-9" (click)="clearFilter()">Clear</button>
-</div>
-
 <!--CHECKED OUT BUDDY HEADER AND BUDDIES-->
 
 <h3 *ngIf="(buddies | checkedIn | buddySearch:filter.search).length > 0" class="col-12 col-sm-10 offset-sm-1 orange"><i>Checked
@@ -53,6 +39,20 @@
   </button>
 </div>
 
+<!--SEARCH BAR-->
+
+<div class="col col-12 offset-sm-1 col-sm-10">
+  <input class="form-control tan-input" placeholder="Search by name, species, or scientific name" type="text"
+         [(ngModel)]="filter.search" (keypress)="resetPage()">
+  <div class="col checkbox col-12">
+    <label>
+      <input type="checkbox" [(ngModel)]="filter.neverOut"> Only buddies who've never been out
+    </label>
+  </div>
+  <button class="col btn btn-xs col-3 col-sm-4 offset-sm-8 offset-9" (click)="clearFilter()">Clear</button>
+</div>
+
+
 
 <!--CHECKED IN BUDDIES HEADER PAGINATION AND BUDDIES-->
 
@@ -71,34 +71,27 @@
     </ul>
   </nav>
 </div>
-<div class="d-flex align-items-stretch flex-wrap">
+
+
+<div class="buddy-list">
   <div
     *ngFor="let buddy of getActivePortion((buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut)); let i = index;"
-    class="col col-12 col-sm-5 col-lg-3 buddy checked-in-buddy d-flex flex-column">
+    class="buddy checked-in-buddy">
     <h3 class="buddy-name mb-auto p-2 orange"><img class="paw-icon" src="assets/img/icons/checked_in.png"/>{{buddy.name}}
     </h3>
-    <div class="p-2 bottom-5 buddy-content">
-      <div><b>Species:</b> {{buddy.species}} <span *ngIf="buddy.binomial && buddy.binomial !== ' '"> ({{buddy.binomial}})</span>
-      </div>
-      <div><b>Birthday:</b> {{buddy.dateAdded ? (buddy.dateAdded | date: 'longDate') : 'Unknown'}}</div>
-      <div *ngIf="buddy.description"><b>Description:</b> {{buddy.description}}</div>
-      <div *ngIf="buddy.lastOutDate"><b>Last Out:</b>
-        <span>{{buddy.lastOutDate | date}} for {{buddy.lastOutDays}} days.</span>
-      </div>
-      <div *ngIf="buddy.timesOut"> Out {{buddy.timesOut}} times for a total of {{buddy.totalDaysOut}}
-        days.
-      </div>
-      <div *ngIf="!buddy.lastOutDate"><b>Your buddy hasn't been out yet. You should rectify that!</b></div>
+    <div class="buddy-content">
+        <p><b>Species:</b> {{buddy.species}} <span *ngIf="buddy.binomial && buddy.binomial !== ' '"> ({{buddy.binomial}})</span></p>
+        <p><b>Birthday:</b> {{buddy.dateAdded ? (buddy.dateAdded | date: 'longDate') : 'Unknown'}}</p>
+        <p *ngIf="buddy.description"><b>Description:</b> {{buddy.description}}</p>
+        <p *ngIf="buddy.lastOutDate"><b>Last Out:</b><span>{{buddy.lastOutDate | date}} for {{buddy.lastOutDays}} days.</span></p>
+      <p *ngIf="buddy.timesOut"> Out {{buddy.timesOut}} times for a total of {{buddy.totalDaysOut}} days.</p>
+      <p *ngIf="!buddy.lastOutDate"><b>Your buddy hasn't been out yet. You should rectify that!</b></p>
     </div>
-    <div class="buddy-buttons  mb-auto p-2">
-      <button class="col col-5 text-center btn col-sm-5"
-              (click)="selected.emit(buddy); $event.stopPropagation();">
-        <i>Edit</i>
+    <div class="buddy-buttons">
+      <button class="col col-5 text-center btn col-sm-5" (click)="selected.emit(buddy); $event.stopPropagation();"><i>Edit</i>
       </button>
-      <button class="col offset-1 offset-sm-1 text-center col-sm-5 col-4 btn delete"
-              (click)="checker.emit(buddy); $event.stopPropagation();">
+      <button class="col offset-1 offset-sm-1 text-center col-sm-5 col-4 btn delete" (click)="checker.emit(buddy); $event.stopPropagation();">
         <i>Check Out</i>
-
       </button>
     </div>
   </div>

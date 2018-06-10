@@ -1,0 +1,21 @@
+@import '../../../styles/partials/_colors.scss';
+
+* ::ng-deep{
+.buddy {
+    border: 1px $blue-green solid;
+    padding: 5px;
+    background-color: rgba($tan, .3) !important;
+  }
+  
+  .buddy-content{
+    margin: 10px 0 0 0 !important;
+    flex-grow: 1;
+    margin-top: auto !important;
+    p{
+      margin: 0px;
+    }
+    b{
+      color: $dark-blue !important;
+    }
+  }
+}
