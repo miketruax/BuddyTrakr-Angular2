@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
-import { Observable } from 'rxjs';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -22,7 +20,6 @@ export class InitUserService {
   }
 
   load(){
-    console.log("to here.");
   if(localStorage.getItem('authToken')){
     let headers = new HttpHeaders().append('Authorization', localStorage.getItem('authToken'));
   const promise = this.http.get('/api/auth/getUser', {headers: headers})

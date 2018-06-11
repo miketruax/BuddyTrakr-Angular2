@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {NgModule, APP_INITIALIZER} from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {reducers} from './reducers'
 import { AppComponent } from './app.component';
 import {StoreModule} from "@ngrx/store";
@@ -20,7 +20,6 @@ import {HttpClientModule} from "@angular/common/http";
 import { BuddiesModule } from './buddies/buddies.module';
 
 export function startupUser(startupService: InitUserService){
-  console.log("startup");
   return ()=> startupService.load();
 }
 
@@ -35,6 +34,7 @@ export function startupUser(startupService: InitUserService){
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes, {
       useHash: true

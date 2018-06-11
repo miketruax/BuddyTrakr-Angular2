@@ -1,0 +1,26 @@
+<div class="col login col-12 center-block">
+  <img class="col col-6 offset-3 col-sm-4 offset-sm-4" src="/assets/img/logos/main_logo.png">
+  <h5 class="col col-12 text-center">Your buddies are expecting you!</h5>
+  <h3 class="col col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">Please Sign In</h3>
+  <form class="col col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3" role="form" (ngSubmit)="login($event)" [formGroup]="loginForm">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input formControlName="username" type="text" name="username" class="form-control tan-input" id="username" [(ngModel)]="username" placeholder="Username">
+      <div class="form-error" *ngIf="loginForm.controls.username.errors && (loginForm.controls.username.dirty || loginForm.controls.username.touched)">
+         Invalid username</div>
+      </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input formControlName="password" type="password" name="password" class="form-control tan-input" id="password" [(ngModel)]="password" placeholder="Password">
+      <div class="form-error" *ngIf="loginForm.controls.password.errors && (loginForm.controls.password.dirty || loginForm.controls.password.touched)">
+          Invalid password</div>
+      </div>
+    <button type="submit" ngClass="{{loginForm.valid && loginForm.touched ? '' : 'disabled'}}"  class="btn col-6 offset-6">
+      Get tracking!
+    </button>
+  </form>
+  <div class="col col-10 offset-1 text-center col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+  Are you a new tracker? <a [routerLink]="['/signup']" class="orange">Signup</a>
+  </div>
+
+</div>
