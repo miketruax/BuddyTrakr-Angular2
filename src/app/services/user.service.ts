@@ -78,8 +78,8 @@ export class UserService {
           return {type: flashActions.ADD_ERROR, payload:payload['err']};
         }
         else{
-          localStorage.setItem('authToken', payload['token']);
           this.router.navigate(['/buddies']);
+          localStorage.setItem('authToken', payload['token']);
           return {type: flashActions.ADD_SUCCESS, payload: 'Successfully updated password.'}
         }
       })

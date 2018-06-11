@@ -1,12 +1,27 @@
+@import '../styles/partials/_colors.scss';
 .flash{
     position: fixed !important;
     top: 61px !important;
     z-index: 1000;
     opacity: .95 !important;
     text-align: center !important;
+    width: calc(95% - 16px);
+    margin: 0 2.5%;
+    padding: 8px;
+    border-radius: .25rem;
+    color: white;
   }
   
   .flash span{
     float: right !important;
   }
+
+  .success{
+    background-color:$blue-green ;
+  }
+
+  .warning{
+    background-color: $orange;
   
+  }
+
