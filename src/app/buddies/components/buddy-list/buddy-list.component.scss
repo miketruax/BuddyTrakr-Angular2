@@ -1,6 +1,8 @@
 @import '../../../styles/partials/_colors.scss';
 
 .buddy-list{
+    width: 96%;
+    margin: auto;
     display: flex;
     flex-flow: row wrap;
   }
@@ -21,7 +23,13 @@
     button{width: 95px !important;}
   }
   
-  
+  .search-options{
+    height: 30px;
+    line-height: 30px;
+    .btn{
+      margin: 4px 0 0 0 !important;
+    }
+  }
   
   @media(min-width: 576px){
     .checked-in-buddy{
@@ -29,14 +37,14 @@
     }
   }
   
-  @media(min-width: 992px){
+  @media(min-width: 1085px){
     .checked-in-buddy{
       flex-basis: calc((100% / 4) - 32px);
     }
       
   }
   
-  @media(min-width: 1400px){
+  @media(min-width: 1625px){
     .checked-in-buddy{
       flex-basis: calc((100% / 6) - 32px);
     }

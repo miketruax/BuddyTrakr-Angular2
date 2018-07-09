@@ -13,7 +13,7 @@
       <label for="password">Password</label>
       <input formControlName="password" type="password" name="password" class="form-control tan-input" id="password" [(ngModel)]="password" placeholder="Password">
       <div class="form-error" *ngIf="loginForm.controls.password.errors && (loginForm.controls.password.dirty || loginForm.controls.password.touched)">
-          Invalid password</div>
+          Invalid Password Length</div>
       </div>
     <button type="submit" ngClass="{{loginForm.valid && loginForm.touched ? '' : 'disabled'}}"  class="btn col-6 offset-6">
       Get tracking!

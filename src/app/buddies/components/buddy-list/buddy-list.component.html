@@ -39,30 +39,18 @@
   </button>
 </div>
 
-<!--SEARCH BAR-->
-
-<div class="col col-12 offset-sm-1 col-sm-10">
-  <input class="form-control tan-input" placeholder="Search by name, species, or scientific name" type="text"
-         [(ngModel)]="filter.search" (keypress)="resetPage()">
-  <div class="col checkbox col-12">
-    <label>
-      <input type="checkbox" [(ngModel)]="filter.neverOut"> Only buddies who've never been out
-    </label>
-  </div>
-  <button class="col btn btn-xs col-3 col-sm-4 offset-sm-8 offset-9" (click)="clearFilter()">Clear</button>
-</div>
-
 
 
 <!--CHECKED IN BUDDIES HEADER PAGINATION AND BUDDIES-->
 
-<div *ngIf="(buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length > 0">
+<div>
   <h3
     class="col-12 col-sm-11 offset-sm-half text-orange text-center">
-    <i class="col-12 col-sm-5">Checked-in buddies:</i>{{(buddies | checkedIn | buddySearch:filter.search |
-    neverOut:filter.neverOut).length}} buddies found.</h3>
+    <i class="col-12 col-sm-5">Checked-in buddies:</i>{{(buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length === 1 ?
+      (buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length + ' buddy' :
+      (buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length + ' buddies'
+    }} found.</h3>
   <nav class="buddy-pagination flex-wrap d-flex justify-content-center">
-
     <h6 class="text-center text-capitalize text-orange col-12">Results per Page: </h6>
     <ul class="pagination">
       <li class="page-item" *ngFor="let x of [12,24,48,96]">
@@ -71,6 +59,19 @@
     </ul>
   </nav>
 </div>
+  <!--SEARCH BAR-->
+
+<div class="col col-12 offset-sm-1 col-sm-10">
+  <input class="form-control tan-input" placeholder="Search by name, species, or scientific name" type="text"
+         [(ngModel)]="filter.search" (keypress)="resetPage()">
+  <div class="col checkbox col-12 search-options">
+    <label>
+      <input type="checkbox" [(ngModel)]="filter.neverOut"> Only buddies who've never been out
+    </label>
+    <button class="col btn btn-xs col-3 float-right p-0" (click)="clearFilter()">Clear</button>
+  </div>
+</div>
+
 
 
 <div class="buddy-list">
@@ -80,10 +81,10 @@
     <h3 class="buddy-name mb-auto p-2 orange"><img class="paw-icon" src="assets/img/icons/checked_in.png"/>{{buddy.name}}
     </h3>
     <div class="buddy-content">
-        <p><b>Species:</b> {{buddy.species}} <span *ngIf="buddy.binomial && buddy.binomial !== ' '"> ({{buddy.binomial}})</span></p>
+        <p><b>Species:</b> {{buddy.species}} <span *ngIf="buddy.binomial && buddy.binomial !== ' '"> ({{buddy.binomial.trim()}})</span></p>
         <p><b>Birthday:</b> {{buddy.dateAdded ? (buddy.dateAdded | date: 'longDate') : 'Unknown'}}</p>
         <p *ngIf="buddy.description"><b>Description:</b> {{buddy.description}}</p>
-        <p *ngIf="buddy.lastOutDate"><b>Last Out:</b><span>{{buddy.lastOutDate | date}} for {{buddy.lastOutDays}} days.</span></p>
+        <p *ngIf="buddy.lastOutDate"><b>Last Out:</b><span> {{buddy.lastOutDate | date}} for {{buddy.lastOutDays}} days.</span></p>
       <p *ngIf="buddy.timesOut"> Out {{buddy.timesOut}} times for a total of {{buddy.totalDaysOut}} days.</p>
       <p *ngIf="!buddy.lastOutDate"><b>Your buddy hasn't been out yet. You should rectify that!</b></p>
     </div>
