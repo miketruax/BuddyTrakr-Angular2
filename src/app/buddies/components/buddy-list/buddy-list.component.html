@@ -21,7 +21,7 @@
       <div class="col col-12" *ngIf="buddy.description"><b>Description:</b> {{buddy.description}}</div>
       <div class="col col-12">Buddy has been out since: {{buddy.lastOutDate | date:'shortDate'}}</div>
     </div>
-    <button class="col col-6 offset-6 col-sm-4 offset-sm-8 btn delete"
+    <button class="col col-6 offset-6 col-sm-4 offset-sm-8 btn btn-sm delete"
             (click)="checker.emit(buddy); $event.stopPropagation();">
       <i>Check In</i>
     </button>
@@ -30,13 +30,17 @@
 
 <!--GENERIC BUDDY BUTTONS-->
 
-<div class="col col-12 generic-buttons" *ngIf="buddies.length >0">
+<div class="col col-10 offset-1 generic-buttons px-0 row" *ngIf="buddies.length >0">
+  <div class="col col-12 col-sm-5 col-md-4 col-lg-3 offset-md-1 px-0">
   <button (click)="randomBuddy.emit(buddies); $event.stopPropagation();"
-          class="col col-12 col-sm-5 offset-sm-half btn cancel">Check out a Random Buddy
+          class="col-12 btn btn-sm cancel">Checkout Random Buddy
   </button>
+</div>
+<div class="col col-12 col-sm-5 offset-sm-2 offset-md-2 col-md-4 col-lg-3 offset-lg-4 px-0">
   <button (click)="addBuddy.emit(buddies); $event.stopPropagation();" id="checkedIn"
-          class="col col-12 col-sm-5 offset-sm-1 btn cancel">Add a New Buddy
+          class="col-12 btn btn-sm cancel">Add New Buddy
   </button>
+</div>
 </div>
 
 
@@ -89,9 +93,9 @@
       <p *ngIf="!buddy.lastOutDate"><b>Your buddy hasn't been out yet. You should rectify that!</b></p>
     </div>
     <div class="buddy-buttons">
-      <button class="col col-5 text-center btn col-sm-5" (click)="selected.emit(buddy); $event.stopPropagation();"><i>Edit</i>
+      <button class="col col-5 text-center btn btn-sm col-sm-5" (click)="selected.emit(buddy); $event.stopPropagation();"><i>Edit</i>
       </button>
-      <button class="col offset-1 offset-sm-1 text-center col-sm-5 col-4 btn delete" (click)="checker.emit(buddy); $event.stopPropagation();">
+      <button class="col offset-1 offset-sm-1 text-center col-sm-5 col-4 btn btn-sm delete" (click)="checker.emit(buddy); $event.stopPropagation();">
         <i>Check Out</i>
       </button>
     </div>

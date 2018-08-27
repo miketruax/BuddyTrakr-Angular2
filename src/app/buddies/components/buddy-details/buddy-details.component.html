@@ -31,13 +31,13 @@
     </form>
   </div>
   <div class="col col-12 buddyButtons">
-      <button class="btn col col-12 col-sm-3" type="submit" (click)="saveBuddy()">
+      <button class="btn btn-sm col col-12 col-sm-3" type="submit" (click)="saveBuddy()">
         Save
       </button>
-    <button class="btn col col-12 col-sm-3  offset-sm-1 cancel" type="submit" (click)="cancelled.emit(selectedBuddy)">
+    <button class="btn btn-sm col col-12 col-sm-3  offset-sm-1 cancel" type="submit" (click)="cancelled.emit(selectedBuddy)">
       Cancel
     </button>
-    <button class="col col-12 btn col-sm-3  offset-sm-1 delete" (click)="deleted.emit(buddy); $event.stopPropagation();">
+    <button class="col col-12 btn btn-sm col-sm-3  offset-sm-1 delete" (click)="deleted.emit(buddy); $event.stopPropagation();">
       <i>Delete</i>
     </button>
   </div>

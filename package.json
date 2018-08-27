@@ -53,7 +53,7 @@
     "method-override": "^2.3.7",
     "mongoose": "^4.8.7",
     "morgan": "^1.8.1",
-    "node-sass": "^4.5.1",
+    "node-sass": "^4.9.2",
     "octicons": "^7.3.0",
     "passport": "^0.3.2",
     "passport-jwt": "^2.2.1",
