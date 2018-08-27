@@ -11,6 +11,7 @@ import {CheckedOut} from './pipes/checked-out.pipe';
 import {BuddySearch} from './pipes/buddy-search.pipe';
 import {NeverOut} from './pipes/never-out.pipe';
 import { CommonModule } from '@angular/common';
+import { MaterialModule } from '../material.module';
 
 
 @NgModule({
@@ -19,7 +20,7 @@ import { CommonModule } from '@angular/common';
     CheckedIn, CheckedOut, BuddySearch, NeverOut
   ],
   imports: [CommonModule,
-    FormsModule,
+    FormsModule, MaterialModule,
     HttpClientModule
   ],
   providers: [BuddyService],

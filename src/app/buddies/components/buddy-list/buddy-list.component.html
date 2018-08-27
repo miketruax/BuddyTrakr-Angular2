@@ -24,7 +24,7 @@
         <b>Description:</b> {{buddy.description}}</div>
       <div class="col col-12">Buddy has been out since: {{buddy.lastOutDate | date:'shortDate'}}</div>
     </div>
-    <button class="col col-6 offset-6 col-sm-4 offset-sm-8 btn btn-sm delete" (click)="checker.emit(buddy); $event.stopPropagation();">
+    <button mat-raised-button color="primary" class="col col-6 offset-6 col-sm-4 offset-sm-8 btn btn-sm" (click)="checker.emit(buddy); $event.stopPropagation();">
       <i>Check In</i>
     </button>
   </div>

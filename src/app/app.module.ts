@@ -7,6 +7,7 @@ import {StoreModule} from "@ngrx/store";
 import {routes} from "./app.routes";
 import {RouterModule} from "@angular/router";
 import {LoginComponent} from "./login/login.component";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {AboutComponent} from "./about/about.component";
 import {AuthProtected} from "./services/auth-protected.service";
@@ -18,6 +19,7 @@ import {SettingsComponent} from "./settings/settings.component";
 import {InitUserService} from "./services/init-user.service";
 import {HttpClientModule} from "@angular/common/http";
 import { BuddiesModule } from './buddies/buddies.module';
+import { MaterialModule } from './material.module';
 
 export function startupUser(startupService: InitUserService){
   return ()=> startupService.load();
@@ -33,9 +35,11 @@ export function startupUser(startupService: InitUserService){
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MaterialModule,
     RouterModule.forRoot(routes, {
       useHash: true
     }),
