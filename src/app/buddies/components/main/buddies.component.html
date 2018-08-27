@@ -8,5 +8,5 @@
 <div>
   <buddy-detail *ngIf="details"
     (saved)="saveBuddy($event)" (cancelled)="resetBuddy($event)" (deleted)="deleteBuddy($event)"
-    [selectedBuddy]="selectedBuddy | async">Buddy Editor Loading...</buddy-detail>
+    [selectedBuddy]="selectedBuddy | async" [actionType] = "actionType">Buddy Editor Loading...</buddy-detail>
 </div>

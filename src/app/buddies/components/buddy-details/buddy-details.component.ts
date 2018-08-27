@@ -21,6 +21,7 @@ export class BuddyDetailsComponent {
     if (value) this.originalName = value.name;
     this.selectedBuddy = Object.assign({}, value);
   }
+  @Input() actionType: string;
 
   @Output() saved = new EventEmitter();
   @Output() cancelled = new EventEmitter();

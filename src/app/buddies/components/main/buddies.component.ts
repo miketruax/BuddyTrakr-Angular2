@@ -26,6 +26,7 @@ export class BuddiesComponent {
   buddies: Observable<Array<Buddy>>;
   user: Observable<User>;
   selectedBuddy: Observable<Buddy>;
+  actionType: string;
 
   constructor(private buddyService: BuddyService,
               private store: Store<fromRoot.State>) {
@@ -41,7 +42,7 @@ export class BuddiesComponent {
       type: selectedBuddyActions.SELECT_BUDDY,
       payload: buddy
     });
-    this.toggleDetails(true)
+    this.toggleDetails(true, 'edit')
   }
 
   checkBuddy(buddy: Buddy){
@@ -62,7 +63,7 @@ export class BuddiesComponent {
   }
 
   addBuddy(buddy: Buddy){
-    this.toggleDetails(true)
+    this.toggleDetails(true, 'add')
   }
 
   deleteBuddy(buddy: Buddy) {
@@ -83,8 +84,9 @@ export class BuddiesComponent {
     this.resetBuddy();
   }
 
-  toggleDetails(showDetails: boolean){
+  toggleDetails(showDetails: boolean, actionType: string = null){
     this.details = showDetails;
+    this.actionType = actionType;
     this.store.dispatch({type: flashActions.CLEAR_FLASH})
   }
 

@@ -2,33 +2,39 @@
   <a class="navbar-brand" [routerLink]="['/about']">
     <img class="brand-logo" alt="Buddy Trakr" src="/assets/img/logos/main_logo.png">
   </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-main"
-          aria-controls="navbar-main" aria-label="Toggle navigation" id="navbar-toggler" #toggler
-          aria-expanded="false"
-          [ngClass]="{'nav-menu-active': menuActive}" (click)="menuClick($event)">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-main" aria-controls="navbar-main"
+    aria-label="Toggle navigation" id="navbar-toggler" #toggler aria-expanded="false" [ngClass]="{'nav-menu-active': menuActive}"
+    (click)="menuClick($event)">
     <span class="sr-only">Toggle navigation</span>
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
   </button>
 
-  <div class=" collapse navbar-collapse justify-content-end" id="navbar-main" #menu>
+  <div class=" collapse navbar-collapse p-0" id="navbar-main" #menu>
     <ul class="navbar-nav nav-pills">
-      <li class="nav-item" *ngIf="(userID | async)"><a routerLinkActive="active"
-                                                       [routerLinkActiveOptions]="{exact:true}" class="nav-link"
-                                                       [routerLink]="['/buddies']">Buddies</a></li>
-      <li class="nav-item"><a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link"
-                              [routerLink]="['/about']">About</a></li>
-      <li class="nav-item" *ngIf="(userID | async)"><a routerLinkActive="active"
-                                                       [routerLinkActiveOptions]="{exact:true}" class="nav-link"
-                                                       [routerLink]="['/settings']">Settings</a></li>
-      <li class="nav-item" *ngIf="!(userID | async)"><a routerLinkActive="active"
-                                                        [routerLinkActiveOptions]="{exact:true}" class="nav-link"
-                                                        [routerLink]="['/login']">Log In</a></li>
-      <li class="nav-item" *ngIf="!(userID | async)"><a routerLinkActive="active"
-                                                        [routerLinkActiveOptions]="{exact:true}" class="nav-link"
-                                                        [routerLink]="['/signup']">Signup</a></li>
-      <li class="nav-item" *ngIf="(userID | async)" class="pointer"><a class="nav-link" (click)="logout()">Logout</a>
+        <li class="nav-item m-1">
+            <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link" [routerLink]="['/about']">About</a>
+          </li>
+      <li class="nav-item m-1" *ngIf="(userID | async)">
+        <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link" [routerLink]="['/buddies']">Buddies</a>
+      </li>
+      <!-- <li class="nav-item m-1" *ngIf="(userID | async)">
+          <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link" [routerLink]="['/friends']">Friends</a>
+      </li> -->
+      <li class="nav-item m-1" *ngIf="(userID | async)">
+        <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link" [routerLink]="['/settings']">Settings</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav nav-pills ml-auto" >
+      <li class="nav-item m-1" *ngIf="!(userID | async)">
+        <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link" [routerLink]="['/login']">Log In</a>
+      </li>
+      <li class="nav-item m-1" *ngIf="!(userID | async)">
+        <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link" [routerLink]="['/signup']">Signup</a>
+      </li>
+      <li class="nav-item m-1 pointer" *ngIf="(userID | async)">
+        <a class="nav-link" (click)="logout()">Logout</a>
       </li>
     </ul>
   </div>
@@ -40,7 +46,9 @@
   <router-outlet></router-outlet>
 </div>
 
-  <footer class="col-10 offset-1 text-center">
+<footer class="col-10 offset-1 text-center">
   <img src="/assets/img/logos/paw_logo.png" style="max-height: 40px !important;">
-  <span>Buddy Trakr App created by <a href="http://www.miketruax.com">Mike Truax</a></span>
+  <span>Buddy Trakr App created by
+    <a href="http://www.miketruax.com">Mike Truax</a>
+  </span>
 </footer>

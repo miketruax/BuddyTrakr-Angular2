@@ -1,59 +1,59 @@
-<h2 class="col col-12 bottom-5 col-sm-10 offset-sm-1">Welcome, <span class="text-orange">{{user.username}}!</span><br>
-  Let's get tracking! </h2>
+<h2 class="col col-12 bottom-5 col-sm-10 offset-sm-1">Welcome,
+  <span class="text-orange">{{user.username}}!</span> Let's get tracking! </h2>
 
 <!--CHECKED OUT BUDDY HEADER AND BUDDIES-->
 
-<h3 *ngIf="(buddies | checkedIn | buddySearch:filter.search).length > 0" class="col-12 col-sm-10 offset-sm-1 orange"><i>Checked
-  out buddies:</i>
+<h3 *ngIf="(buddies | checkedIn | buddySearch:filter.search).length > 0" class="col-12 col-sm-10 offset-sm-1 orange">
+  <i>Checked out buddies:</i>
 </h3>
 <div class="flex-wrap">
-  <div *ngFor="let buddy of (buddies | checkedOut )"
-       class="col col-12 col-sm-10 offset-sm-1 buddy">
+  <div *ngFor="let buddy of (buddies | checkedOut )" class="col col-12 col-sm-10 offset-sm-1 buddy">
     <div class="col col-12 bottom-5">
-      <h3 class="col col-12"><img class="paw-icon" src="/assets/img/icons/checked_out.png"/>{{buddy.name}}</h3>
+      <h3 class="col col-12">
+        <img class="paw-icon" src="/assets/img/icons/checked_out.png" />{{buddy.name}}</h3>
     </div>
     <div class="col col-12 bottom-5">
-      <div class="col col-12"><b>Species:</b> {{buddy.species}} <span
-        *ngIf="buddy.binomial && buddy.binomial !== ' '"> ({{buddy.binomial}})</span>
+      <div class="col col-12">
+        <b>Species:</b> {{buddy.species}}
+        <span *ngIf="buddy.binomial && buddy.binomial !== ' '"> ({{buddy.binomial}})</span>
       </div>
-      <div class="col col-12"><b>Birthday:</b> {{buddy.dateAdded ? (buddy.dateAdded | date: 'longDate') : 'Unknown'}}
+      <div class="col col-12">
+        <b>Birthday:</b> {{buddy.dateAdded ? (buddy.dateAdded | date: 'longDate') : 'Unknown'}}
       </div>
-      <div class="col col-12" *ngIf="buddy.description"><b>Description:</b> {{buddy.description}}</div>
+      <div class="col col-12" *ngIf="buddy.description">
+        <b>Description:</b> {{buddy.description}}</div>
       <div class="col col-12">Buddy has been out since: {{buddy.lastOutDate | date:'shortDate'}}</div>
     </div>
-    <button class="col col-6 offset-6 col-sm-4 offset-sm-8 btn btn-sm delete"
-            (click)="checker.emit(buddy); $event.stopPropagation();">
+    <button class="col col-6 offset-6 col-sm-4 offset-sm-8 btn btn-sm delete" (click)="checker.emit(buddy); $event.stopPropagation();">
       <i>Check In</i>
     </button>
   </div>
 </div>
 
 <!--GENERIC BUDDY BUTTONS-->
+<h2 class="text-center text-orange" *ngIf="buddies.length  <= 0">You don't have any buddies... Add a buddy to get started!</h2>
 
-<div class="col col-10 offset-1 generic-buttons px-0 row" *ngIf="buddies.length >0">
-  <div class="col col-12 col-sm-5 col-md-4 col-lg-3 offset-md-1 px-0">
-  <button (click)="randomBuddy.emit(buddies); $event.stopPropagation();"
-          class="col-12 btn btn-sm cancel">Checkout Random Buddy
-  </button>
-</div>
-<div class="col col-12 col-sm-5 offset-sm-2 offset-md-2 col-md-4 col-lg-3 offset-lg-4 px-0">
-  <button (click)="addBuddy.emit(buddies); $event.stopPropagation();" id="checkedIn"
-          class="col-12 btn btn-sm cancel">Add New Buddy
-  </button>
-</div>
+<div class="col col-10 offset-1 generic-buttons px-0 row d-flex justify-content-center">
+  <div class="col col-12 col-sm-5 col-md-4 col-lg-3 px-0">
+    <button (click)="addBuddy.emit(buddies); $event.stopPropagation();" id="checkedIn" class="col-12 btn btn-sm cancel">Add New Buddy
+    </button>
+  </div>
+  <div *ngIf="buddies.length >0" class="col col-12 col-sm-5 offset-sm-2 offset-md-2 col-md-4 col-lg-3 offset-lg-4 px-0">
+    <button (click)="randomBuddy.emit(buddies); $event.stopPropagation();" class="col-12 btn btn-sm cancel">Checkout Random Buddy
+    </button>
+
+  </div>
 </div>
 
 
 
 <!--CHECKED IN BUDDIES HEADER PAGINATION AND BUDDIES-->
 
-<div>
-  <h3
-    class="col-12 col-sm-11 offset-sm-half text-orange text-center">
+<div *ngIf="buddies.length > 0">
+  <h3 class="col-12 col-sm-11 offset-sm-half text-orange text-center">
     <i class="col-12 col-sm-5">Checked-in buddies:</i>{{(buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length === 1 ?
-      (buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length + ' buddy' :
-      (buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length + ' buddies'
-    }} found.</h3>
+    (buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length + ' buddy' : (buddies | checkedIn
+    | buddySearch:filter.search | neverOut:filter.neverOut).length + ' buddies' }} found.</h3>
   <nav class="buddy-pagination flex-wrap d-flex justify-content-center">
     <h6 class="text-center text-capitalize text-orange col-12">Results per Page: </h6>
     <ul class="pagination">
@@ -63,11 +63,11 @@
     </ul>
   </nav>
 </div>
-  <!--SEARCH BAR-->
+<!--SEARCH BAR-->
 
-<div class="col col-12 offset-sm-1 col-sm-10">
-  <input class="form-control tan-input" placeholder="Search by name, species, or scientific name" type="text"
-         [(ngModel)]="filter.search" (keypress)="resetPage()">
+<div class="col col-12 offset-sm-1 col-sm-10"  *ngIf="buddies.length >0">
+  <input class="form-control tan-input" placeholder="Search by name, species, or scientific name" type="text" [(ngModel)]="filter.search"
+    (keypress)="resetPage()">
   <div class="col checkbox col-12 search-options">
     <label>
       <input type="checkbox" [(ngModel)]="filter.neverOut"> Only buddies who've never been out
@@ -79,21 +79,32 @@
 
 
 <div class="buddy-list">
-  <div
-    *ngFor="let buddy of getActivePortion((buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut)); let i = index;"
+  <div *ngFor="let buddy of getActivePortion((buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut)); let i = index;"
     class="buddy checked-in-buddy">
-    <h3 class="buddy-name mb-auto p-2 orange"><img class="paw-icon" src="assets/img/icons/checked_in.png"/>{{buddy.name}}
+    <h3 class="buddy-name mb-auto p-2 orange">
+      <img class="paw-icon" src="assets/img/icons/checked_in.png" />{{buddy.name}}
     </h3>
     <div class="buddy-content">
-        <p><b>Species:</b> {{buddy.species}} <span *ngIf="buddy.binomial && buddy.binomial !== ' '"> ({{buddy.binomial.trim()}})</span></p>
-        <p><b>Birthday:</b> {{buddy.dateAdded ? (buddy.dateAdded | date: 'longDate') : 'Unknown'}}</p>
-        <p *ngIf="buddy.description"><b>Description:</b> {{buddy.description}}</p>
-        <p *ngIf="buddy.lastOutDate"><b>Last Out:</b><span> {{buddy.lastOutDate | date}} for {{buddy.lastOutDays}} days.</span></p>
+      <p>
+        <b>Species:</b> {{buddy.species}}
+        <span *ngIf="buddy.binomial && buddy.binomial !== ' '"> ({{buddy.binomial.trim()}})</span>
+      </p>
+      <p>
+        <b>Birthday:</b> {{buddy.dateAdded ? (buddy.dateAdded | date: 'longDate') : 'Unknown'}}</p>
+      <p *ngIf="buddy.description">
+        <b>Description:</b> {{buddy.description}}</p>
+      <p *ngIf="buddy.lastOutDate">
+        <b>Last Out:</b>
+        <span> {{buddy.lastOutDate | date}} for {{buddy.lastOutDays}} days.</span>
+      </p>
       <p *ngIf="buddy.timesOut"> Out {{buddy.timesOut}} times for a total of {{buddy.totalDaysOut}} days.</p>
-      <p *ngIf="!buddy.lastOutDate"><b>Your buddy hasn't been out yet. You should rectify that!</b></p>
+      <p *ngIf="!buddy.lastOutDate">
+        <b>Your buddy hasn't been out yet. You should rectify that!</b>
+      </p>
     </div>
     <div class="buddy-buttons">
-      <button class="col col-5 text-center btn btn-sm col-sm-5" (click)="selected.emit(buddy); $event.stopPropagation();"><i>Edit</i>
+      <button class="col col-5 text-center btn btn-sm col-sm-5" (click)="selected.emit(buddy); $event.stopPropagation();">
+        <i>Edit</i>
       </button>
       <button class="col offset-1 offset-sm-1 text-center col-sm-5 col-4 btn btn-sm delete" (click)="checker.emit(buddy); $event.stopPropagation();">
         <i>Check Out</i>
@@ -103,14 +114,10 @@
 </div>
 
 
-<nav class="buddy-pagination flex-wrap d-flex justify-content-center"
-     *ngIf="(buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length > perPage">
+<nav class="buddy-pagination flex-wrap d-flex justify-content-center" *ngIf="(buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length > perPage">
   <ul class="pagination">
-    <li *ngFor="let i of buttons((buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length);"
-        class="page-item">
+    <li *ngFor="let i of buttons((buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length);" class="page-item">
       <a class="pag-button pointer page-link" [ngClass]="{active : activePage===i}" (click)="setActive(i)">{{i}}</a>
     </li>
   </ul>
 </nav>
-
-
