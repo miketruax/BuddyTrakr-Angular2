@@ -1,4 +1,4 @@
-@import '../styles/partials/_colors.scss';
+@import '../shared/styles/colors';
 .flash{
   position: fixed !important;
   top: 3px !important;
@@ -18,11 +18,11 @@
   }
 
   .success{
-    background-color:$blue-green ;
+    background-color:$primary ;
   }
 
   .warning{
-    background-color: $orange;
+    background-color: $warning;
   
   }
 

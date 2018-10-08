@@ -1,8 +1,8 @@
 <div class="page-container">
-<h2 class="text-center">Welcome, <span class="text-orange">{{user.username}}!</span> Let's get tracking! </h2>
+<h2 class="text-center">Welcome, <span class="text-warning">{{user.username}}!</span> Let's get tracking! </h2>
 
 <!--GENERIC BUDDY BUTTONS-->
-<h2 class="text-center text-orange" *ngIf="buddies.length  <= 0">You don't have any buddies... Add a buddy to get started!</h2>
+<h2 class="text-center text-warning" *ngIf="buddies.length  <= 0">You don't have any buddies... Add a buddy to get started!</h2>
 
 <div class="button-container">
     <button (click)="addBuddy.emit(buddies); $event.stopPropagation();" mat-raised-button color="primary">Add New Buddy</button>
@@ -18,14 +18,14 @@
     <mat-card class="buddy-card" *ngFor="let buddy of (buddies | checkedOut ); let i = index;">
         <mat-card-header>
             <div mat-card-avatar class="checked-out-image"></div>
-          <mat-card-title class="text-orange buddy-name"><b>{{buddy.name}}</b></mat-card-title>
+          <mat-card-title class="text-warning buddy-name"><b>{{buddy.name}}</b></mat-card-title>
           <mat-card-subtitle>{{buddy.species}}<span *ngIf="buddy.binomial && buddy.binomial !== ' '"> ({{buddy.binomial.trim()}})</span></mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-            <b class="text-dark-blue">Birthday:</b> {{buddy.dateAdded ? (buddy.dateAdded | date: 'longDate') : 'Unknown'}}<br>
+            <b class="text-secondary">Birthday:</b> {{buddy.dateAdded ? (buddy.dateAdded | date: 'longDate') : 'Unknown'}}<br>
             <ng-container *ngIf="buddy.description">
-                <b class="text-dark-blue">Description:</b> {{buddy.description}}<br></ng-container>
-                <p class="text-orange">Buddy has been out since: {{buddy.lastOutDate | date:'shortDate'}}</p> 
+                <b class="text-secondary">Description:</b> {{buddy.description}}<br></ng-container>
+                <p class="text-warning">Buddy has been out since: {{buddy.lastOutDate | date:'shortDate'}}</p> 
           </mat-card-content>
           <mat-card-actions class="button-container">
               <button mat-raised-button color="accent" (click)="checker.emit(buddy); $event.stopPropagation();">Check In</button>
@@ -36,11 +36,11 @@
 <!--CHECKED IN BUDDIES HEADER PAGINATION AND BUDDIES-->
 
 <div *ngIf="buddies.length > 0">
-  <h3 class="text-orange text-center">
+  <h3 class="text-warning text-center">
     <i>Checked-in buddies: </i>{{(buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length === 1 ?
     (buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut).length + ' buddy' : (buddies | checkedIn
     | buddySearch:filter.search | neverOut:filter.neverOut).length + ' buddies' }} found.</h3>
-    <h6 class="text-center text-capitalize text-orange">Results per Page: </h6>
+    <h6 class="text-center text-capitalize text-warning">Results per Page: </h6>
     <nav class="buddy-pagination">
     <ng-container *ngFor="let x of [12,24,48,96]">
         <button class="pag-button pointer" mat-raised-button [color]="perPage=== x ? 'primary' : 'basic'" (click)="setPerPage(x)">{{x}}</button>
@@ -66,20 +66,20 @@
   <mat-card class="buddy-card" *ngFor="let buddy of getActivePortion((buddies | checkedIn | buddySearch:filter.search | neverOut:filter.neverOut)); let i = index;">
       <mat-card-header>
           <div mat-card-avatar class="checked-in-image"></div>
-        <mat-card-title class="text-orange buddy-name"><b>{{buddy.name}}</b></mat-card-title>
+        <mat-card-title class="text-warning buddy-name"><b>{{buddy.name}}</b></mat-card-title>
         <mat-card-subtitle>{{buddy.species}}<span *ngIf="buddy.binomial && buddy.binomial !== ' '"> ({{buddy.binomial.trim()}})</span></mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-          <b class="text-dark-blue">Birthday:</b> {{buddy.dateAdded ? (buddy.dateAdded | date: 'longDate') : 'Unknown'}}<br>
+          <b class="text-secondary">Birthday:</b> {{buddy.dateAdded ? (buddy.dateAdded | date: 'longDate') : 'Unknown'}}<br>
           <ng-container *ngIf="buddy.description">
-              <b class="text-dark-blue">Description:</b> {{buddy.description}}<br></ng-container>
+              <b class="text-secondary">Description:</b> {{buddy.description}}<br></ng-container>
             <ng-container *ngIf="buddy.lastOutDate">
-              <b class="text-dark-blue">Last Out:</b>
+              <b class="text-secondary">Last Out:</b>
               <span> {{buddy.lastOutDate | date}} for {{buddy.lastOutDays}} days.</span><br>
             </ng-container>
             <ng-container *ngIf="buddy.timesOut"> Out {{buddy.timesOut}} times for a total of {{buddy.totalDaysOut}} days.</ng-container>
             <ng-container *ngIf="!buddy.lastOutDate">
-              <b class="text-orange">Your buddy hasn't been out yet. You should rectify that!</b>
+              <b class="text-warning">Your buddy hasn't been out yet. You should rectify that!</b>
             </ng-container>
         </mat-card-content>
         <mat-card-actions class="button-container">

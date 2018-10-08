@@ -1,7 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-@import "app/styles/app.style";
 @import '~@angular/material/theming';
+@import './app//shared/styles/colors';
+
+
+
+//MATERIAL DESIGN
 @include mat-core();
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
@@ -130,6 +134,80 @@ $buddy-app-theme: mat-light-theme($buddy-app-primary, $buddy-app-accent, $buddy-
 // that you are using.
 @include angular-material-theme($buddy-app-theme);
 
+// Typography
+    // Sizes
+    .font-size-14{
+        font-size: 14px !important;
+    }
+    
+    //Colors
+    .text-primary{
+        color: $primary !important;
+      }
+      .text-accent-light{
+        color: $accent-light !important;
+      }
+      .text-warning{
+        color: $warning !important;
+      }
+      .text-secondary{
+        color: $secondary !important;
+      }
+      .text-accent-dark{
+       color: $accent-dark !important;
+      }
+
+    //Layout
+    .text-center{
+        text-align: center;
+    }
+
+
+//Layout Helpers
+.float-right{
+    float: right;
+    clear: both;
+}
+
+
+//CONTAINERS
+
+.page-container{
+    width: 90%;
+    margin: 20px 5%;
+}  
+
+.section-container{
+    margin-top: 10px;
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+
+
+.paw-icon{
+    max-height: 50px; width: auto;
+    padding: 0 !important;
+    margin-left: -5px !important;
+  }
+  
+ 
+.main-content{
+    background-color: rgba(255,255,255,.6);
+  }
+
+  .mat-sidenav-container{
+    .sidenav-content, .sidenav-menu{
+        margin-top: 50px;
+    }
+      min-height: calc(100% - 50px);
+  }
+
+  .sidenav-menu{
+      background-color: $accent-light;
+  }
 
 
 

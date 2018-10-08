@@ -1,12 +1,12 @@
 <mat-toolbar color="primary" class="top-toolbar">
-  <div class="toolbar-logo"><img alt="Buddy Trakr" src="/assets/img/icons/checked_in.png">BuddyTrakr</div>
+  <div class="toolbar-logo"><img alt="Buddy Trakr" src="/assets/img/logos/main_logo.png"></div>
   <button class="menu-toggle" mat-flat-button color="accent">
   <i class="material-icons pointer" (click)="sidenav.toggle()" color="primary">menu</i>
   </button>  
 </mat-toolbar>
 <mat-sidenav-container class="menu-container main-content">
-  <mat-sidenav class="sidenav-content" #sidenav mode="over" [(opened)]="opened" [fixedInViewport]="true">
-    <img class="menu-logo" alt="Buddy Trakr" src="/assets/img/logos/main_logo.png">
+  <mat-sidenav class="sidenav-menu" #sidenav mode="over" [(opened)]="opened" [fixedInViewport]="true">
+    <!-- <img class="menu-logo" alt="Buddy Trakr" src="/assets/img/logos/main_logo.png"> -->
     <mat-nav-list>
       <a (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link text-center"
         [routerLink]="['/about']">About</a>

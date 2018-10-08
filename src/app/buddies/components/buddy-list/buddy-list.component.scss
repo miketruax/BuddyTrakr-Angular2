@@ -1,4 +1,4 @@
-@import '../../../styles/partials/_colors.scss';
+@import '../../../shared/styles/colors';
 
 .buddy-list{
     width: 96%;
@@ -14,8 +14,8 @@
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: calc((100%) - 32px);
-    border: 1px solid $blue-green;
-    background-color: rgba($tan, .3);
+    border: 1px solid $primary;
+    background-color: rgba($accent-light, .3);
   }
 
 

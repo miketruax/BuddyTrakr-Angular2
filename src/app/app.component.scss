@@ -1,8 +1,14 @@
+@import './shared/styles/colors';
+
 a:hover:not(.navbar-brand){
-  background-color: $tan;
+  background-color: $warning;
+}
+.nav-link{
+  display: block;
+    padding: .5rem 1rem;
 }
 .active, .active:hover{
-background-color: $blue-green !important;
+background-color: $primary !important;
 color: white;
 }
 
@@ -26,9 +32,9 @@ color: white;
 .menu-toggle{
   padding: 3px;
   min-width: 18px;
-  border-radius: 10px;
-  background-color:$tan;
-  color:$off-black;
+  border-radius: 5px;
+  background-color:$accent-light;
+  color:$warning;
   i{
     font-size: 35px;
   }

@@ -1,5 +1,5 @@
 <div class="page-container">
-  <h2 class="text-center text-orange">{{selectedBuddy._id ? "Editing "+originalName : "Create New Buddy"}}</h2>
+  <h2 class="text-center text-warning">{{selectedBuddy._id ? "Editing "+originalName : "Create New Buddy"}}</h2>
     <form class="buddy-edit-form">
       <mat-form-field class="input">
         <input matInput name="name" [(ngModel)]="selectedBuddy.name"
