@@ -9,7 +9,8 @@ import {
   MatCardModule,
   MatSidenavModule,
   MatCheckboxModule,
-  MatListModule
+  MatListModule,
+  MatPaginatorModule,
 
 } from '@angular/material';
 
@@ -23,7 +24,8 @@ import {
     MatCardModule,
     MatSidenavModule,
     MatCheckboxModule,
-    MatListModule
+    MatListModule,
+    MatPaginatorModule,
   ],
   exports: [
     MatButtonModule,
@@ -34,7 +36,8 @@ import {
     MatCardModule,
     MatSidenavModule,
     MatCheckboxModule,
-    MatListModule
+    MatListModule,
+    MatPaginatorModule,
   ]
 })
 export class MaterialModule {}

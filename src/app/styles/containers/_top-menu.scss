@@ -7,11 +7,35 @@ color: white;
 }
 
 .mat-sidenav{
-  width: 150px;
+  width: 300px;
 }
 
 .menu-logo{
   max-height: 45px !important;
   margin: 10px auto;
   display: block;
+}
+
+.toolbar-logo{
+  margin: 0 auto 0 0 ;
+  img{
+  max-height: 40px !important;
+  }
+}
+
+.menu-toggle{
+  padding: 3px;
+  min-width: 18px;
+  border-radius: 10px;
+  background-color:$tan;
+  color:$off-black;
+  i{
+    font-size: 35px;
+  }
+}
+
+.top-toolbar{
+  height: 50px;
+  position: fixed;
+  z-index: 10;
 }

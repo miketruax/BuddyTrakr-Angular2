@@ -7,47 +7,86 @@
     flex-flow: row wrap;
   }
   
-  .checked-in-buddy{
+  .buddy-card{
     display: flex;
     flex-flow: column wrap;
-    margin: 10px;
+    margin: 6px;
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: calc((100%) - 32px);
+    border: 1px solid $blue-green;
+    background-color: rgba($tan, .3);
   }
-  
-  .buddy-buttons{
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-evenly;
-    button{width: 95px !important;}
-  }
+
+
   
   .search-options{
-    height: 30px;
-    line-height: 30px;
-    .btn{
-      margin: 4px 0 0 0 !important;
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    mat-checkbox{
+      margin: 0 0 0 5%;
     }
+    button{
+      margin: 0 5% 0 auto;
+    }
+  }
+
+  .filter{
+    width: 90%;
+    margin: 8px 5%;
+  }
+
+  .search{
+    width: 100%;
+    margin: 10px 0;
   }
   
   @media(min-width: 576px){
-    .checked-in-buddy{
+    .buddy-card{
       flex-basis: calc((100% / 2) - 32px);
     }
   }
   
-  @media(min-width: 1085px){
-    .checked-in-buddy{
+  @media(min-width: 1088px){
+    .buddy-card{
       flex-basis: calc((100% / 4) - 32px);
     }
       
   }
   
-  @media(min-width: 1625px){
-    .checked-in-buddy{
-      flex-basis: calc((100% / 6) - 32px);
-    }
-  
+  .checked-in-image{
+    background-image: url('/assets/img/icons/checked_in.png');
+    background-size: cover;
+    border-radius: 0 !important;
   }
-  
+
+  .checked-out-image{
+    background-image: url('/assets/img/icons/checked_out.png');
+    background-size: cover;
+    border-radius: 0 !important;
+  }
+
+  .button-container{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    margin: auto 0 10px 0;
+    button{
+      margin: 5px auto;
+    }
+  }
+
+  .buddy-name{
+    margin-bottom: 5px;
+  }
+  .pag-button{
+    border: 1px;
+    min-width: 20px !important;
+  }
+
+  .buddy-pagination{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center !important;
+  }

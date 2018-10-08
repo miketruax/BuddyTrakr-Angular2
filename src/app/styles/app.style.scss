@@ -1,18 +1,14 @@
 @import 'partials/colors';
-@import 'partials/override-bootstrap';
 
 @import 'typography/font-colors';
 @import 'typography/font-sizes';
 
 @import 'containers/top-menu';
 
-@import 'helpers/forms';
 @import 'helpers/pagination';
 @import 'helpers/spacing';
-@import 'helpers/buttons';
 
 @import 'images/backgrounds';
-@import 'images/sizing';
 
 .text-center{
     text-align: center;
@@ -21,7 +17,7 @@
 .page-container{
     width: 90%;
     margin: 20px 5%;
-}
+}  
 
 .float-right{
     float: right;
@@ -31,3 +27,24 @@
 .section-container{
     margin-top: 10px;
 }
+
+.pointer{
+    cursor: pointer;
+}
+.paw-icon{
+    max-height: 50px; width: auto;
+    padding: 0 !important;
+    margin-left: -5px !important;
+  }
+  
+ 
+.main-content{
+    background-color: rgba(255,255,255,.6);
+  }
+
+  .mat-sidenav-container{
+    .sidenav-content{
+        margin-top: 50px;
+    }
+      min-height: calc(100% - 50px);
+  }

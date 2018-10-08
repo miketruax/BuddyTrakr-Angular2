@@ -32,7 +32,6 @@ export class BuddyListComponent{
 
   setActive(active: number){
     this.activePage = active;
-    document.getElementById('checkedIn').scrollIntoView();
   }
   resetPage(){
     this.activePage = 1

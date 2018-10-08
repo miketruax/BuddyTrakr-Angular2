@@ -1,10 +1,5 @@
-.pointer{
-  cursor: pointer !important;
-}
-
 .menu-logo{
   max-height: 45px !important;
   margin: 10px auto;
   display: block;
 }
-
