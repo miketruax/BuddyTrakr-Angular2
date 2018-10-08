@@ -1,0 +1,25 @@
+.disabled{
+    cursor: not-allowed;
+    opacity: .65;
+}
+
+
+.settings-form{
+    width: 90%;
+    margin: 5%;
+}
+.input{
+    width: 100%;
+    margin: 10px 0;
+}
+
+.cancel-button{
+    margin-left: 10px;
+}
+
+.button-container{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: end;
+}
+

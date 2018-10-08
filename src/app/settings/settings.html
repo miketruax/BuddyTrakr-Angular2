@@ -1,20 +1,25 @@
-<h2 class="col col-10 offset-1 col-sm-8 offset-sm-2">Change password for <span class="orange">{{(user | async).username}}</span></h2>
-<form class="col col-10 offset-1 col-sm-8 offset-sm-2" role="form" (submit)="changePassword($event)">
-  <div class="form-group">
-    <label for="currentPassword">Current Password</label>
-    <input type="password" class="form-control tan-input" id="currentPassword" placeholder="Current Password" [(ngModel)]="form.currentPassword" name="currentPassword">
-    <div class="col col-12 alert alert-danger" *ngIf="errors.currentPassword">{{errors.currentPassword}}</div>
-  </div>
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input type="password" class="form-control tan-input" id="password" placeholder="New Password" [(ngModel)]="form.newPassword" name="newPassword">
-    <div class="col col-12 alert alert-danger" *ngIf="errors.newPassword">{{errors.newPassword}}</div>
-  </div>
-  <div class="form-group">
-    <label for="confirmPassword">Confirm Password</label>
-    <input type="password" class="form-control tan-input" id="confirmPassword" placeholder="Confirm New Password" [(ngModel)]="form.confirmNewPassword" name="confirmNewPassword">
-    <div class="col col-12 alert alert-danger" *ngIf="errors.confirmNewPassword">{{errors.confirmNewPassword}}</div>
-  </div>
-  <button type="submit" class="btn col col-12 col-sm-4 offset-sm-1">Save</button>
-  <a [routerLink]="['/buddies']"><button class="btn col col-12 col-sm-4 offset-sm-1">Cancel</button></a>
+<div class="page-container">
+<h2 class="text-center">Change password for <span class="text-orange">{{(user | async).username}}</span></h2>
+<form class="settings-form" [formGroup]="changePasswordForm" role="form" (ngSubmit)="changePassword($event)">
+    <mat-form-field class="input">
+    <input matInput  type="password" formControlName="currentPassword" placeholder="Current Password" name="currentPassword">
+    <mat-error *ngIf="currentPassword.errors && (currentPassword.dirty || currentPassword.touched)">
+        Invalid password. Must be between 8 and 128 characters.
+    </mat-error>
+    </mat-form-field>
+  <mat-form-field class="input">
+    <input matInput type="password" formControlName="newPassword" placeholder="New Password" name="newPassword" [(ngModel)]="newPasswordModel">
+    <mat-error *ngIf="newPassword.errors && (newPassword.dirty || newPassword.touched)">
+        Invalid password. Must be between 8 and 128 characters.
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="input">
+    <input matInput type="password" placeholder="Confirm New Password" formControlName="confirmPassword" name="confirmPassword">
+    <mat-error *ngIf="confirmPassword.errors && ((newPassword.dirty || newPassword.touched) || (confirmPassword.dirty || confirmPassword.touched))">
+        Passwords must match.
+    </mat-error>
+  </mat-form-field>
+  <button ngClass="{{changePasswordForm.valid && changePasswordForm.touched ? '' : 'disabled'}}" mat-raised-button [color]="changePasswordForm.valid ? 'primary' : 'warning'" type="submit" class="submit-button">Save</button>
+  <button mat-raised-button color="warning" [routerLink]="['/buddies']" class="cancel-button">Cancel</button>
 </form>
+</div>

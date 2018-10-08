@@ -1,52 +1,68 @@
-
-import {Component, ChangeDetectionStrategy} from "@angular/core";
+import {Component, ChangeDetectionStrategy, OnInit} from "@angular/core";
 import {UserService} from "../services/user.service";
 import * as fromRoot from '../reducers'
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 import {User} from "../stores/user.store";
 import * as flashActions from '../actions/flash.actions';
+import {FormGroup, Validators, FormControl,  AbstractControl } from "@angular/forms";
 
 @Component({
   selector: 'settings',
   templateUrl: "./settings.html",
+  styleUrls: ["./settings.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 
-export class SettingsComponent {
-  public user : Observable<User>;
-  public errors: any = {};
-  public form: any = {currentPassword: '', newPassword: '', confirmNewPassword: ''};
+export class SettingsComponent implements OnInit{
+  user : Observable<User>;
+  changePasswordForm: FormGroup
+  newPasswordModel: string;
   constructor(private userService: UserService, private store: Store<fromRoot.State>){
     this.user = this.store.select(fromRoot.getUser);
   }
 
-  validate(){
-    let errors = false;
-    if(!(this.form['currentPassword'])){
-      this.errors['currentPassword'] = "Must enter your current password";
-      errors = true;
-    }
-    if(!(this.form['newPassword'] && this.form['newPassword'].length >= 8 && this.form['newPassword'].length <= 128)){
-      this.errors['newPassword'] = "Your new password must be between 8 and 128 characters";
-      errors = true;
-    }
-    if(this.form['confirmNewPassword'] !== this.form['newPassword']){
-      this.errors['confirmNewPassword'] = "Passwords do not match";
-
-      errors = true;
-    }
-    return errors;
+  get currentPassword(){
+    return this.changePasswordForm.get('currentPassword')
   }
 
-  changePassword(e){
-    this.errors = {};
-    if(!this.validate()){
-      this.userService.changePassword(this.form['currentPassword'], this.form['newPassword'])
+  get newPassword(){
+    return this.changePasswordForm.get('newPassword')
+  }
+
+  get confirmPassword(){
+    return this.changePasswordForm.get('confirmPassword')
+  }
+  
+  passwordMatchValidator(ctrl: AbstractControl){
+    console.log(this.newPasswordModel);
+    return ctrl.value === this.newPasswordModel
+    ? null : {'mismatch': true};
+  }
+
+  changePassword(){
+    if(this.changePasswordForm.valid){
+      this.userService.changePassword(this.currentPassword.value, this.newPassword.value)
     }
     else{
-      this.store.dispatch({type: flashActions.ADD_ERROR, payload: 'Please fix the errors below'})
+      this.store.dispatch({type: flashActions.ADD_ERROR, payload: 'Please fix the errors below'});
     }
+  }
+
+
+  ngOnInit(){
+    this.changePasswordForm = new FormGroup({
+      currentPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(128)]),
+      newPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(128)]),
+      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(128), this.passwordMatchValidator.bind(this)]),
+    });
+    
+    
+    function passwordMatchValidator(g: FormGroup) {
+       return g.get('newPassword').value === g.get('confirmPassword').value
+          ? null : {'mismatch': true};
+    }
+
   }
 }

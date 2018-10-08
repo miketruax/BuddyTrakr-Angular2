@@ -17,7 +17,7 @@
           Password must be between 8 and 128 characters
       </mat-error>
     </mat-form-field>
-    <button class="login-button" mat-raised-button color="primary" ngClass="{{loginForm.valid && loginForm.touched ? '' : 'disabled'}}">Get tracking!</button>
+    <button class="login-button" mat-raised-button [color]="loginForm.valid ? 'primary' : 'warning'" ngClass="{{loginForm.valid && loginForm.touched ? '' : 'disabled'}}">Get tracking!</button>
     </form>
   <div class="signup-link text-center">
   Are you a new tracker? <a [routerLink]="['/signup']" class="text-orange">Signup</a>
