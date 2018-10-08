@@ -12,7 +12,7 @@
     border-color: $blue-green;
   }
 
-  .tan-input.ng-invalid.ng-touched, .confirm.ng-invalid, .tan-input.nginvalid.ng-touched:focus, .confirm.ng-invalid:focus{
+  .tan-input.ng-invalid.ng-touched, .confirm.ng-invalid, .tan-input.ng-invalid.ng-touched:focus, .confirm.ng-invalid:focus{
     border-color: $orange;
     border-radius: 10px 10px 0 0;
 }

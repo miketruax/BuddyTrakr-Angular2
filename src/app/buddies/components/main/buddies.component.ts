@@ -1,10 +1,5 @@
-
-
 // # Buddies Component
-
 import {Component, ChangeDetectionStrategy} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-
 import * as fromRoot from '../../../reducers'
 import * as selectedBuddyActions from '../../actions/selectedBuddy.actions';
 import {Buddy} from '../../stores/buddy.store';
@@ -12,6 +7,7 @@ import {BuddyService} from '../../services/buddy.service';
 import {User} from "../../../stores/user.store";
 import * as flashActions from "../../../actions/flash.actions";
 import {Store} from "@ngrx/store";
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'buddies',

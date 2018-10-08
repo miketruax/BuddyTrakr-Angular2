@@ -1,8 +1,8 @@
 // # Buddy Service
 import {Store} from '@ngrx/store';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map'
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators'
 import {flashActions, buddyActions} from '../../actions'
 import {Buddy} from '../stores/buddy.store';
 import * as fromRoot from '../../reducers';
@@ -18,13 +18,13 @@ export class BuddyService {
   loadBuddies() {
     let headers = new HttpHeaders()
       .append('Authorization', `JWT ${localStorage.getItem('authToken')}`);
-        this.http.get('/api/buddy', {headers: headers})
-            .map(payload => {
+        this.http.get('/api/buddy', {headers: headers}).pipe(
+            map(payload => {
               if(payload['err']){
                 return ({type: flashActions.ADD_ERROR, payload: payload['err']})
               }
               return ({ type: buddyActions.ADD_BUDDIES, payload: payload['buddy'] })
-            })
+            }))
             .subscribe(action => this.store.dispatch(action));
     }
 
@@ -38,13 +38,14 @@ export class BuddyService {
       .append('Content-Type', 'application/json')
       .append('Authorization', `JWT ${localStorage.getItem('authToken')}`);
         this.http.post('/api/buddy', JSON.stringify(buddy), {headers: headers})
-          .map(payload => {
+        .pipe(
+          map(payload => {
             if(payload['err']){
               return ({type: flashActions.ADD_ERROR, payload: payload['err']})
             }
             this.store.dispatch({type: flashActions.ADD_SUCCESS, payload: `${payload['buddy'].name} successfully saved!`});
             return ({ type: buddyActions.CREATE_BUDDY, payload: payload['buddy'] })
-          })
+          }))
             .subscribe(action => this.store.dispatch(action));
     }
 
@@ -61,7 +62,8 @@ export class BuddyService {
       .append('Content-Type', 'application/json')
       .append('Authorization', `JWT ${localStorage.getItem('authToken')}`);
         this.http.put(`/api/buddy/${buddy._id}`, JSON.stringify(buddy), {headers: headers})
-          .map(payload => {
+          .pipe(
+            map(payload => {
             if(payload['err']){
               return ({type: flashActions.ADD_ERROR, payload:payload['err']})
             }
@@ -70,7 +72,7 @@ export class BuddyService {
               type: flashActions.ADD_SUCCESS,
               payload: msg});
             return ({ type: buddyActions.UPDATE_BUDDY, payload: payload['buddy'] })
-          })
+          }))
           .subscribe(action => {
             this.store.dispatch(action);
             this.loadBuddies();
@@ -82,7 +84,8 @@ export class BuddyService {
       let headers = new HttpHeaders()
       .append('Authorization', `JWT ${localStorage.getItem('authToken')}`);
         this.http.delete(`/api/buddy/${buddy._id}`, {headers: headers})
-          .map(payload => {
+        .pipe(  
+        map(payload => {
             if(payload['err']){
               return ({type: flashActions.ADD_ERROR, payload:  payload['err']})
             }
@@ -90,7 +93,7 @@ export class BuddyService {
               type: flashActions.ADD_SUCCESS,
               payload: `${payload['buddy'].name} successfully deleted!`});
             return ({ type: buddyActions.DELETE_BUDDY, payload: payload['buddy'] })
-          })
+          }))
           .subscribe(action => this.store.dispatch(action));
     }
 }

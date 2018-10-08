@@ -1,54 +1,34 @@
-<nav class="navbar navbar-expand-sm fixed-top ">
-  <a class="navbar-brand" [routerLink]="['/about']">
-    <img class="brand-logo" alt="Buddy Trakr" src="/assets/img/logos/main_logo.png">
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-main" aria-controls="navbar-main"
-    aria-label="Toggle navigation" id="navbar-toggler" #toggler aria-expanded="false" [ngClass]="{'nav-menu-active': menuActive}"
-    (click)="menuClick($event)">
-    <span class="sr-only">Toggle navigation</span>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-  </button>
+<mat-sidenav-container class="menu-container">
+  <mat-sidenav #sidenav mode="over" [(opened)]="opened" [fixedInViewport]="true">
+    <img class="menu-logo" alt="Buddy Trakr" src="/assets/img/logos/main_logo.png">
+    <mat-nav-list>
+      <a (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link text-center"
+        [routerLink]="['/about']">About</a>
+      <a *ngIf="(userID | async)" (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+        class="nav-link  text-center" [routerLink]="['/buddies']">Buddies</a>
+      <a *ngIf="(userID | async)" (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+        class="nav-link  text-center" [routerLink]="['/settings']">Settings</a>
+      <a *ngIf="!(userID | async)" (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+        class="nav-link text-center" [routerLink]="['/login']">Login</a>
+      <a *ngIf="!(userID | async)" (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+        class="nav-link text-center" [routerLink]="['/signup']">Signup</a>
+      <a *ngIf="(userID | async)" (click)="logout(); sidenav.toggle()" class="nav-link">Logout</a>
+    </mat-nav-list>
+  </mat-sidenav>
 
-  <div class=" collapse navbar-collapse p-0" id="navbar-main" #menu>
-    <ul class="navbar-nav nav-pills">
-        <li class="nav-item m-1">
-            <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link" [routerLink]="['/about']">About</a>
-          </li>
-      <li class="nav-item m-1" *ngIf="(userID | async)">
-        <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link" [routerLink]="['/buddies']">Buddies</a>
-      </li>
-      <!-- <li class="nav-item m-1" *ngIf="(userID | async)">
-          <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link" [routerLink]="['/friends']">Friends</a>
-      </li> -->
-      <li class="nav-item m-1" *ngIf="(userID | async)">
-        <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link" [routerLink]="['/settings']">Settings</a>
-      </li>
-    </ul>
-    <ul class="navbar-nav nav-pills ml-auto" >
-      <li class="nav-item m-1" *ngIf="!(userID | async)">
-        <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link" [routerLink]="['/login']">Log In</a>
-      </li>
-      <li class="nav-item m-1" *ngIf="!(userID | async)">
-        <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link" [routerLink]="['/signup']">Signup</a>
-      </li>
-      <li class="nav-item m-1 pointer" *ngIf="(userID | async)">
-        <a class="nav-link" (click)="logout()">Logout</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+  <mat-sidenav-content>
+    <i class="material-icons pointer" style="font-size: 48px;" (click)="sidenav.toggle()" color="primary">menu</i>
 
+    <flash-component [flash]="flash | async"></flash-component>
+    <div class="content-container">
+      <router-outlet></router-outlet>
+    </div>
 
-<flash-component [flash]="flash | async"></flash-component>
-<div class="content-container">
-  <router-outlet></router-outlet>
-</div>
-
-<footer class="col-10 offset-1 text-center">
-  <img src="/assets/img/logos/paw_logo.png" style="max-height: 40px !important;">
-  <span>Buddy Trakr App created by
-    <a href="http://www.miketruax.com">Mike Truax</a>
-  </span>
-</footer>
+    <footer class="col-10 offset-1 text-center">
+      <img src="/assets/img/logos/paw_logo.png" style="max-height: 40px !important;">
+      <span>Buddy Trakr App created by
+        <a href="http://www.miketruax.com">Mike Truax</a>
+      </span>
+    </footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

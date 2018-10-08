@@ -1,73 +1,17 @@
-nav{
-  background-color: white !important;
-    a:hover:not(.navbar-brand){
-      background-color: $tan;
-    }
-  .active, .active:hover{
-    background-color: $blue-green !important;
-    color: white;
-  }
-
-  a{
-    color: $dark-blue;
-  }
+a:hover:not(.navbar-brand){
+  background-color: $tan;
+}
+.active, .active:hover{
+background-color: $blue-green !important;
+color: white;
 }
 
-#navbar-toggler{
-  position: absolute;
-  right: 5px;
-  top: 9px;
-  overflow-x: hidden !important;
-  height: 45px !important;
-  width: 45px !important;
-  border-radius: 8px;
-  border: 2px solid $tan;
-  cursor: pointer;
-  outline: 0 !important;
-  .icon-bar{
-    display: block;
-    border: 1px solid $dark-blue;
-    width: 100%;
-    margin: 4px 0 !important;
-  }
+.mat-sidenav{
+  width: 150px;
 }
 
-.navbar-brand{
-  width: 82px !important;
-  float: left !important;
-}
-
-
-#nav-menu, #main-nav, .nav-icon {
-  transition: all .4s cubic-bezier(.23, .98, .01, .96);
-}
-
-
-$speed: 400ms;
-$easing: cubic-bezier(0.7, 0, 0, 0.7);
-
-.nav-icon-wrapper {
-  overflow: hidden;
-  float: left;
-}
-
-.icon-bar {
-  transition: opacity, transform;
-  transition-duration: $speed;
-  transition-timing-function: $easing;
-}
-
-.nav-menu-active {
-  .icon-bar {
-    &:nth-child(2) {
-      transform: translateY(6px) rotate(45deg);
-    }
-    &:nth-child(3) {
-      opacity: 0;
-      transform: translateX(-100%);
-    }
-    &:nth-child(4) {
-      transform: translateY(-6px) rotate(-45deg);
-    }
-  }
+.menu-logo{
+  max-height: 45px !important;
+  margin: 10px auto;
+  display: block;
 }
