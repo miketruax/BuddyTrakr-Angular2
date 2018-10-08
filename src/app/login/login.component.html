@@ -1,26 +1,25 @@
-<div class="col login col-12 center-block">
-  <img class="col col-6 offset-3 col-sm-4 offset-sm-4" src="/assets/img/logos/main_logo.png">
-  <h5 class="col col-12 text-center">Your buddies are expecting you!</h5>
-  <h3 class="col col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">Please Sign In</h3>
-  <form class="col col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3" role="form" (ngSubmit)="login($event)" [formGroup]="loginForm">
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input formControlName="username" type="text" name="username" class="form-control tan-input" id="username" [(ngModel)]="username" placeholder="Username">
-      <div class="form-error" *ngIf="loginForm.controls.username.errors && (loginForm.controls.username.dirty || loginForm.controls.username.touched)">
-         Invalid username</div>
-      </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input formControlName="password" type="password" name="password" class="form-control tan-input" id="password" [(ngModel)]="password" placeholder="Password">
-      <div class="form-error" *ngIf="loginForm.controls.password.errors && (loginForm.controls.password.dirty || loginForm.controls.password.touched)">
-          Invalid Password Length</div>
-      </div>
-    <button type="submit" ngClass="{{loginForm.valid && loginForm.touched ? '' : 'disabled'}}"  class="btn col-6 offset-6">
-      Get tracking!
-    </button>
-  </form>
-  <div class="col col-10 offset-1 text-center col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
-  Are you a new tracker? <a [routerLink]="['/signup']" class="orange">Signup</a>
+<div class="page-container">
+  <img class="login-img" src="/assets/img/logos/main_logo.png">
+  <h5 class="text-center">Your buddies are expecting you!</h5>
+  <h3 class="text-center">Please Sign In</h3>
+  <form class="login-form" role="form" (ngSubmit)="login($event)" [formGroup]="loginForm">
+    <mat-form-field  class="input">
+    <input matInput formControlName="username" type="text" name="username" placeholder="Username">
+      <mat-hint>Username must be between 3 and 16 characters</mat-hint>
+      <mat-error *ngIf="loginForm.controls.username.errors && (loginForm.controls.username.dirty || loginForm.controls.username.touched)">
+          Invalid username - must be between 3 and 16 Characters  
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field  class="input">
+      <input matInput formControlName="password" type="password" name="password" placeholder="Password">
+      <mat-hint>Password must be between 8 and 128 characters</mat-hint>
+      <mat-error *ngIf="loginForm.controls.password.errors && (loginForm.controls.password.dirty || loginForm.controls.password.touched)">
+          Password must be between 8 and 128 characters
+      </mat-error>
+    </mat-form-field>
+    <button class="login-button" mat-raised-button color="primary" ngClass="{{loginForm.valid && loginForm.touched ? '' : 'disabled'}}">Get tracking!</button>
+    </form>
+  <div class="signup text-center">
+  Are you a new tracker? <a [routerLink]="['/signup']" class="text-orange">Signup</a>
   </div>
-
 </div>

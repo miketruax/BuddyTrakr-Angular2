@@ -16,8 +16,6 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 })
 
 export class LoginComponent {
-  password: string;
-  username: string;
   loginForm: FormGroup;
   constructor(private userService: UserService, private formBuilder: FormBuilder) {
 
@@ -26,14 +24,14 @@ export class LoginComponent {
   login(e) {
     e.preventDefault();
     if(this.loginForm.valid){
-      this.userService.login(this.username, this.password);
+      this.userService.login(this.loginForm.value.username, this.loginForm.value.password);
     }
   }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      username: [this.username, Validators.compose([Validators.required, Validators.maxLength(16), Validators.minLength(3)])],
-      password: [this.password, Validators.compose([Validators.required, Validators.maxLength(128), Validators.minLength(8)])]
+      username: ['', Validators.compose([Validators.required, Validators.maxLength(16), Validators.minLength(3)])],
+      password: ['', Validators.compose([Validators.required, Validators.maxLength(128), Validators.minLength(8)])]
   
     });
   }
