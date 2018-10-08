@@ -8,7 +8,8 @@ import {Buddy} from '../../stores/buddy.store';
 
 @Component({
   selector: 'buddy-detail',
-  templateUrl: "./buddy-details.component.html"
+  templateUrl: "./buddy-details.component.html",
+  styleUrls: ["./buddy-details.component.scss"]
 })
 export class BuddyDetailsComponent {
 

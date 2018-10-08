@@ -1,45 +1,42 @@
-<div class="col col-12">
-    <h2 class="col col-12" *ngIf="selectedBuddy._id">Editing {{originalName}}</h2>
-    <h2 class="col col-12" *ngIf="!selectedBuddy._id">Create New Buddy</h2>
-  <div>
-    <form id="buddyForm">
-        <div class="form-group">
-          <label for="name">Buddy Name</label>
-          <input class="form-control tan-input" id="name" name="name" [(ngModel)]="selectedBuddy.name"
-            placeholder="Buddy name" type="text">
-        </div>
-        <div class="form-group">
-          <label for="species">Species</label>
-          <input class="form-control tan-input" id="species" name="species"  [(ngModel)]="selectedBuddy.species"
-                 placeholder="Species" type="text">
-        </div>
-        <div class="form-group">
-          <label for="binomial">Scientific Name</label>
-          <input class="form-control tan-input" id="binomial" name="binomial" [(ngModel)]="selectedBuddy.binomial"
-                 placeholder="Enter scientific name (if known)" type="text">
-        </div>
-        <div *ngIf="!selectedBuddy.dateAdded" class="form-group" >
-          <label for="description">Birthday</label>
-          <input class="form-control tan-input" name="dateAdded" rows="5" [(ngModel)]="dateAdded"
-                    placeholder="Description" id="dateAdded" form="buddyForm" type="date">
-        </div>
-        <div class="form-group">
-          <label for="description">Description</label>
-          <textarea class="form-control tan-input" name="description" rows="5" [(ngModel)]="selectedBuddy.description"
-                    placeholder="Description" id="description" form="buddyForm"></textarea>
-        </div>
+<div class="page-container">
+  <h2 class="text-center text-orange">{{selectedBuddy._id ? "Editing "+originalName : "Create New Buddy"}}</h2>
+    <form class="buddy-edit-form">
+      <mat-form-field class="input">
+        <input matInput name="name" [(ngModel)]="selectedBuddy.name"
+          placeholder="Buddy Name" type="text">
+      </mat-form-field>
+      <mat-form-field class="input">
+        <input matInput name="species" [(ngModel)]="selectedBuddy.species"
+          placeholder="Species" type="text">
+  
+      </mat-form-field>
+      <mat-form-field class="input">
+        <input matInput name="binomial" [(ngModel)]="selectedBuddy.binomial"
+          placeholder="Scientific Name (Optional)" type="text">
+    
+      </mat-form-field>
+      <mat-form-field class="input" *ngIf="!selectedBuddy.dateAdded">
+        <input matInput name="dateAdded" rows="5" [(ngModel)]="dateAdded" placeholder="Date Added"
+          form="buddyForm" type="date">
+      </mat-form-field>
+      <mat-form-field class="input">
+        <textarea matInput name="description" rows="5" [(ngModel)]="selectedBuddy.description"
+          placeholder="Description" form="buddyForm"></textarea>
+      </mat-form-field>
     </form>
-  </div>
-  <div class="col col-12 buddyButtons row d-flex justify-content-center">
-      <button class="btn btn-sm col col-12 col-sm-3" type="submit" (click)="saveBuddy()">
-        Save
+
+  <div class="buddy-buttons">
+    <button mat-raised-button color="primary" class="submit" type="submit" (click)="saveBuddy()">
+      Save
+    </button>
+    <button mat-raised-button color="warning" *ngIf="actionType == 'edit'" class="delete" (click)="deleted.emit(buddy); $event.stopPropagation();">
+        Delete
       </button>
-    <button class="btn btn-sm col col-12 col-sm-3  offset-sm-1 cancel" type="submit" (click)="cancelled.emit(selectedBuddy)">
+      
+    <button mat-raised-button color="secondary" class="cancel" type="submit" (click)="cancelled.emit(selectedBuddy)">
       Cancel
     </button>
-    <button *ngIf="actionType == 'edit'" class="col col-12 btn btn-sm col-sm-3  offset-sm-1 delete" (click)="deleted.emit(buddy); $event.stopPropagation();">
-      <i>Delete</i>
-    </button>
+
   </div>
 
 </div>
