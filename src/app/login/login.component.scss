@@ -1,37 +1,3 @@
-@import '../styles/partials/_colors.scss';
-
-.tan-input:focus{
-    outline-style:none !important;
-    box-shadow:none !important;
-}
-
-.tan-input{
-    background-color: $tan !important;
-    color: $blue-green;
-    border-radius: 10px;
-    border-color: $blue-green;
-  }
-
-  .tan-input.ng-invalid.ng-touched, .confirm.ng-invalid, .tan-input.ng-invalid.ng-touched:focus, .confirm.ng-invalid:focus{
-    border-color: $orange;
-    border-radius: 10px 10px 0 0;
-}
-
-.form-error{
-    width: 100%;
-    border-radius: 0 0 10px 10px;
-    background-color: $orange;
-    color: $tan;
-    text-align: center;
-    height: 24px !important;
-}
-
-
-
-@media(max-width: 500px){
-    .form-error{ height: 48px;}
-}
-
 .disabled{
     cursor: not-allowed;
     opacity: .65;
@@ -53,7 +19,7 @@
     margin: 10px 0;
 }
 
-.signup{
+.signup-link{
     clear: both;
     width: 100%;
     margin-top: 10px;
