@@ -1,12 +1,11 @@
 @import '../shared/styles/colors';
 .flash{
   position: fixed !important;
-  top: 3px !important;
-  left: 41px;
+  top: 50px !important;
   z-index: 1000;
   opacity: .95 !important;
   text-align: center !important;
-  width: calc(95% - 35px);
+  width: calc(95%);
   margin: 0 2.5%;
   padding: 8px;
   border-radius: .25rem;
