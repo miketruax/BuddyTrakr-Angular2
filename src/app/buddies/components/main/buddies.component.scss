@@ -1,21 +1,118 @@
-// @import '../../';
+@import '../../../shared/styles/colors';
 
-// * ::ng-deep{
-// .buddy {
-//     border: 1px $blue-green solid;
-//     padding: 5px;
-//     background-color: rgba($tan, .3) !important;
-//   }
+.buddy-list{
+    width: 96%;
+    margin: auto;
+    display: flex;
+    flex-flow: row wrap;
+  }
   
-//   .buddy-content{
-//     margin: 10px 0 0 0 !important;
-//     flex-grow: 1;
-//     margin-top: auto !important;
-//     p{
-//       margin: 0px;
-//     }
-//     b{
-//       color: $dark-blue !important;
-//     }
-//   }
-// }
+
+
+  
+  .search-options{
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    mat-checkbox{
+      margin: 0 0 0 5%;
+    }
+    button{
+      margin: 0 5% 0 auto;
+    }
+  }
+
+  .filter{
+    width: 90%;
+    margin: 8px 5%;
+  }
+
+  .search{
+    width: 100%;
+    margin: 10px 0;
+  }
+  
+
+  .pag-button{
+    border: 1px;
+    min-width: 20px !important;
+  }
+
+  .buddy-pagination{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center !important;
+  }
+
+  .buddy-card{
+    display: flex;
+    flex-flow: column wrap;
+    margin: 6px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: calc((100%) - 32px);
+    border: 1px solid $primary;
+    background-color: rgba($accent-light, .3);
+  }
+
+  @media(min-width: 576px){
+    .buddy-card{
+      flex-basis: calc((100% / 2) - 32px);
+    }
+  }
+  
+  @media(min-width: 1088px){
+    .buddy-card{
+      flex-basis: calc((100% / 4) - 32px);
+    }
+      
+  }
+  
+  .checked-in-image{
+    background-image: url('/assets/img/icons/checked_in.png');
+    background-size: cover;
+    border-radius: 0 !important;
+  }
+
+  .checked-out-image{
+    background-image: url('/assets/img/icons/checked_out.png');
+    background-size: cover;
+    border-radius: 0 !important;
+  }
+
+  .button-container{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    margin: auto 0 10px 0;
+    button{
+      margin: 5px auto;
+    }
+  }
+
+  .buddy-name{
+    margin-bottom: 5px;
+  }
+
+
+  buddy-card {
+    display: flex;
+    flex-flow: column wrap;      
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: calc((100%) - 32px);
+  }
+
+  
+  @media(min-width: 576px){
+    buddy-card{
+      flex-basis: calc((100% / 2) - 32px);
+    }
+  }
+  
+  @media(min-width: 1088px){
+    buddy-card{
+      flex-basis: calc((100% / 4) - 32px);
+    }
+      
+  }

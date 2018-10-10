@@ -1,12 +1,63 @@
-<div class="background">
-  <buddy-list  *ngIf="!details" [buddies]="buddies | async" [user]="user | async"
-    (selected)="selectBuddy($event)" (deleted)="deleteBuddy($event)" (checker)="checkBuddy($event)" (randomBuddy)="randomBuddy($event)"
-    (addBuddy)="addBuddy($event)">
-    LOADING BUDDIES.... Please Standby...
-  </buddy-list>
-</div>
-<div>
-  <buddy-detail *ngIf="details"
-    (saved)="saveBuddy($event)" (cancelled)="resetBuddy($event)" (deleted)="deleteBuddy($event)"
-    [selectedBuddy]="selectedBuddy | async" [actionType] = "actionType">Buddy Editor Loading...</buddy-detail>
-</div>
+<!-- HEADER -->
+<div class="page-container">
+  <h2 class="text-center">Welcome, <span class="text-warning">{{(user | async).username}}!</span> Let's get tracking! </h2>
+  
+  
+  <!--GENERIC BUDDY BUTTONS-->
+  <h2 class="text-center text-warning" *ngIf="buddies.length  <= 0">You don't have any buddies... Add a buddy to get started!</h2>
+  
+  <div class="button-container">
+      <button (click)="addBuddy()" mat-raised-button color="primary">Add New Buddy</button>
+      <button  *ngIf="inBuddies.length >0" (click)="randomBuddy()" mat-raised-button color="warn">Checkout Random Buddy</button>
+  </div>
+  
+  <!--CHECKED OUT BUDDY HEADER AND BUDDIES-->
+  
+  <h3 *ngIf="outBuddies.length > 0" class="text-warning">
+    <i>Checked out budd{{outBuddies.length > 1 ? 'ies' :'y'}}:</i>
+  </h3>
+  <div class="buddy-list">
+    <ng-container *ngFor="let buddy of outBuddies">
+      <buddy-card [buddy] ="buddy" (select)="editBuddy($event)" (check)="checkBuddy($event)"></buddy-card>
+    </ng-container>
+  </div>
+  
+  <!--CHECKED IN BUDDIES HEADER PAGINATION AND BUDDIES-->
+  
+  <div *ngIf="buddies.length > 0">
+    <h3 class="text-warning text-center">
+      <i>Checked-in buddies: </i>{{filteredBuddies.length}} Budd{{filteredBuddies.length === 1 ? 'y' : 'ies'}} found.</h3>
+      <h6 class="text-center text-capitalize text-warning">Results per Page: </h6>
+      <nav class="buddy-pagination">
+      <ng-container *ngFor="let x of [12,24,48,96]">
+          <button class="pag-button pointer" mat-raised-button [color]="perPage=== x ? 'primary' : 'basic'" (click)="setPerPage(x)">{{x}}</button>
+        </ng-container>
+    </nav>
+  </div>
+  
+  <!--SEARCH BAR-->
+  
+  <div *ngIf="buddies.length >0" class="search">
+    <mat-form-field class="filter"> 
+      <input matInput placeholder="Search by name, species, or scientific name" type="text" [(ngModel)]="searchText" (keypress)="setActive(1)">
+    </mat-form-field>
+    <div class="search-options">
+        <mat-checkbox [(ngModel)]="neverOut">Only buddies who've never been out</mat-checkbox>
+      <button mat-flat-button color="warn" (click)="clearFilter()">Clear</button>
+    </div>
+  </div>
+  
+  
+  
+  <div class="buddy-list">
+    <ng-container *ngFor="let buddy of activePortion; let i = index;">
+      <buddy-card [buddy]="buddy" (select)="editBuddy($event)" (check)="checkBuddy($event)"></buddy-card>
+    </ng-container>
+  </div>
+  
+  <nav class="buddy-pagination">
+      <ng-container *ngFor="let i of buttons;">
+        <button class="pag-button pointer" mat-raised-button [color]="activePage===i ? 'primary' : 'basic'" (click)="setActive(i)">{{i}}</button>
+      </ng-container>
+  </nav>
+  </div>

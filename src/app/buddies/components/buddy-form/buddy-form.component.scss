@@ -1,3 +1,5 @@
+@import '../../../shared/styles/colors';
+
 .disabled{
     cursor: not-allowed;
     opacity: .65;
@@ -21,6 +23,8 @@
 
 
 .buddy-buttons{
+    width: 90%;
+    margin: auto;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;

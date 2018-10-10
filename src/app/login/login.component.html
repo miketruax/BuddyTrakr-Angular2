@@ -3,14 +3,14 @@
   <h5 class="text-center">Your buddies are expecting you!</h5>
   <h3 class="text-center">Please Sign In</h3>
   <form class="login-form" role="form" (ngSubmit)="login($event)" [formGroup]="loginForm">
-    <mat-form-field  class="input">
+    <mat-form-field class="input">
     <input matInput formControlName="username" type="text" name="username" placeholder="Username">
       <mat-hint>Username must be between 3 and 16 characters</mat-hint>
       <mat-error *ngIf="loginForm.controls.username.errors && (loginForm.controls.username.dirty || loginForm.controls.username.touched)">
           Invalid username - must be between 3 and 16 Characters  
       </mat-error>
     </mat-form-field>
-    <mat-form-field  class="input">
+    <mat-form-field class="input">
       <input matInput formControlName="password" type="password" name="password" placeholder="Password">
       <mat-hint>Password must be between 8 and 128 characters</mat-hint>
       <mat-error *ngIf="loginForm.controls.password.errors && (loginForm.controls.password.dirty || loginForm.controls.password.touched)">

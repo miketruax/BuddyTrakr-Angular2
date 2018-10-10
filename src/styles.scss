@@ -210,6 +210,30 @@ $buddy-app-theme: mat-light-theme($buddy-app-primary, $buddy-app-accent, $buddy-
   }
 
 
+  .background-primary{
+      background-color: $primary
+  }
+  
+  .background-secondary{
+    background-color: $secondary
+  }
+  
+  .background-accent-light{
+    background-color: $accent-light
+  }
+  
+  .background-accent-dark{
+    background-color: rgba($accent-dark, .5)
+  }
+
+  .background-warning{
+    background-color: $warning
+  }
+
+  .mat-dialog-container{
+    background-color: $accent-light
+  }
+
 
 html, body { height: 100%; }
 body { margin: 0; font-family: 'Roboto', sans-serif; }

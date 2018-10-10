@@ -1,0 +1,32 @@
+<mat-card class="buddy-card">
+  <mat-card-header>
+    <div mat-card-avatar ngClass="{{buddy.checkedOut ? 'checked-out-image' : 'checked-in-image'}}"></div>
+    <mat-card-title class="text-warning buddy-name"><b>{{buddy.name}}</b></mat-card-title>
+    <mat-card-subtitle>{{buddy.species}}<span *ngIf="buddy.binomial && buddy.binomial !== ' '">
+        ({{buddy.binomial.trim()}})</span></mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <b class="text-secondary">Birthday:</b> {{buddy.dateAdded ? (buddy.dateAdded | date: 'longDate') : 'Unknown'}}<br>
+    <ng-container *ngIf="buddy.description">
+      <b class="text-secondary">Description:</b> {{buddy.description}}<br></ng-container>
+
+    <ng-container *ngIf="buddy.lastOutDate">
+      <b class="text-secondary">Last Out:</b>
+      <span> {{buddy.lastOutDate | date}} for {{buddy.lastOutDays}} days.</span><br>
+    </ng-container>
+    <ng-container *ngIf="!buddyCheckedOut">
+      <ng-container *ngIf="buddy.timesOut"> Out {{buddy.timesOut}} times for a total of {{buddy.totalDaysOut}} days.</ng-container>
+      <ng-container *ngIf="!buddy.lastOutDate">
+        <b class="text-warning">Your buddy hasn't been out yet. You should rectify that!</b>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="buddyCheckedOut">
+      <p class="text-warning">Buddy has been out since: {{buddy.lastOutDate | date:'shortDate'}}</p>
+    </ng-container>
+  </mat-card-content>
+  <mat-card-actions class="button-container">
+    <button *ngIf="!buddy.checkedOut" mat-raised-button color="primary" (click)="selectBuddy()">Edit</button>
+    <button mat-raised-button color="warn" (click)="checkBuddy()">Check
+      {{buddy.checkedOut ? 'In': 'Out'}}</button>
+  </mat-card-actions>
+</mat-card>

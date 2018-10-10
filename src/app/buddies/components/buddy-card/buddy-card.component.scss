@@ -1,13 +1,6 @@
 @import '../../../shared/styles/colors';
 
-.buddy-list{
-    width: 96%;
-    margin: auto;
-    display: flex;
-    flex-flow: row wrap;
-  }
-  
-  .buddy-card{
+.buddy-card{
     display: flex;
     flex-flow: column wrap;
     margin: 6px;
@@ -18,30 +11,6 @@
     background-color: rgba($accent-light, .3);
   }
 
-
-  
-  .search-options{
-    display: flex;
-    flex-flow: row wrap;
-    width: 100%;
-    mat-checkbox{
-      margin: 0 0 0 5%;
-    }
-    button{
-      margin: 0 5% 0 auto;
-    }
-  }
-
-  .filter{
-    width: 90%;
-    margin: 8px 5%;
-  }
-
-  .search{
-    width: 100%;
-    margin: 10px 0;
-  }
-  
   @media(min-width: 576px){
     .buddy-card{
       flex-basis: calc((100% / 2) - 32px);
@@ -79,14 +48,4 @@
 
   .buddy-name{
     margin-bottom: 5px;
-  }
-  .pag-button{
-    border: 1px;
-    min-width: 20px !important;
-  }
-
-  .buddy-pagination{
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center !important;
   }
