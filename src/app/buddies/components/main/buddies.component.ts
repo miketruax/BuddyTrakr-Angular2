@@ -54,21 +54,6 @@ export class BuddiesComponent {
     );
   }
 
-  get buttons() {
-    if (this.filteredBuddies.length <= this.perPage) {
-      return [];
-    }
-    let numButtons = Math.ceil(this.filteredBuddies.length / this.perPage);
-    return Array.from(Array(numButtons), (x, i) => i + 1);
-  }
-
-  get activePortion() {
-    return this.filteredBuddies.slice(
-      (this.activePage - 1) * this.perPage,
-      this.activePage * this.perPage
-    );
-  }
-
   // Dialogue
   openDialog(buddy?: Buddy): void {
     const dialogRef = this.dialog.open(BuddyFormComponent, {
@@ -92,10 +77,18 @@ export class BuddiesComponent {
     });
   }
 
-  // Buddy Functionality
+  // Buddy Dialog Events
   addBuddy() {
     this.openDialog();
   }
+
+  editBuddy(buddy: Buddy) {
+    this.openDialog(buddy);
+  }
+
+
+
+  // Buddy Actions
 
   deleteBuddy(buddy: Buddy) {
     console.log("Fake Deletion");
@@ -104,10 +97,6 @@ export class BuddiesComponent {
 
   saveBuddy(buddy: Buddy) {
     this.buddyService.saveBuddy(buddy);
-  }
-
-  editBuddy(buddy: Buddy) {
-    this.openDialog(buddy);
   }
 
   checkBuddy(buddy: Buddy) {
@@ -136,6 +125,22 @@ export class BuddiesComponent {
   }
 
   //Pagination
+
+  get buttons() {
+    if (this.filteredBuddies.length <= this.perPage) {
+      return [];
+    }
+    let numButtons = Math.ceil(this.filteredBuddies.length / this.perPage);
+    return Array.from(Array(numButtons), (x, i) => i + 1);
+  }
+
+  get activePortion() {
+    return this.filteredBuddies.slice(
+      (this.activePage - 1) * this.perPage,
+      this.activePage * this.perPage
+    );
+  }
+
   setActive(active: number) {
     this.activePage = active;
   }
