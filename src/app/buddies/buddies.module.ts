@@ -9,7 +9,6 @@ import {SearchPipe} from './pipes/search.pipe';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material.module';
 import { BuddyCardComponent } from './components/buddy-card/buddy-card.component';
-import { MatDialogModule } from '@angular/material';
 
 
 @NgModule({

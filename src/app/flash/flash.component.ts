@@ -1,6 +1,6 @@
 //# Flash Component
 
-import {Component, ChangeDetectionStrategy, Input} from "@angular/core";
+import {Component, ChangeDetectionStrategy} from "@angular/core";
 import {Flash} from "../stores/flash.store";
 import * as fromRoot from '../reducers'
 import * as flashActions from '../actions/flash.actions';

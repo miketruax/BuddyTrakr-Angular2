@@ -9,7 +9,7 @@ import { BuddiesComponent } from './buddies/components/main/buddies.component';
 export const routes: Routes = [
   { path: '',   redirectTo: '/buddies', pathMatch: 'full' },
   { path: 'login',  component: LoginComponent, canActivate:[AuthGeneric], data: {animation: 'LoginPage'}},
-  { path: 'buddies', component: BuddiesComponent, canActivate: [AuthProtected], data: {animation: 'BuddiesPage'} },
+  { path: 'buddies', component: BuddiesComponent, canActivate: [AuthProtected], data: {animation: 'BuddyPage'} },
   { path: 'about', component: AboutComponent, data: {animation: 'AboutPage'} },
   { path: 'settings', component: SettingsComponent, canActivate:[AuthProtected], data: {animation: 'SettingsPage'} },
   { path: 'signup', component: SignupComponent, canActivate:[AuthGeneric], data: {animation: 'SignupPage'}},

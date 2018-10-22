@@ -8,25 +8,42 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="./assets/img/logos/paw_logo.png">
-</head>
-<body style="background-image: url('./assets/img/backgrounds/main_background.png');
-  background-attachment: fixed !important;
-  background-repeat: repeat-y !important;">
-  <app-root>
-  <h1 style="margin-top: 20px !important; text-align: center">Loading</h1>
   <style>
-    @keyframes blink {
+  body{
+    background-image: url('./assets/img/backgrounds/main_background.png');
+    background-attachment: fixed !important;
+    background-repeat: repeat-y !important;
+  }
+  
+  .loading{
+    margin-top: 20px !important; 
+  }
+
+  @keyframes blink {
       0% {  opacity: 1;  }
       50% {  opacity: .5;  }
       100% {  opacity: 1;  }
     }
+  .load-img{
+    width: 90% !important; 
+    max-width: 600px !important; 
+    margin: auto !important; 
+    display: block !important; 
+    animation: blink 1s;
+    animation-iteration-count: infinite;
+  }
+  
+  .load-div{margin: auto;}
+  .center{text-align: center}
   </style>
-
-  <div style="margin: auto !important">
-    <img src="./assets/img/logos/main_logo.png" style="width: 90% !important; max-width: 600px !important; margin: auto !important; display: block !important; animation: blink 1s;
-      animation-iteration-count: infinite;">
+</head>
+<body>
+  <app-root>
+  <h1 class="center loading">Loading</h1>
+  <div class="load-div">
+    <img class="load-img" src="./assets/img/logos/main_logo.png">
   </div>
-  <h3 style="text-align: center">Please Stand By To Track...</h3>
+  <h3 class="center">Please Stand By To Track...</h3>
 
 
   </app-root>

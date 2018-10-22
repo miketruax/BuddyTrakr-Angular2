@@ -5,7 +5,7 @@ import { Buddy } from "../../stores/buddy.store";
 import { BuddyService } from "../../services/buddy.service";
 import { User } from "../../../stores/user.store";
 import { Store } from "@ngrx/store";
-import { Observable, Subscription } from "rxjs";
+import {Subscription } from "rxjs";
 import { SearchPipe } from "../../pipes/search.pipe";
 import { MatDialog } from "@angular/material";
 import { BuddyFormComponent } from "../buddy-form/buddy-form.component";
@@ -104,7 +104,7 @@ export class BuddiesComponent {
 
   checkBuddy(buddy: Buddy) {
     buddy.checkedOut = !buddy.checkedOut;
-    this.buddyService.saveBuddy(buddy, true);
+    this.buddyService.checkBuddy(buddy);
   }
 
   randomBuddy() {

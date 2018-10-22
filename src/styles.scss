@@ -174,9 +174,9 @@ $buddy-app-theme: mat-light-theme($buddy-app-primary, $buddy-app-accent, $buddy-
 
 .page-container{
     width: 90%;
-    margin: 0px 5% 20px;
-    position: absolute;
-    top: 20px;
+    margin: 65px 5% 20px;
+    position: relative;
+    top: 0px;
 }  
 
 .section-container{
@@ -188,8 +188,9 @@ $buddy-app-theme: mat-light-theme($buddy-app-primary, $buddy-app-accent, $buddy-
 }
 
 .content-container{
-    position: relative;
-    min-height: 100%;
+    height: auto;
+    overflow: visible;
+    width: 100%;
 }
 
 
@@ -205,10 +206,10 @@ $buddy-app-theme: mat-light-theme($buddy-app-primary, $buddy-app-accent, $buddy-
   }
 
   .mat-sidenav-container{
-    .sidenav-content, .sidenav-menu{
+    .sidenav-menu{
         margin-top: 50px;
     }
-      min-height: calc(100% - 50px);
+      min-height: 100vh;
   }
 
   .sidenav-menu{
@@ -240,6 +241,4 @@ $buddy-app-theme: mat-light-theme($buddy-app-primary, $buddy-app-accent, $buddy-
     background-color: $accent-light
   }
 
-
-html, body { height: 100%; }
 body { margin: 0; font-family: 'Roboto', sans-serif; }

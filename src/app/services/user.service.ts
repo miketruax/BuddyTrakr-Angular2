@@ -44,7 +44,7 @@ export class UserService{
             return { type: flashActions.ADD_ERROR, payload: payload["err"] };
           } else {
             localStorage.setItem("authToken", payload["token"]);
-            localStorage.setItem("user", payload['user']);
+            localStorage.setItem("user", JSON.stringify(payload['user']));
             this.isLoggedIn = true;
             this.router.navigate(["/buddies"]);
             return { type: userActions.SELECT_USER, payload: payload["user"] };

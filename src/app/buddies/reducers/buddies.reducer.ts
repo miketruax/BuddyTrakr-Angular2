@@ -1,6 +1,4 @@
-import { Action } from '@ngrx/store';
 import * as BuddyActions from '../actions/buddies.actions';
-import  * as buddies  from '../actions/buddies.actions';
 import {Buddy} from "../stores/buddy.store";
 
 export type State = Buddy[]
