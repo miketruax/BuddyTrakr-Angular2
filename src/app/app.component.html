@@ -10,20 +10,20 @@
     <mat-nav-list>
       <a (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link text-center"
         [routerLink]="['/about']">About</a>
-      <a *ngIf="(userID | async)" (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+      <a *ngIf="loggedIn" (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
         class="nav-link  text-center" [routerLink]="['/buddies']">Buddies</a>
-      <a *ngIf="(userID | async)" (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+      <a *ngIf="loggedIn" (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
         class="nav-link  text-center" [routerLink]="['/settings']">Settings</a>
-      <a *ngIf="!(userID | async)" (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+      <a *ngIf="!loggedIn" (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
         class="nav-link text-center" [routerLink]="['/login']">Login</a>
-      <a *ngIf="!(userID | async)" (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+      <a *ngIf="!loggedIn" (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
         class="nav-link text-center" [routerLink]="['/signup']">Signup</a>
-      <a *ngIf="(userID | async)" (click)="logout(); sidenav.toggle()" class="nav-link text-center pointer">Logout</a>
+      <a *ngIf="loggedIn" (click)="logout(); sidenav.toggle()" class="nav-link text-center pointer">Logout</a>
     </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content class="sidenav-content">
-    <flash-component [flash]="flash | async"></flash-component>
+    <flash-component></flash-component>
     <div class="content-container">
       <router-outlet></router-outlet>
     </div>

@@ -5,7 +5,6 @@ import * as flashActions from './actions/flash.actions'
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 import {Router, NavigationStart} from "@angular/router";
-import {Flash} from "./stores/flash.store";
 
 @Component({
   selector: 'app-root',
@@ -16,18 +15,15 @@ import {Flash} from "./stores/flash.store";
 export class AppComponent {
   @ViewChild('menu') menu:ElementRef;
   userID: Observable<String>;
-  flash: Observable<Flash>;
   constructor(private router: Router, private userService: UserService, private store: Store<fromRoot.State>){
-    this.userID = store.select(fromRoot.getUserId);
-    this.flash = store.select(fromRoot.getFlash);
     this.router.events.subscribe(path => {
-      if (path['url'] != this.router.url) {
-        window.scrollTo(0, 0);
-      }
-      if(event instanceof NavigationStart) {
+      if(event instanceof NavigationStart && path['url'] != this.router.url) {
         store.dispatch({type: flashActions.CLEAR_FLASH});
       }
     });
+  }
+  get loggedIn(){
+    return this.userService.isLoggedIn;
   }
   logout(){
     this.userService.logout();

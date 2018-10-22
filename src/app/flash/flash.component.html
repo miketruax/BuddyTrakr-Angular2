@@ -1,4 +1,4 @@
 
-<div *ngIf="flash.message" class="flash" ngClass="{{flash.type === 'error' ? 'warning' : 'success' }}">{{flash.message}}
+<div *ngIf="(flash | async).message" class="flash" ngClass="{{(flash | async).type === 'error' ? 'warning' : 'success' }}">{{(flash | async).message}}
   <span (click)="removeFlash()" class="glyphicon glyphicon-remove pointer" aria-hidden="true">X</span>
 </div>

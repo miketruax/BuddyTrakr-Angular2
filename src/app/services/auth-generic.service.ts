@@ -10,11 +10,9 @@ export class AuthGeneric implements CanActivate {
   canActivate(next:ActivatedRouteSnapshot, state:RouterStateSnapshot) {
     if(this.userService.isLoggedIn){
       this.router.navigate(['/buddies']);
-      return false
     }
-    else{
-      return true;
-    }
+    console.log(this.userService.isLoggedIn);
+    return !this.userService.isLoggedIn
   }
 }
 
