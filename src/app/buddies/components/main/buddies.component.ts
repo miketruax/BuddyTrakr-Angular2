@@ -9,31 +9,34 @@ import { Observable, Subscription } from "rxjs";
 import { SearchPipe } from "../../pipes/search.pipe";
 import { MatDialog } from "@angular/material";
 import { BuddyFormComponent } from "../buddy-form/buddy-form.component";
+import { UserService } from "../../../services/user.service";
+import { fadeInAnimation } from "../../../shared/animations/fadeInAnimation";
 
 @Component({
   selector: "buddies",
   templateUrl: "./buddies.component.html",
-  styleUrls: ["buddies.component.scss"]
+  styleUrls: ["buddies.component.scss"],
+  animations: [fadeInAnimation]
 })
 export class BuddiesComponent {
   details: boolean;
   buddies: Array<Buddy>;
   buddiesSub: Subscription;
-  user: Observable<User>;
   searchText: string = "";
   neverOut: boolean = false;
   activePage: number = 1;
   perPage: number = 12;
+  user: User
 
   constructor(
     private buddyService: BuddyService,
     private ref: ChangeDetectorRef,
     public dialog: MatDialog,
     private store: Store<fromRoot.State>,
-    private filterBySearch: SearchPipe
+    private filterBySearch: SearchPipe, private userService: UserService
   ) {
     buddyService.loadBuddies();
-    this.user = store.select(fromRoot.getUser);
+    this.user = userService.user
   }
 
   //Getters

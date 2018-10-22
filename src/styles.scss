@@ -174,7 +174,9 @@ $buddy-app-theme: mat-light-theme($buddy-app-primary, $buddy-app-accent, $buddy-
 
 .page-container{
     width: 90%;
-    margin: 20px 5%;
+    margin: 0px 5% 20px;
+    position: absolute;
+    top: 20px;
 }  
 
 .section-container{
@@ -185,6 +187,10 @@ $buddy-app-theme: mat-light-theme($buddy-app-primary, $buddy-app-accent, $buddy-
     cursor: pointer;
 }
 
+.content-container{
+    position: relative;
+    min-height: 100%;
+}
 
 
 .paw-icon{

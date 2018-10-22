@@ -1,6 +1,6 @@
 <!-- HEADER -->
 <div class="page-container">
-  <h2 class="text-center">Welcome, <span class="text-warning">{{(user | async).username}}!</span> Let's get tracking! </h2>
+  <h2 class="text-center">Welcome, <span class="text-warning">{{user.username}}!</span> Let's get tracking! </h2>
   
   
   <!--GENERIC BUDDY BUTTONS-->
@@ -18,7 +18,7 @@
   </h3>
   <div class="buddy-list">
     <ng-container *ngFor="let buddy of outBuddies">
-      <buddy-card [buddy] ="buddy" (select)="editBuddy($event)" (check)="checkBuddy($event)"></buddy-card>
+      <buddy-card @fadeInAnimation [buddy] ="buddy" (select)="editBuddy($event)" (check)="checkBuddy($event)"></buddy-card>
     </ng-container>
   </div>
   
@@ -49,9 +49,9 @@
   
   
   
-  <div class="buddy-list">
-    <ng-container *ngFor="let buddy of activePortion; let i = index;">
-      <buddy-card [buddy]="buddy" (select)="editBuddy($event)" (check)="checkBuddy($event)"></buddy-card>
+  <div class="buddy-list" >
+    <ng-container   *ngFor="let buddy of activePortion; let i = index;">
+      <buddy-card  @fadeInAnimation [buddy]="buddy" (select)="editBuddy($event)" (check)="checkBuddy($event)"></buddy-card>
     </ng-container>
   </div>
   

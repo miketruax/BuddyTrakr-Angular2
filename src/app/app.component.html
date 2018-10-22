@@ -24,15 +24,14 @@
 
   <mat-sidenav-content class="sidenav-content">
     <flash-component></flash-component>
-    <div class="content-container">
-      <router-outlet></router-outlet>
+    <div class="content-container" [@routeAnimations]="prepareRoute(outlet)">
+      <router-outlet #outlet="outlet"></router-outlet>
     </div>
-
-    <footer class="col-10 offset-1 text-center">
-      <img src="/assets/img/logos/paw_logo.png" style="max-height: 40px !important;">
-      <span>Buddy Trakr App created by
-        <a href="http://www.miketruax.com">Mike Truax</a>
-      </span>
-    </footer>
   </mat-sidenav-content>
 </mat-sidenav-container>
+<footer class="col-10 offset-1 text-center">
+  <img src="/assets/img/logos/paw_logo.png" style="max-height: 40px !important;">
+  <span>Buddy Trakr App created by
+    <a href="http://www.miketruax.com">Mike Truax</a>
+  </span>
+</footer>

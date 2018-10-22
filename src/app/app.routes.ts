@@ -8,10 +8,10 @@ import {SettingsComponent} from "./settings/settings.component";
 import { BuddiesComponent } from './buddies/components/main/buddies.component';
 export const routes: Routes = [
   { path: '',   redirectTo: '/buddies', pathMatch: 'full' },
-  { path: 'login',  component: LoginComponent, canActivate:[AuthGeneric]},
-  { path: 'buddies', component: BuddiesComponent, canActivate: [AuthProtected] },
-  { path: 'about', component: AboutComponent },
-  { path: 'settings', component: SettingsComponent, canActivate:[AuthProtected] },
-  { path: 'signup', component: SignupComponent, canActivate:[AuthGeneric]},
+  { path: 'login',  component: LoginComponent, canActivate:[AuthGeneric], data: {animation: 'LoginPage'}},
+  { path: 'buddies', component: BuddiesComponent, canActivate: [AuthProtected], data: {animation: 'BuddiesPage'} },
+  { path: 'about', component: AboutComponent, data: {animation: 'AboutPage'} },
+  { path: 'settings', component: SettingsComponent, canActivate:[AuthProtected], data: {animation: 'SettingsPage'} },
+  { path: 'signup', component: SignupComponent, canActivate:[AuthGeneric], data: {animation: 'SignupPage'}},
   { path: '**',   redirectTo: '/buddies', pathMatch: 'full' },
 ];

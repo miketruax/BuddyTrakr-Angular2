@@ -16,11 +16,11 @@ import {FormGroup, Validators, FormControl,  AbstractControl } from "@angular/fo
 
 
 export class SettingsComponent implements OnInit{
-  user : Observable<User>;
+  user : User;
   changePasswordForm: FormGroup
   newPasswordModel: string;
   constructor(private userService: UserService, private store: Store<fromRoot.State>){
-    this.user = this.store.select(fromRoot.getUser);
+    this.user = this.userService.user;
   }
 
   get currentPassword(){
@@ -36,7 +36,6 @@ export class SettingsComponent implements OnInit{
   }
   
   passwordMatchValidator(ctrl: AbstractControl){
-    console.log(this.newPasswordModel);
     return ctrl.value === this.newPasswordModel
     ? null : {'mismatch': true};
   }

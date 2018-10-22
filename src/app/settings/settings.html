@@ -1,5 +1,5 @@
 <div class="page-container">
-<h2 class="text-center">Change password for <span class="text-warning">{{(user | async).username}}</span></h2>
+<h2 class="text-center">Change password for <span class="text-warning">{{user.username}}</span></h2>
 <form class="settings-form" [formGroup]="changePasswordForm" role="form" (ngSubmit)="changePassword($event)">
     <mat-form-field class="input">
     <input matInput  type="password" formControlName="currentPassword" placeholder="Current Password" name="currentPassword">

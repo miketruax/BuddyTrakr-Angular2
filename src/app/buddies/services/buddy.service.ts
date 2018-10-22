@@ -2,7 +2,7 @@
 import { Store } from "@ngrx/store";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
 import { flashActions, buddyActions } from "../../actions";
 import { Buddy } from "../stores/buddy.store";
 import * as fromRoot from "../../reducers";
