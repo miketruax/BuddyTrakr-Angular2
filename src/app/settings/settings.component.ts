@@ -1,11 +1,8 @@
 import {Component, ChangeDetectionStrategy, OnInit} from "@angular/core";
 import {UserService} from "../services/user.service";
-import * as fromRoot from '../reducers'
-import {Store} from "@ngrx/store";
-import {Observable} from "rxjs";
-import {User} from "../stores/user.store";
-import * as flashActions from '../actions/flash.actions';
 import {FormGroup, Validators, FormControl,  AbstractControl } from "@angular/forms";
+import { RootStoreFacade } from "../store";
+import { User } from "../models/user.model";
 
 @Component({
   selector: 'settings',
@@ -19,7 +16,7 @@ export class SettingsComponent implements OnInit{
   user : User;
   changePasswordForm: FormGroup
   newPasswordModel: string;
-  constructor(private userService: UserService, private store: Store<fromRoot.State>){
+  constructor(private userService: UserService, private rootStore: RootStoreFacade){
     this.user = this.userService.user;
   }
 
@@ -45,7 +42,7 @@ export class SettingsComponent implements OnInit{
       this.userService.changePassword(this.currentPassword.value, this.newPassword.value)
     }
     else{
-      this.store.dispatch({type: flashActions.ADD_ERROR, payload: 'Please fix the errors below'});
+      this.rootStore.addError('Please fix the errors below');
     }
   }
 

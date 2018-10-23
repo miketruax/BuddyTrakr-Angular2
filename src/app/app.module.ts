@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {NgModule, APP_INITIALIZER} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {reducers} from './reducers'
+import {reducers} from './store/reducers'
 import { AppComponent } from './app.component';
 import {StoreModule} from "@ngrx/store";
 import {routes} from "./app.routes";

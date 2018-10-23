@@ -5,11 +5,11 @@ import {SignupComponent} from "./signup/signup.component";
 import {AuthProtected} from "./services/auth-protected.service";
 import {AuthGeneric} from "./services/auth-generic.service"
 import {SettingsComponent} from "./settings/settings.component";
-import { BuddiesComponent } from './buddies/components/main/buddies.component';
+
 export const routes: Routes = [
   { path: '',   redirectTo: '/buddies', pathMatch: 'full' },
   { path: 'login',  component: LoginComponent, canActivate:[AuthGeneric], data: {animation: 'LoginPage'}},
-  { path: 'buddies', component: BuddiesComponent, canActivate: [AuthProtected], data: {animation: 'BuddyPage'} },
+  { path: 'buddies', loadChildren: './buddies/buddies.module#BuddiesModule', canActivate: [AuthProtected], data: {animation: 'BuddyPage'} },
   { path: 'about', component: AboutComponent, data: {animation: 'AboutPage'} },
   { path: 'settings', component: SettingsComponent, canActivate:[AuthProtected], data: {animation: 'SettingsPage'} },
   { path: 'signup', component: SignupComponent, canActivate:[AuthGeneric], data: {animation: 'SignupPage'}},

@@ -1,30 +1,21 @@
-
-
 //Signup component
-
-import {Component,
-  ChangeDetectionStrategy} from '@angular/core';
-
+import {Component} from '@angular/core';
 import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
-import {Store} from '@ngrx/store';
-import * as fromRoot from '../reducers';
-
-import {User} from '../stores/user.store';
 import {UserService} from '../services/user.service';
+import { User } from '../models/user.model';
 
 
 @Component({
   selector: 'signup',
   templateUrl: "./signup.component.html",
-  styleUrls: ['./signup.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./signup.component.scss']
 })
 
 export class SignupComponent {
   user: User = {username: '', email: '', password: ''};
   confirmPswd: string;
   signupForm: FormGroup;
-  constructor(private userService: UserService, private store: Store<fromRoot.State>, private formBuilder: FormBuilder) {
+  constructor(private userService: UserService, private formBuilder: FormBuilder) {
 
   }
 

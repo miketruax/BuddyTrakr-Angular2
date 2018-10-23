@@ -3,7 +3,7 @@ import {Component,
   Output,
   EventEmitter
 } from '@angular/core';
-import {Buddy} from '../../stores/buddy.store';
+import {Buddy} from '../../models/buddy.model';
 
 
 @Component({

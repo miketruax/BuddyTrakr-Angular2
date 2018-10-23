@@ -1,6 +1,6 @@
 import {Action} from '@ngrx/store';
 
-import {Buddy} from "../stores/buddy.store";
+import {Buddy} from "../../models/buddy.model";
 
 export const DELETE_BUDDY = '[Buddy] Delete Buddy';
 export const ADD_BUDDIES = '[Buddies] Add Buddies';

@@ -1,11 +1,8 @@
 //# Flash Component
-
 import {Component, ChangeDetectionStrategy} from "@angular/core";
-import {Flash} from "../stores/flash.store";
-import * as fromRoot from '../reducers'
-import * as flashActions from '../actions/flash.actions';
-import {Store} from "@ngrx/store";
 import { Observable } from "rxjs";
+import { RootStoreFacade } from "../store";
+import { Flash } from "../models/flash.model";
 
 @Component({
   selector: 'flash-component',
@@ -17,10 +14,11 @@ import { Observable } from "rxjs";
 
 export class FlashComponent {
   flash: Observable<Flash>;
-  constructor(private store:Store<fromRoot.State>){
-    this.flash = store.select(fromRoot.getFlash);
+  constructor(private rootStore: RootStoreFacade){
+    this.flash = this.rootStore.flash$;
   }
   removeFlash(){
-    this.store.dispatch({type: flashActions.CLEAR_FLASH});
+    this.rootStore.clearFlash();
   }
+  
 }

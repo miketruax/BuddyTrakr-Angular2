@@ -1,9 +1,9 @@
 import * as BuddyActions from '../actions/buddies.actions';
-import {Buddy} from "../stores/buddy.store";
+import {Buddy} from "../../models/buddy.model";
 
-export type State = Buddy[]
+export type BuddiesState = Buddy[]
 
-const initialState: State = [];
+const initialState: BuddiesState = [];
 
 
 export function buddyReducer (state = initialState, action: BuddyActions.Actions): any{
@@ -31,4 +31,4 @@ export function buddyReducer (state = initialState, action: BuddyActions.Actions
   }
 }
 
-export const getBuddies = (state: State) => state;
+export const getBuddies = (state: BuddiesState) => state;

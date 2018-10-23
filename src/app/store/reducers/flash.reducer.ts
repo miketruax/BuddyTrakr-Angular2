@@ -1,15 +1,15 @@
 import { Action } from '@ngrx/store';
 import  * as FlashActions  from '../actions/flash.actions';
-import {Flash} from "../stores/flash.store";
+import {Flash} from '../../models/flash.model'
 
-export type State = Flash
+export type FlashState = Flash
 
 
-const initialState: State = {};
+const initialState: FlashState = {};
 
 
 export
-function flashReducer(state = initialState, action: FlashActions.Actions): any{
+function flashReducer(state = initialState, action: FlashActions.FlashActions): any{
 
   switch (action.type) {
 
@@ -28,6 +28,6 @@ function flashReducer(state = initialState, action: FlashActions.Actions): any{
   }
 }
 
-export const getFlash = (state: State) => state;
-export const getType = (state: State) => state.type;
-export const getMessage = (state: State) => state.message;
+export const getFlash = (state: FlashState) => state;
+export const getType = (state: FlashState) => state.type;
+export const getMessage = (state: FlashState) => state.message;

@@ -1,5 +1,5 @@
 import {Component, OnInit, Inject} from '@angular/core';
-import {Buddy} from '../../stores/buddy.store';
+import {Buddy} from '../../models/buddy.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 

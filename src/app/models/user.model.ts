@@ -1,4 +1,4 @@
-//User store
+//User Model
 export interface User{
   _id?: string;
   username?: string;

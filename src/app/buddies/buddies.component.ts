@@ -1,16 +1,15 @@
 // # Buddies Component
 import { Component, ChangeDetectorRef } from "@angular/core";
-import * as fromRoot from "../../../reducers";
-import { Buddy } from "../../stores/buddy.store";
-import { BuddyService } from "../../services/buddy.service";
-import { User } from "../../../stores/user.store";
-import { Store } from "@ngrx/store";
+import { Buddy } from "./models/buddy.model";
+import { BuddyService } from "./services/buddy.service";
 import {Subscription } from "rxjs";
-import { SearchPipe } from "../../pipes/search.pipe";
+import { SearchPipe } from "./pipes/search.pipe";
 import { MatDialog } from "@angular/material";
-import { BuddyFormComponent } from "../buddy-form/buddy-form.component";
-import { UserService } from "../../../services/user.service";
-import { fadeInAnimation } from "../../../shared/animations/fadeInAnimation";
+import { BuddyFormComponent } from "./components/buddy-form/buddy-form.component";
+import { UserService } from "../services/user.service";
+import { fadeInAnimation } from "../shared/animations/fadeInAnimation";
+import { BuddyStoreFacade } from "./store";
+import { User } from "app/models/user.model";
 
 @Component({
   selector: "buddies",
@@ -32,7 +31,7 @@ export class BuddiesComponent {
     private buddyService: BuddyService,
     private ref: ChangeDetectorRef,
     public dialog: MatDialog,
-    private store: Store<fromRoot.State>,
+    private buddyStore: BuddyStoreFacade,
     private filterBySearch: SearchPipe, private userService: UserService
   ) {
     buddyService.loadBuddies();
@@ -155,10 +154,8 @@ export class BuddiesComponent {
 
   //Lifecycle Hooks
   ngOnInit() {
-    //Not detecting changes in the subscription
-    //TODO: return and refactor later.
-    this.buddiesSub = this.store
-      .select(fromRoot.getBuddies)
+    this.buddiesSub = this.buddyStore
+      .buddies$
       .subscribe(buddies => {
         this.buddies = buddies;
         this.ref.detectChanges();

@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { Buddy } from '../stores/buddy.store';
+import { Buddy } from '../models/buddy.model';
 
 @Pipe({ name: 'search' })
 export class SearchPipe implements PipeTransform {

@@ -1,5 +1,4 @@
 import {Action} from '@ngrx/store';
-import {Flash} from '../stores/flash.store'
 
 export const ADD_ERROR = '[Flash] Add Error';
 export const ADD_SUCCESS = '[Flash] Add Success';
@@ -28,4 +27,4 @@ export class ClearFlash implements Action {
   }
 }
 
-export type Actions = AddError | AddSuccess | ClearFlash;
+export type FlashActions = AddError | AddSuccess | ClearFlash;

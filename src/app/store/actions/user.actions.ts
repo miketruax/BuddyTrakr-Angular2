@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {User} from '../stores/user.store';
+import {User} from '../../models/user.model';
 
 export const SELECT_USER = '[Selected User] Select User';
 export const CLEAR_USER = '[User] Clear User';
@@ -20,4 +20,4 @@ export class ClearUser implements Action {
 
 }
 
-export type Actions = SelectUser | ClearUser;
+export type UserActions = SelectUser | ClearUser;
