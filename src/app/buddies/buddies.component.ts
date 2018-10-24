@@ -9,7 +9,7 @@ import { BuddyFormComponent } from "./components/buddy-form/buddy-form.component
 import { UserService } from "../services/user.service";
 import { fadeInAnimation } from "../shared/animations/fadeInAnimation";
 import { BuddyStoreFacade } from "./store";
-import { User } from "app/models/user.model";
+import { User } from "../models/user.model";
 
 @Component({
   selector: "buddies",
