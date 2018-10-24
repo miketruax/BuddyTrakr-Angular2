@@ -8,7 +8,6 @@ export class InitUserService {
   constructor(private http: HttpClient) {
   }
   load() {
-    console.log('loading');
     if (localStorage.getItem("authToken")) {
       let headers = new HttpHeaders().append(
         "Authorization",

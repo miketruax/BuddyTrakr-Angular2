@@ -15,6 +15,7 @@ import { RootStoreFacade } from './store';
 export class AppComponent {
   @ViewChild('menu') menu:ElementRef;
   userID: Observable<String>;
+  opened: boolean;
   constructor(private router: Router, private userService: UserService, private rootStore: RootStoreFacade){
     this.router.events.subscribe(path => {
       if(event instanceof NavigationStart && path['url'] != this.router.url) {

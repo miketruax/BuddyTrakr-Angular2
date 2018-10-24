@@ -1,7 +1,6 @@
 import config from './config';
 
 export function envValidator() {
-  process.env.NODE_ENV = process.env.NODE_ENV.trim();
   if(!process.env.NODE_ENV) {
     process.env.NODE_ENV = process.env.defaultENV;
   }
@@ -43,7 +42,6 @@ function validateNodeEnv() {
       console.error(`Error: process.env.NODE_ENV should be set to a valid value such as 'production', 'development', or 'test'.`);
       console.error(`Value received: ${process.env.NODE_ENV}`);
       console.error(`Defaulting value for: development`);
-      process.env.NODE_ENV = 'development';
       break;
   }
   return;

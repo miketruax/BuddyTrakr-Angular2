@@ -1,6 +1,6 @@
 // Load PassportJS strategies
 import LocalStrategy from "passport-local";
-import User from "../server/models/user.model.js";
+import User from "../models/user.model.js";
 import { Strategy } from "passport-jwt";
 import { ExtractJwt } from "passport-jwt";
 import bcrypt from "bcrypt-nodejs";
@@ -133,8 +133,7 @@ export default passport => {
         if (
           !checkLength(
             username,
-            bounds.username.minLength,
-            bounds.email.maxLength
+            bounds.username
           )
         ) {
           // ### Verify Callback
@@ -148,8 +147,7 @@ export default passport => {
         if (
           !checkLength(
             password,
-            bounds.password.minLength,
-            bounds.password.maxLength
+            bounds.password
           )
         ) {
           return done(null, false, { message: "Invalid password length." });

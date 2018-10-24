@@ -16,7 +16,7 @@ import {reducers} from './store/reducers';
 
 @NgModule({
   declarations: [
-    BuddiesComponent, BuddyFormComponent, BuddyCardComponent
+    BuddiesComponent, BuddyFormComponent, BuddyCardComponent, SearchPipe
   ],
   imports: [CommonModule, BuddiesRoutingModule, MaterialModule, 
     FormsModule, StoreModule.forFeature('buddies', reducers),
