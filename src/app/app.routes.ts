@@ -9,7 +9,7 @@ import {SettingsComponent} from "./settings/settings.component";
 export const routes: Routes = [
   { path: '',   redirectTo: '/buddies', pathMatch: 'full' },
   { path: 'login',  component: LoginComponent, canActivate:[AuthGeneric], data: {animation: 'LoginPage'}},
-  { path: 'buddies', loadChildren: './buddies/buddies.module#BuddiesModule', canActivate: [AuthProtected], data: {animation: 'BuddyPage'} },
+  { path: 'buddies', loadChildren: './buddies/buddies.module', data: {animation: 'BuddyPage'} },
   { path: 'about', component: AboutComponent, data: {animation: 'AboutPage'} },
   { path: 'settings', component: SettingsComponent, canActivate:[AuthProtected], data: {animation: 'SettingsPage'} },
   { path: 'signup', component: SignupComponent, canActivate:[AuthGeneric], data: {animation: 'SignupPage'}},

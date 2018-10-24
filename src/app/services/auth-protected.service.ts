@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {Router, CanActivate} from '@angular/router';
+import {Router, CanActivate, CanLoad} from '@angular/router';
 import {UserService} from "./user.service";
 
 @Injectable()
-export class AuthProtected implements CanActivate {
+export class AuthProtected implements CanActivate{
   constructor(private userService:UserService, private router:Router) { }
 
   canActivate() {
@@ -12,5 +12,6 @@ export class AuthProtected implements CanActivate {
     }
     return this.userService.isLoggedIn;
   }
+
 }
 

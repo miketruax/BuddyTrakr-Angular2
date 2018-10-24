@@ -19,7 +19,6 @@ export class BuddyService {
   // Pulls all buddies based off current JWT token in localStorage
   // Updates the store and saves locally if data hasn't changed in 60 seconds
   loadBuddies() {
-    console.log(Date.now() - this.lastUpdated);
     if(!(Date.now() - this.lastUpdated > 60000)){
       return;
     }

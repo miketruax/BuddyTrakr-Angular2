@@ -1,21 +1,16 @@
-
 import Buddy from '../models/buddy.model';
-export default (app, router, passport, auth) => {
-  router.route('/buddy')
-    //post for buddy creation
-    .post(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
-
+import * as express from 'express';
+import passport from 'passport';
+let router = express.Router();
+  
+  router.route('/')
+  .post(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
       Buddy.create({
         name : req.body.name,
-
         species : req.body.species,
-
         binomial : req.body.binomial,
-
         description : req.body.description,
-
         owner : req.user._id,
-
         dateAdded: Date.now()
 
       }, (err, buddy) => {
@@ -44,7 +39,7 @@ export default (app, router, passport, auth) => {
     });
 
 
-  router.route('/buddy/:buddy_id')
+  router.route('/:buddy_id')
     //gets a single buddy by their _id
     .get(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
       Buddy.findOne(req.params.buddy_id, (err, buddy) => {
@@ -56,7 +51,6 @@ export default (app, router, passport, auth) => {
           res.json({buddy: buddy});
       });
     })
-
     //put request for updating buddies
     .put(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
       Buddy.findOne({
@@ -82,13 +76,9 @@ export default (app, router, passport, auth) => {
           altered = true;
         }
 
-
-
         if(!altered){
           return res.send({err: 'No changes to save'});
         }
-
-
         return buddy.save((err) => {
           //either send an error back to front-end or the buddy to be re-added to store
           if (err){
@@ -103,9 +93,7 @@ export default (app, router, passport, auth) => {
 
     //sad times to delete a buddy
     .delete(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
-      // debug log statement
-      console.log(`Attempting to delete buddy with id: ${req.params.buddy_id}`);
-
+      
       Buddy.remove({
         _id : req.params.buddy_id,
         'owner': req.user._id
@@ -120,4 +108,5 @@ export default (app, router, passport, auth) => {
         });
       });
     });
-};
+
+export default router;

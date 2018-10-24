@@ -1,5 +1,4 @@
 import { Injectable} from "@angular/core";
-import { of } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
@@ -9,20 +8,19 @@ import { BuddyStoreFacade } from "../buddies/store";
 
 @Injectable()
 export class UserService{
-  public isLoggedIn: boolean = false;
   constructor(
     private router: Router,
     private http: HttpClient,
     private rootStore: RootStoreFacade,
     private buddyStore: BuddyStoreFacade
-  ) {
-    if(localStorage.getItem('user')){
-      this.isLoggedIn = true;
-    }
-  }
+  ) {}
 
   get user(): User{
       return this.isLoggedIn ? JSON.parse(localStorage.getItem('user')) : null
+  }
+  
+  public get isLoggedIn(){
+    return localStorage.getItem('user') ? true : false
   }
 
   login(username, password) {
@@ -36,12 +34,11 @@ export class UserService{
         map(payload => {
             localStorage.setItem("authToken", payload["token"]);
             localStorage.setItem("user", JSON.stringify(payload['user']));
-            this.isLoggedIn = true;
             this.router.navigate(["/buddies"]);
             return payload["user"];
           }),
         catchError(error =>
-          of("Something went wrong, please try again later")
+          error("Something went wrong, please try again later")
         )
       )
       .subscribe(user => this.rootStore.selectUser(user), 
@@ -73,7 +70,7 @@ export class UserService{
       .append("Authorization", `JWT ${localStorage.getItem("authToken")}`);
     this.http
       .post(
-        "/api/auth/changeSettings",
+        "/api/user/changeSettings",
         JSON.stringify({ currentPassword, newPassword }),
         { headers: headers }
       )
@@ -94,7 +91,6 @@ export class UserService{
     this.rootStore.clearUser()
     this.rootStore.addSuccess("Successfully Logged Out");
     this.router.navigate(["/login"]);
-    this.isLoggedIn = false;
     localStorage.clear();
   }
 }

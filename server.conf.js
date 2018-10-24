@@ -2,11 +2,8 @@
 import {envValidator} from './config/env.conf.js';
 import helmet from 'helmet';
   envValidator();
-import csrf from 'csurf';
-  import express from 'express';
+import express from 'express';
 import socketio from 'socket.io';
-let log4js = require('log4js');
-let logger = log4js.getLogger();
 let cors = require('cors');
 
 
@@ -21,11 +18,7 @@ import bodyParser from 'body-parser';
 import methodOverride from 'method-override';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
-import session from 'express-session';
-
-let mongoStore  = require('connect-mongo/es5')(session);
 import base from './sockets/base';
-
 base(io);
 
 // Set the port for this app
@@ -64,15 +57,10 @@ if(process.env.NODE_ENV === 'production') {
 
 app.use(express.static(__dirname + '/dist'));
 app.use(helmet());
-
-
-let router = express.Router();
-
-
 app.use(passport.initialize());
 
-import routes from './app/routes';
-routes(app, router, passport);
+import routes from './server/routes';
+routes(app);
 
 
 
@@ -81,6 +69,7 @@ server.listen(port);
 // Shoutout to the user
 console.log(`Internet Bears have collected buddies on port: ${port}`);
 
+//Lazy work around for uptime on heroku
 setInterval(function() {
   http.get("http://buddytrakr.herokuapp.com");
 }, 300000);

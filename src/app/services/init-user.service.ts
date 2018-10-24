@@ -1,18 +1,30 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { catchError } from "rxjs/operators";
+import { of } from "rxjs";
 
 @Injectable()
 export class InitUserService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
   load() {
+    console.log('loading');
     if (localStorage.getItem("authToken")) {
       let headers = new HttpHeaders().append(
         "Authorization",
         localStorage.getItem("authToken")
       );
       this.http
-        .get("/api/auth/getUser", { headers: headers })
-        .subscribe(data => localStorage.setItem("user", JSON.stringify(data["user"])));
+        .get("/api/user", { headers: headers }).pipe(
+          catchError((err)=>{ 
+            console.log(err);
+            return of(new Error())
+          }))
+        .subscribe(data => {
+          console.log(data);
+          localStorage.setItem("user", JSON.stringify(data["user"]))}, 
+          err=>{localStorage.clear();});
     }
+    
   }
 }
