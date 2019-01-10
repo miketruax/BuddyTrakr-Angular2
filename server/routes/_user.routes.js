@@ -17,7 +17,7 @@ import jwt from "jsonwebtoken";
 
 router.get("/", (req, res) => {
   passport.authenticate('jwt-auth', (err, user, info) =>{
-    return err || info ? res.send({user: {}}) : res.send({user: user})
+    return err || info ? res.send({user: {}}) : res.send({user: user.sanitize()})
   })(req, res)
   });
 

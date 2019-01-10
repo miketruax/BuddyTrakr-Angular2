@@ -208,7 +208,7 @@ export default passport => {
 
   //JWT Authentication
   let jwtOptions = {
-    jwtFromRequest: ExtractJwt.fromAuthHeader(),
+    jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt"),
     secretOrKey: process.env.SESSION_SECRET
   };
 

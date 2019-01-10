@@ -44,16 +44,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Override with the X-HTTP-Method-Override header in the request. Simulate DELETE/PUT
 app.use(methodOverride('X-HTTP-Method-Override'));
 
-// if(process.env.NODE_ENV === 'production') {
-//   app.use((req, res, next) => {
-//     if (req.header('x-forwarded-proto') !== 'https') {
-//       res.redirect(`https://${req.header('host')}${req.url}`);
-//     }
-//     else {
-//       next()
-//     }
-//   });
-// }
+if(process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.header('x-forwarded-proto') !== 'https') {
+      res.redirect(`http://${req.header('host')}${req.url}`);
+    }
+    else {
+      next()
+    }
+  });
+}
 
 app.use(express.static(__dirname + '/dist'));
 app.use(helmet());
@@ -64,6 +64,7 @@ routes(app);
 
   //ALL requests get routed through to index.html to ensure app is used
 app.get('*', (req, res) => {
+  console.log('working');
     res.sendFile('/dist/index.html', {root: __dirname + "/"});
 });
 
