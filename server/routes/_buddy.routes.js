@@ -67,12 +67,12 @@ let router = express.Router();
         }
 
         if(!altered){
-          return res.status(404).send({err: 'No changes to save'});
+          return res.send({buddy: buddy});
         }
         return buddy.save((err) => {
           //either send an error back to front-end or the buddy to be re-added to store
           if (err){
-            res.status(404).send({err: 'An error occured, please try again later.'});
+            res.status(500).send({err: 'An error occured, please try again later.'});
           }
           else {
             res.send({buddy: buddy});
@@ -88,7 +88,7 @@ let router = express.Router();
         'owner': req.user._id
       }, (err, buddy) => {
         if (err){
-          return res.status(404).send({err: 'An error occured, please try again later.'});
+          return res.status(500).send({err: 'An error occured, please try again later.'});
         }
           res.json({buddy: buddy});
       });

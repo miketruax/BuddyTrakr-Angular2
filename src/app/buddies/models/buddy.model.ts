@@ -3,7 +3,7 @@ export interface Buddy {
   name?: string;
   species?: string;
   binomial?: string;
-  owner?: Object;
+  owner?: string;
   dateAdded?: Date;
   description?: string;
   timesOut?: number

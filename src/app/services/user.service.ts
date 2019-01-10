@@ -37,17 +37,21 @@ export class UserService{
       })
       .pipe(
         map((res: UserResponse)=> {
+          if(res.token){
             localStorage.setItem("authToken", res.token);
             this.isLoggedIn = true;
             this.router.navigate(["/buddies"]);
-            return res.user;
+            this.rootStore.selectUser(res.user)
+          }
+          return res.err
           }),
         catchError(error => throwError(error.error.err))
       )
-      .subscribe(user => {
-        this.rootStore.selectUser(user)}, 
+      .subscribe(errMsg => {
+        if(errMsg){
+          this.rootStore.addError(errMsg)
+        }}, 
         err=> {
-          console.log('here err');
           this.rootStore.addError(err)} );
   }
 

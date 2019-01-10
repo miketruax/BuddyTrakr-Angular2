@@ -11,9 +11,4 @@ export default (app) => {
 
 	//applies user Routes
 	app.use('/api/user', userRoutes);
-
-  //ALL requests get routed through to index.html to ensure app is used
-  app.get('*', (req, res) => {
-      res.sendFile('/dist/index.html', {root: __dirname + "/../"});
-  });
 };

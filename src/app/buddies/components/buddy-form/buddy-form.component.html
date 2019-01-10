@@ -36,7 +36,7 @@
   </form>
 <div mat-dialog-actions class="buddy-buttons  ">
   
-  <button mat-raised-button color="primary" class="submit" ngClass="{{(buddyForm.valid) && (buddyForm.touched || selectedBuddy.owner._id) ? '' : 'disabled'}}" type="submit" (click)="saveBuddy()">
+  <button mat-raised-button color="primary" class="submit" ngClass="{{(buddyForm.valid) && (buddyForm.touched || selectedBuddy.owner) ? '' : 'disabled'}}" type="submit" (click)="saveBuddy()">
     Save
   </button>
   <button mat-raised-button color="warn" *ngIf="selectedBuddy._id" class="delete" (click)="deleteBuddy()">

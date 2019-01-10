@@ -15,8 +15,10 @@ import jwt from "jsonwebtoken";
       next();
   };
 
-router.get("/", passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
-      return res.status(200).send({ user: req.user.sanitize()});
+router.get("/", (req, res) => {
+  passport.authenticate('jwt-auth', (err, user, info) =>{
+    return err || info ? res.send({user: {}}) : res.send({user: user})
+  })(req, res)
   });
 
 //Changing settings (currently only password updates)
