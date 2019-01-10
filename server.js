@@ -17,7 +17,6 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import methodOverride from 'method-override';
 import passport from 'passport';
-import cookieParser from 'cookie-parser';
 import base from './sockets/base';
 base(io);
 
@@ -35,7 +34,6 @@ if (process.env.NODE_ENV === 'development' ||
   app.use(morgan('dev'));
 
 app.use(cors());
-app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -47,7 +45,7 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 if(process.env.NODE_ENV === 'production') {
   app.use((req, res, next) => {
     if (req.header('x-forwarded-proto') !== 'https') {
-      res.redirect(`http://${req.header('host')}${req.url}`);
+      res.redirect(`https://${req.header('host')}${req.url}`);
     }
     else {
       next()
