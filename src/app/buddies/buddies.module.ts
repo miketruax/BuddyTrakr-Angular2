@@ -1,5 +1,5 @@
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {BuddiesComponent} from "./buddies.component";
 import {BuddyFormComponent} from './components/buddy-form/buddy-form.component'
 import {HttpClientModule} from "@angular/common/http";
@@ -19,7 +19,7 @@ import {reducers} from './store/reducers';
     BuddiesComponent, BuddyFormComponent, BuddyCardComponent, SearchPipe
   ],
   imports: [CommonModule, BuddiesRoutingModule, MaterialModule, 
-    FormsModule, StoreModule.forFeature('buddies', reducers),
+    FormsModule, ReactiveFormsModule, StoreModule.forFeature('buddies', reducers),
     HttpClientModule
   ],
   providers: [BuddyService, SearchPipe],

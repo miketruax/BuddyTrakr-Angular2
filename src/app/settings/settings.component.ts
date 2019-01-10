@@ -1,8 +1,11 @@
 import {Component, ChangeDetectionStrategy, OnInit} from "@angular/core";
 import {UserService} from "../services/user.service";
-import {FormGroup, Validators, FormControl,  AbstractControl } from "@angular/forms";
+import {FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { RootStoreFacade } from "../store";
 import { User } from "../models/user.model";
+import { Observable } from "rxjs";
+import { passwordMatchValidator } from "../shared/functions/password-match-validator.function";
+import { CrossFieldMatcher } from "../shared/classes/cross-field-match.class";
 
 @Component({
   selector: 'settings',
@@ -13,11 +16,12 @@ import { User } from "../models/user.model";
 
 
 export class SettingsComponent implements OnInit{
-  user : User;
+  user : Observable<User>;  
   changePasswordForm: FormGroup
-  newPasswordModel: string;
-  constructor(private userService: UserService, private rootStore: RootStoreFacade){
-    this.user = this.userService.user;
+  matcher: CrossFieldMatcher;
+  constructor(private userService: UserService, private rootStore: RootStoreFacade, public fb: FormBuilder){
+    this.user = this.rootStore.user$;
+    this.matcher = new CrossFieldMatcher();
   }
 
   get currentPassword(){
@@ -31,11 +35,6 @@ export class SettingsComponent implements OnInit{
   get confirmPassword(){
     return this.changePasswordForm.get('confirmPassword')
   }
-  
-  passwordMatchValidator(ctrl: AbstractControl){
-    return ctrl.value === this.newPasswordModel
-    ? null : {'mismatch': true};
-  }
 
   changePassword(){
     if(this.changePasswordForm.valid){
@@ -48,17 +47,10 @@ export class SettingsComponent implements OnInit{
 
 
   ngOnInit(){
-    this.changePasswordForm = new FormGroup({
-      currentPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(128)]),
-      newPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(128)]),
-      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(128), this.passwordMatchValidator.bind(this)]),
-    });
-    
-    
-    function passwordMatchValidator(g: FormGroup) {
-       return g.get('newPassword').value === g.get('confirmPassword').value
-          ? null : {'mismatch': true};
-    }
-
+    this.changePasswordForm = this.fb.group({
+      currentPassword: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(128)])],
+      newPassword: ['', Validators.compose([Validators.required, Validators.maxLength(6), Validators.minLength(8)])],
+      confirmPassword: ['']}, 
+      {validators: passwordMatchValidator});
+    };
   }
-}

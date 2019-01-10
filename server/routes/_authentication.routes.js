@@ -15,7 +15,7 @@ var router = express.Router();
   router.post("/login", (req, res, next) => {
     passport.authenticate("local-login", (err, user, info) => {
         if (!user) {
-          return res.send({err: info.message });
+          return res.status(402).send({err: info.message });
         }
         return res.send({ user: user.sanitize(), token: info.token });
       })(req,res,next);
@@ -27,11 +27,11 @@ var router = express.Router();
       let response = {};
       //if error, add error message and move on
       if (err) {
-        response.err = err;
+        return res.status(402).send({err: err})
       }
       // If no user is returned...
       else if (!user) {
-        response.err = info.signupMessage;
+        return res.status(402).send({err: info.signupMessage})
       }
       //if no errors, send response and move on.
       res.send(response);

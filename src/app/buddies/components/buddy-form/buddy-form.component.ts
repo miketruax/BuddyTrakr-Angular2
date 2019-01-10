@@ -1,6 +1,7 @@
 import {Component, OnInit, Inject} from '@angular/core';
 import {Buddy} from '../../models/buddy.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 
 @Component({
@@ -11,9 +12,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class BuddyFormComponent implements OnInit {
 
   selectedBuddy: Buddy;
-  dateAdded: any;
+  buddyForm: FormGroup;
   constructor(public dialogRef: MatDialogRef<BuddyFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data:any) {
+    @Inject(MAT_DIALOG_DATA) public data:any, public fb: FormBuilder) {
       
     }
 
@@ -22,15 +23,43 @@ export class BuddyFormComponent implements OnInit {
   }
 
   saveBuddy(){
-    this.dialogRef.close({type: 'save', payload: this.selectedBuddy})
+    if(this.buddyForm.valid){
+      this.dialogRef.close({type: 'save', payload: this.selectedBuddy})
+    }
   }
 
   close(){
     this.dialogRef.close({type: 'close'})
   }
 
+  get name(){
+    return this.buddyForm.get('name')
+  }
+
+  get species(){
+    return this.buddyForm.get('species')
+  }
+
+  get binomial(){
+    return this.buddyForm.get('binomial')
+  }
+
+  get dateAdded(){
+    return this.buddyForm.get('dateAdded')
+  }
+
+  get description(){
+    return this.buddyForm.get('description')
+  }
+
   ngOnInit(){
     this.selectedBuddy = Object.assign({}, this.data['buddy'])
-    this.dateAdded = this.selectedBuddy.dateAdded;
-  }
+      this.buddyForm = this.fb.group({
+        name: [this.selectedBuddy.name, Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(128)])],
+        species: [this.selectedBuddy.species, Validators.compose([Validators.required, Validators.maxLength(128), Validators.minLength(3)])],
+        binomial: [this.selectedBuddy.binomial], 
+        dateAdded: [this.selectedBuddy.dateAdded],
+        description: [this.selectedBuddy.description, Validators.compose([Validators.maxLength(256)])]
+      });
+      };
 }

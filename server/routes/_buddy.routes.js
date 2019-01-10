@@ -5,35 +5,25 @@ let router = express.Router();
   
   router.route('/')
   .post(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
-      Buddy.create({
-        name : req.body.name,
-        species : req.body.species,
-        binomial : req.body.binomial,
-        description : req.body.description,
-        owner : req.user._id,
-        dateAdded: Date.now()
-
-      }, (err, buddy) => {
-
-        if (err)
-          res.send({err: 'An error occured, please try again later.'});
-
-        res.json({buddy: buddy});
+      Buddy.create(
+        Object.assign(req.body, 
+          {owner : req.user._id,
+          dateAdded: Date.now()})
+      , (err, buddy) => {
+          return err ? res.send({err: 'An error occured, please try again later.'}) : res.status(200).send({buddy: buddy})
       });
     })
+
+    
     // gets all buddies based off current owner from user object (currently logged in via passport)
     .get(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
-      Buddy.find({'owner' : req.user._id }).populate('owner', 'local.username').exec((err, buddy) => {
+      Buddy.find({'owner' : req.user._id }, (err, buddy) => {
         if(err) {
           //sends error if there is an error
           res.send({err: 'An error occured, please try again later.'});
         }
         else {
-          //otherwise sends buddy list!
-          buddy.sort((a, b) => {
-            return a.name < b.name ? -1 : a.name > b.name ? 1 : 0
-          });
-          res.json({buddy: buddy});
+          res.json({buddies: buddy});
         }
       });
     });
@@ -77,12 +67,12 @@ let router = express.Router();
         }
 
         if(!altered){
-          return res.send({err: 'No changes to save'});
+          return res.status(404).send({err: 'No changes to save'});
         }
         return buddy.save((err) => {
           //either send an error back to front-end or the buddy to be re-added to store
           if (err){
-            res.send({err: 'An error occured, please try again later.'});
+            res.status(404).send({err: 'An error occured, please try again later.'});
           }
           else {
             res.send({buddy: buddy});
@@ -93,19 +83,14 @@ let router = express.Router();
 
     //sad times to delete a buddy
     .delete(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
-      
       Buddy.remove({
         _id : req.params.buddy_id,
         'owner': req.user._id
       }, (err, buddy) => {
         if (err){
-          return res.send({err: 'An error occured, please try again later.'});
+          return res.status(404).send({err: 'An error occured, please try again later.'});
         }
-        Buddy.find((err, buddies) => {
-          if(err)
-            res.send({err: 'An error occured, please try again later.'});
-          res.json({buddy: buddies});
-        });
+          res.json({buddy: buddy});
       });
     });
 

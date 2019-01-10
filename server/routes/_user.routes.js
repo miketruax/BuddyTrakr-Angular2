@@ -2,6 +2,8 @@
 import * as express from 'express';
 import passport from 'passport';
 let router = express.Router();
+let crypto = require("crypto");
+import jwt from "jsonwebtoken";
   
 
   //Admin routes
@@ -13,14 +15,9 @@ let router = express.Router();
       next();
   };
 
-router.get("/", (req, res) => {
-  passport.authenticate("jwt-auth", (err, user, info) => {
-    if (user) {
-      return res.status(200).send({ user: user.sanitize() });
-    }
-    res.status(404);
-  })(req, res);
-});
+router.get("/", passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
+      return res.status(200).send({ user: req.user.sanitize()});
+  });
 
 //Changing settings (currently only password updates)
 router.post("/changeSettings", (req, res, next) => {
@@ -30,9 +27,9 @@ router.post("/changeSettings", (req, res, next) => {
     }
 
     //Resets hash and password to new values
-    req.user.local.password = req.body.newPassword;
-    req.user.jwthash = crypto.randomBytes(20).toString("hex");
-    req.user.save((err, user) => {
+    user.local.password = req.body.newPassword;
+    user.jwthash = crypto.randomBytes(20).toString("hex");
+    user.save((err, user) => {
       if (err) {
         return res.send({
           err: "The server encountered an error, please try again later."

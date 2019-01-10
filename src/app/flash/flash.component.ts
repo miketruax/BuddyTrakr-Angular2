@@ -12,7 +12,7 @@ import { Flash } from "../models/flash.model";
 })
 
 
-export class FlashComponent {
+export class FlashComponent{
   flash: Observable<Flash>;
   constructor(private rootStore: RootStoreFacade){
     this.flash = this.rootStore.flash$;
@@ -20,5 +20,4 @@ export class FlashComponent {
   removeFlash(){
     this.rootStore.clearFlash();
   }
-  
 }

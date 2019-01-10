@@ -10,15 +10,15 @@
     <mat-nav-list>
       <a (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link text-center"
         [routerLink]="['/about']">About</a>
-      <a *ngIf="loggedIn" (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+      <a *ngIf="(user | async)._id" (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
         class="nav-link  text-center" [routerLink]="['/buddies']">Buddies</a>
-      <a *ngIf="loggedIn" (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+      <a *ngIf="(user | async)._id" (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
         class="nav-link  text-center" [routerLink]="['/settings']">Settings</a>
-      <a *ngIf="!loggedIn" (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+      <a *ngIf="!(user | async)._id" (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
         class="nav-link text-center" [routerLink]="['/login']">Login</a>
-      <a *ngIf="!loggedIn" (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+      <a *ngIf="!(user | async)._id" (click)="sidenav.toggle()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
         class="nav-link text-center" [routerLink]="['/signup']">Signup</a>
-      <a *ngIf="loggedIn" (click)="logout(); sidenav.toggle()" class="nav-link text-center pointer">Logout</a>
+      <a *ngIf="(user | async)._id" (click)="logout(); sidenav.toggle()" class="nav-link text-center pointer">Logout</a>
     </mat-nav-list>
   </mat-sidenav>
 

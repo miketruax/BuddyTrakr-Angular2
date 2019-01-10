@@ -1,29 +1,34 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { catchError } from "rxjs/operators";
+import { catchError, map } from "rxjs/operators";
 import { of } from "rxjs";
+import { User } from "../models/user.model";
+import { UserResponse } from "../models/user-response.model";
 
 @Injectable()
 export class InitUserService {
-  constructor(private http: HttpClient) {
-  }
+  isLoggedIn: boolean = false;
+  user: User = {};
+  constructor(private http: HttpClient) {}
   load() {
-    if (localStorage.getItem("authToken")) {
-      let headers = new HttpHeaders().append(
-        "Authorization",
-        localStorage.getItem("authToken")
+    let headers = new HttpHeaders().append(
+      "Authorization",
+      `JWT ${localStorage.getItem("authToken")}`
+    );
+    let observable = this.http.get("/api/user", { headers: headers })
+    .pipe(
+      map((res: UserResponse)=>{
+        return {isLoggedIn: true, user:res.user}
+      }),
+      catchError(err => {
+        return of({isLoggedIn: false, user: {}})
+      })
+    );
+    return observable.toPromise().then(
+      (res)=>{
+        this.isLoggedIn = res.isLoggedIn;
+        this.user = res.user;
+      }
       );
-      this.http
-        .get("/api/user", { headers: headers }).pipe(
-          catchError((err)=>{ 
-            console.log(err);
-            return of(new Error())
-          }))
-        .subscribe(data => {
-          console.log(data);
-          localStorage.setItem("user", JSON.stringify(data["user"]))}, 
-          err=>{localStorage.clear();});
-    }
-    
   }
 }

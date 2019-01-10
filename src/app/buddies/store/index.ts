@@ -4,11 +4,12 @@ import {Buddy} from '../models/buddy.model'
 import * as fromActions from './actions/'
 import * as fromReducers from './reducers/'
 import * as fromSelectors from './selectors'
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 
 export class BuddyStoreFacade{
-  buddies$ = this.store.pipe(select(fromSelectors.getCompleteBuddiesState))
+  buddies$ = this.store.pipe(select(fromSelectors.getCompleteBuddiesState), distinctUntilChanged())
 
   constructor(private store: Store<fromReducers.BuddiesState>){
 

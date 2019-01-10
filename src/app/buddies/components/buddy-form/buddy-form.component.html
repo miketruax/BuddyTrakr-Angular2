@@ -1,33 +1,42 @@
+<div class="background-accent-light">
+  {{selectedBuddy | json}}
 <h2 mat-dialog-title class="text-center text-warning">{{selectedBuddy._id ? "Editing "+ selectedBuddy.name : "Create
   New Buddy"}}</h2>
-<div mat-dialog-content class=" ">
-
-  <form class="buddy-edit-form">
+<div mat-dialog-content class=" " role="form">
+  <form class="buddy-edit-form"  [formGroup]="buddyForm">
     <mat-form-field class="input">
-      <input matInput name="name" [(ngModel)]="selectedBuddy.name" placeholder="Buddy Name" type="text">
+      <input matInput name="name" formControlName="name" placeholder="Buddy Name" type="text" [(ngModel)] = "selectedBuddy.name">
+      <mat-error *ngIf="name.errors && (name.dirty || name.touched)">
+        Invalid name. Must be between 2 and 128 characters.
+    </mat-error>
     </mat-form-field>
     <mat-form-field class="input">
-      <input matInput name="species" [(ngModel)]="selectedBuddy.species" placeholder="Species" type="text">
-
+      <input matInput name="species" formControlName="species" placeholder="Species" type="text"  [(ngModel)] = "selectedBuddy.species">
+      <mat-error *ngIf="species.errors && (species.dirty || species.touched)">
+        Invalid name. Must be between 3 and 128 characters.
+    </mat-error>
     </mat-form-field>
     <mat-form-field class="input">
-      <input matInput name="binomial" [(ngModel)]="selectedBuddy.binomial" placeholder="Scientific Name (Optional)"
-        type="text">
-
+      <input matInput name="binomial" formControlName="binomial" placeholder="Scientific Name (Optional)"
+        type="text"  [(ngModel)] = "selectedBuddy.binomial">
     </mat-form-field>
-    <mat-form-field class="input" *ngIf="!dateAdded" color="primary">
-      <input matInput name="picker" [matDatepicker]="birthday" [(ngModel)]="selectedBuddy.dateAdded" placeholder="Buddy's Birthday">
-      <mat-datepicker-toggle matSuffix [for]="birthday"></mat-datepicker-toggle>
-      <mat-datepicker #birthday></mat-datepicker>
+    <mat-form-field class="input" color="primary">
+      <input matInput name="picker" [matDatepicker]="dateAdded" formControlName="dateAdded" placeholder="Buddy's Birthday"
+      [(ngModel)] = "selectedBuddy.dateAdded">
+      <mat-datepicker-toggle matSuffix [for]="dateAdded"></mat-datepicker-toggle>
+      <mat-datepicker #dateAdded></mat-datepicker>
     </mat-form-field>
     <mat-form-field class="input">
-      <textarea matInput name="description" rows="5" [(ngModel)]="selectedBuddy.description" placeholder="Description"
-        form="buddyForm"></textarea>
+      <textarea matInput name="description"  [(ngModel)] = "selectedBuddy.description" placeholder="Description" maxlength="255"
+        form="buddyForm" formControlName="description"></textarea>
+        <mat-error *ngIf="description.errors && (description.dirty || description.touched)">
+          Invalid description. Must be fewer than 256 characters
+      </mat-error>
     </mat-form-field>
   </form>
-</div>
 <div mat-dialog-actions class="buddy-buttons  ">
-  <button mat-raised-button color="primary" class="submit" type="submit" (click)="saveBuddy()">
+  
+  <button mat-raised-button color="primary" class="submit" ngClass="{{(buddyForm.valid) && (buddyForm.touched || selectedBuddy.owner._id) ? '' : 'disabled'}}" type="submit" (click)="saveBuddy()">
     Save
   </button>
   <button mat-raised-button color="warn" *ngIf="selectedBuddy._id" class="delete" (click)="deleteBuddy()">

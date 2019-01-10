@@ -2,14 +2,14 @@
 import { Component, ChangeDetectorRef } from "@angular/core";
 import { Buddy } from "./models/buddy.model";
 import { BuddyService } from "./services/buddy.service";
-import {Subscription } from "rxjs";
+import {Subscription, Observable } from "rxjs";
 import { SearchPipe } from "./pipes/search.pipe";
 import { MatDialog } from "@angular/material";
 import { BuddyFormComponent } from "./components/buddy-form/buddy-form.component";
-import { UserService } from "../services/user.service";
-import { fadeInAnimation } from "../shared/animations/fadeInAnimation";
+import { fadeInAnimation } from "../shared/animations/fade-in-animation";
 import { BuddyStoreFacade } from "./store";
 import { User } from "../models/user.model";
+import { RootStoreFacade } from "../store";
 
 @Component({
   selector: "buddies",
@@ -25,17 +25,18 @@ export class BuddiesComponent {
   neverOut: boolean = false;
   activePage: number = 1;
   perPage: number = 12;
-  user: User
+  user: Observable<User>
 
   constructor(
     private buddyService: BuddyService,
     private ref: ChangeDetectorRef,
     public dialog: MatDialog,
     private buddyStore: BuddyStoreFacade,
-    private filterBySearch: SearchPipe, private userService: UserService
-  ) {
+    private rootStore: RootStoreFacade,
+    private filterBySearch: SearchPipe) 
+    {
     buddyService.loadBuddies();
-    this.user = userService.user
+    this.user = rootStore.user$;
   }
 
   //Getters
@@ -60,7 +61,7 @@ export class BuddiesComponent {
   openDialog(buddy?: Buddy): void {
     const dialogRef = this.dialog.open(BuddyFormComponent, {
       width: "90%",
-      height: "90%",
+      height: "auto",
       maxWidth: "90vw",
       backdropClass: "background-accent-dark",
       data: { buddy: buddy }
@@ -93,8 +94,7 @@ export class BuddiesComponent {
   // Buddy Actions
 
   deleteBuddy(buddy: Buddy) {
-    console.log("Fake Deletion");
-    //this.buddyService.deleteBuddy(buddy);
+    this.buddyService.deleteBuddy(buddy);
   }
 
   saveBuddy(buddy: Buddy) {

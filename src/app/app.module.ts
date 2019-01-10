@@ -40,9 +40,7 @@ export function startupUser(startupService: InitUserService){
     ReactiveFormsModule,
     HttpClientModule,
     MaterialModule,
-    RouterModule.forRoot(routes, {
-      useHash: true
-    }),
+    RouterModule.forRoot(routes),
     StoreModule.forRoot(reducers), 
     BuddiesModule
   ],

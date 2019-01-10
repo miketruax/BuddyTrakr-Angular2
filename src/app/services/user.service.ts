@@ -1,27 +1,32 @@
 import { Injectable} from "@angular/core";
-import { map, catchError } from "rxjs/operators";
+import { map, catchError, take} from "rxjs/operators";
 import { Router } from "@angular/router";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { RootStoreFacade } from "../store";
 import { User } from "../models/user.model";
+import { UserResponse } from "../models/user-response.model";
 import { BuddyStoreFacade } from "../buddies/store";
+import { throwError } from "rxjs/internal/observable/throwError";
+import { InitUserService } from "./init-user.service";
 
 @Injectable()
 export class UserService{
+  isLoggedIn: boolean;
   constructor(
     private router: Router,
+    private initUserService: InitUserService,
     private http: HttpClient,
     private rootStore: RootStoreFacade,
     private buddyStore: BuddyStoreFacade
-  ) {}
+  ) {
+    this.rootStore.selectUser(this.initUserService.user);
+    this.isLoggedIn = this.initUserService.isLoggedIn;
+  }
+    
 
-  get user(): User{
-      return this.isLoggedIn ? JSON.parse(localStorage.getItem('user')) : null
-  }
-  
-  public get isLoggedIn(){
-    return localStorage.getItem('user') ? true : false
-  }
+
+      
+
 
   login(username, password) {
     let headers = new HttpHeaders().append("Content-Type", "application/json");
@@ -31,18 +36,19 @@ export class UserService{
         headers: headers
       })
       .pipe(
-        map(payload => {
-            localStorage.setItem("authToken", payload["token"]);
-            localStorage.setItem("user", JSON.stringify(payload['user']));
+        map((res: UserResponse)=> {
+            localStorage.setItem("authToken", res.token);
+            this.isLoggedIn = true;
             this.router.navigate(["/buddies"]);
-            return payload["user"];
+            return res.user;
           }),
-        catchError(error =>
-          error("Something went wrong, please try again later")
-        )
+        catchError(error => throwError(error.error.err))
       )
-      .subscribe(user => this.rootStore.selectUser(user), 
-        err=>this.rootStore.addError(err));
+      .subscribe(user => {
+        this.rootStore.selectUser(user)}, 
+        err=> {
+          console.log('here err');
+          this.rootStore.addError(err)} );
   }
 
   signup(username, password, email) {
@@ -53,12 +59,12 @@ export class UserService{
         headers: headers
       })
       .pipe(
-        map(payload => {
+        map((res: UserResponse) => {
             this.router.navigate(["/login"]);
-             return  "Successfully signed up, please log in!"
+             return "Successfully signed up, please log in!"
             }
         ), 
-        catchError(err=> "Something Went wrong. Please check your entries and try again"))
+        catchError(err=> throwError(err.error.err)))
       .subscribe(msg => this.rootStore.addSuccess(msg), 
       err=>this.rootStore.addError(err));
   }
@@ -75,12 +81,12 @@ export class UserService{
         { headers: headers }
       )
       .pipe(
-        map(payload => {
+        map((res: UserResponse)=> {
             this.router.navigate(["/buddies"]);
-            localStorage.setItem("authToken", payload["token"]);
+            localStorage.setItem("authToken", res.token);
             return "Successfully updated password.";
         }), 
-        catchError(err=> "Something went wrong, please check your entries and try again.")
+        catchError(err=> throwError("Something went wrong, please check your entries and try again."))
       )
       .subscribe(msg=> this.rootStore.addSuccess(msg), 
       err=> this.rootStore.addError(err));
@@ -89,6 +95,7 @@ export class UserService{
   logout() {
     this.buddyStore.addBuddies([])
     this.rootStore.clearUser()
+    this.isLoggedIn = false;
     this.rootStore.addSuccess("Successfully Logged Out");
     this.router.navigate(["/login"]);
     localStorage.clear();

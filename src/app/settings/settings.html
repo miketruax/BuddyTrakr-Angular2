@@ -1,5 +1,5 @@
 <div class="page-container">
-<h2 class="text-center">Change password for <span class="text-warning">{{user.username}}</span></h2>
+<h2 class="text-center">Change password for <span class="text-warning">{{(user | async).username}}</span></h2>
 <form class="settings-form" [formGroup]="changePasswordForm" role="form" (ngSubmit)="changePassword()">
     <mat-form-field class="input">
     <input matInput  type="password" formControlName="currentPassword" placeholder="Current Password" name="currentPassword">
@@ -8,14 +8,14 @@
     </mat-error>
     </mat-form-field>
   <mat-form-field class="input">
-    <input matInput type="password" formControlName="newPassword" placeholder="New Password" name="newPassword" [(ngModel)]="newPasswordModel">
+    <input matInput type="password" formControlName="newPassword" placeholder="New Password" name="newPassword">
     <mat-error *ngIf="newPassword.errors && (newPassword.dirty || newPassword.touched)">
         Invalid password. Must be between 8 and 128 characters.
     </mat-error>
   </mat-form-field>
   <mat-form-field class="input">
-    <input matInput type="password" placeholder="Confirm New Password" formControlName="confirmPassword" name="confirmPassword">
-    <mat-error *ngIf="confirmPassword.errors && ((newPassword.dirty || newPassword.touched) || (confirmPassword.dirty || confirmPassword.touched))">
+    <input matInput type="password" placeholder="Confirm New Password" formControlName="confirmPassword" name="confirmPassword" [errorStateMatcher] = "matcher">
+    <mat-error *ngIf="changePasswordForm.hasError('mismatch') && (confirmPassword.dirty || confirmPassword.touched || newPassword.dirty || newPassword.touched)">
         Passwords must match.
     </mat-error>
   </mat-form-field>

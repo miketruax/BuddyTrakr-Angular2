@@ -1,6 +1,6 @@
 <!-- HEADER -->
 <div class="page-container">
-  <h2 class="text-center">Welcome, <span class="text-warning">{{user.username}}!</span> Let's get tracking! </h2>
+  <h2 class="text-center">Welcome, <span class="text-warning">{{(user | async).username}}!</span> Let's get tracking! </h2>
   
   
   <!--GENERIC BUDDY BUTTONS-->

@@ -1,8 +1,9 @@
 //Signup component
 import {Component} from '@angular/core';
-import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {UserService} from '../services/user.service';
-import { User } from '../models/user.model';
+import { CrossFieldMatcher } from '../shared/classes/cross-field-match.class';
+import { passwordMatchValidator } from '../shared/functions/password-match-validator.function';
 
 
 @Component({
@@ -12,33 +13,40 @@ import { User } from '../models/user.model';
 })
 
 export class SignupComponent {
-  user: User = {username: '', email: '', password: ''};
-  confirmPswd: string;
   signupForm: FormGroup;
+  matcher: CrossFieldMatcher
   constructor(private userService: UserService, private formBuilder: FormBuilder) {
+    this.matcher = new CrossFieldMatcher();
+  }
 
+  get username(){
+    return this.signupForm.get('username')
+  }
+
+  get email(){
+    return this.signupForm.get('email')
+  }
+  get password(){
+    return this.signupForm.get('password')
+  }
+
+  get confirmPassword(){
+    return this.signupForm.get('confirmPassword')
   }
 
   signup(e) {
     e.preventDefault();
     if(this.signupForm.valid){
-      this.userService.signup(this.user.username, this.user.password, this.user.email);
+      this.userService.signup(this.username.value, this.password.value, this.email.value);
     }
   }
 
-  passwordMatchValidator = function(control: FormControl) {
-    if(!this.user.password && !control.dirty && control.untouched){
-      return null;
-    }
-    return (this.user.password === this.confirmPswd) ? null : { 'mismatch': true };
-}
-
   ngOnInit() {
     this.signupForm = this.formBuilder.group({
-      email: [this.user.username, Validators.compose([Validators.required, Validators.email])],
-      username: [this.user.email, Validators.compose([Validators.required, Validators.maxLength(16), Validators.minLength(3)])],
-      password: [this.user.password, Validators.compose([Validators.required, Validators.maxLength(128), Validators.minLength(8)])],
-      confirmpassword: [this.confirmPswd, Validators.compose([this.passwordMatchValidator.bind(this)])]
-    });
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      username: ['', Validators.compose([Validators.required, Validators.maxLength(16), Validators.minLength(3)])],
+      password: ['', Validators.compose([Validators.required, Validators.maxLength(128), Validators.minLength(8)])],
+      confirmPassword: ['' ]
+    }, {validator: passwordMatchValidator});
 
 }}

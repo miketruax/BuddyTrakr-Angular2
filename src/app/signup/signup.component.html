@@ -1,37 +1,34 @@
 <div class="page-container">
   <img class="signup-img" src="/assets/img/logos/main_logo.png">
-  <h3 class="text-center">Sign up</h3>
+  <h2 class="text-center">Sign up</h2>
 
   <form class="signup-form" role="form" (ngSubmit)="signup($event)" [formGroup]="signupForm">
     <mat-form-field class="input">
-      <input matInput  formControlName="username" type="text" class="" placeholder="Username"
-        [(ngModel)]="user.username">
+      <input matInput  formControlName="username" type="text" class="" placeholder="Username">
       <mat-hint>Username must be between 3 and 16 characters</mat-hint>
-      <mat-error *ngIf="signupForm.controls.username.errors && (signupForm.controls.username.dirty || signupForm.controls.username.touched)">
+      <mat-error *ngIf="username.errors && (username.dirty || username.touched)">
         Username must be between 3 and 16 characters</mat-error>
     </mat-form-field>
     <mat-form-field class="input">
-      <input matInput  formControlName="email" type="email" class="" placeholder="Email"
-        [(ngModel)]="user.email">
+      <input matInput  formControlName="email" type="email" class="" placeholder="Email">
         <mat-hint>Valid e-mail address</mat-hint>
-      <mat-error *ngIf="signupForm.controls.email.errors && (signupForm.controls.email.dirty || signupForm.controls.email.touched)">Valid
+      <mat-error *ngIf="email.errors && (email.dirty || email.touched)">Valid
         email is required</mat-error>
     </mat-form-field>
     <mat-form-field class="input">
 
-      <input matInput  formControlName="password" type="password" class=""  placeholder="Password"
-        [(ngModel)]="user.password">
+      <input matInput  formControlName="password" type="password" class=""  placeholder="Password">
       <mat-hint>Password must be between 8 and 128 characters.</mat-hint>
-      <mat-error *ngIf="signupForm.controls.password.errors && (signupForm.controls.password.dirty || signupForm.controls.password.touched)">Password
+      <mat-error *ngIf="password.errors && (password.dirty || password.touched)">Password
         must be between 8 and 128 characters.</mat-error>
 
     </mat-form-field>
     <mat-form-field class="input">
 
-      <input matInput  formControlName="confirmpassword" type="password" class=""
-        placeholder="Confirm Password" [(ngModel)]="confirmPswd">
+      <input matInput  formControlName="confirmPassword" type="password" class=""  [errorStateMatcher] = "matcher"
+        placeholder="Confirm Password">
       <mat-hint>Passwords must match.</mat-hint>
-      <mat-error class="form-error" *ngIf="signupForm.controls.confirmpassword.errors && (signupForm.controls.confirmpassword.dirty || signupForm.controls.confirmpassword.touched || signupForm.controls.password.dirty || signupForm.controls.password.touched)">
+      <mat-error class="form-error" *ngIf="signupForm.hasError('mismatch') && (confirmPassword.dirty || confirmPassword.touched || password.dirty || password.touched)">
         Passwords must match.</mat-error>
     </mat-form-field>
     <button type="submit" mat-raised-button color="primary" ngClass="{{signupForm.valid && signupForm.touched ? '' : 'disabled'}}" class="signup-button">
