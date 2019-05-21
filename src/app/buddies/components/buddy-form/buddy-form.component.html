@@ -1,5 +1,5 @@
 <div class="background-accent-light">
-<h2 mat-dialog-title class="text-center text-warning">{{selectedBuddy._id ? "Editing "+ selectedBuddy.name : "Create
+<h2 mat-dialog-title class="text-center text-warning">{{selectedBuddy.id ? "Editing "+ selectedBuddy.name : "Create
   New Buddy"}}</h2>
 <div mat-dialog-content class=" " role="form">
   <form class="buddy-edit-form"  [formGroup]="buddyForm">
@@ -38,7 +38,7 @@
   <button mat-raised-button color="primary" class="submit" ngClass="{{(buddyForm.valid) && (buddyForm.touched || selectedBuddy.owner) ? '' : 'disabled'}}" type="submit" (click)="saveBuddy()">
     Save
   </button>
-  <button mat-raised-button color="warn" *ngIf="selectedBuddy._id" class="delete" (click)="deleteBuddy()">
+  <button mat-raised-button color="warn" *ngIf="selectedBuddy.id" class="delete" (click)="deleteBuddy()">
     Delete
   </button>
 

@@ -2,6 +2,7 @@
 import * as express from 'express';
 import passport from 'passport';
 let router = express.Router();
+const bcrypt = require('bcrypt')
 let crypto = require("crypto");
 import jwt from "jsonwebtoken";
 import {query} from '../config/pg.conf';
@@ -17,34 +18,36 @@ import {query} from '../config/pg.conf';
 
 router.get("/", (req, res) => {
   passport.authenticate('jwt-auth', (err, user, info) =>{
-    return err || info ? res.send({user: {}}) : res.send({user: user.sanitize()})
+    return err || info ? res.send({user: {}}) : res.send({user: user})
   })(req, res)
   });
 
 //Changing settings (currently only password updates)
 router.post("/changeSettings", (req, res, next) => {
-  passport.authenticate("jwt-auth", (err, user, info) => {
+  passport.authenticate("jwt-auth", async (err, user, info) => {
     if (err) {
       return res.send({ err: err });
     }
 
     //Resets hash and password to new values
-    user.local.password = req.body.newPassword;
-    user.jwthash = crypto.randomBytes(20).toString("hex");
-    user.save((err, user) => {
+    let hashPassword = await bcrypt.hash(password, 8);
+
+    let jwthash = crypto.randomBytes(20).toString("hex");
+    query("UPDATE USERS jwthash = $1, password = $2 WHERE id = $3", [jwthash, hashPassword, user.id], (err, result)=>{
       if (err) {
         return res.send({
           err: "The server encountered an error, please try again later."
         });
       }
       let token = jwt.sign(
-        { user: user.sanitize(), hash: user.jwthash },
+        { user: user, hash: user.jwthash },
         process.env.SESSION_SECRET,
         { expiresIn: 259200 }
+        
       );
       res.send({ token: token });
-    });
-  })(req, res);
+    })
+      })(req, res);
 });
 
 //admin route to delete a user

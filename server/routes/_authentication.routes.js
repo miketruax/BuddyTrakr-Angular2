@@ -14,10 +14,11 @@ var router = express.Router();
   //log in route
   router.post("/login", (req, res, next) => {
     passport.authenticate("local-login", (err, user, info) => {
-        if (!user) {
+      if(err)  return res.send({err: "Something went wrong, please try again later;"})
+      if (!user) {
           return res.send({err: info.message });
         }
-        return res.send({ user: user.sanitize(), token: info.token });
+        return res.send({ user: user, token: info.token });
       })(req,res,next);
   });
 

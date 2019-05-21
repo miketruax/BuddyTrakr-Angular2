@@ -18,7 +18,7 @@ export class InitUserService {
     let observable = this.http.get("/api/user", { headers: headers })
     .pipe(
       map((res: UserResponse)=>{
-        return {isLoggedIn: !!res.user._id, user:res.user}
+        return {isLoggedIn: !!res.user.id, user:res.user}
       }),
       catchError(err => {
         return of({isLoggedIn: false, user: {}})

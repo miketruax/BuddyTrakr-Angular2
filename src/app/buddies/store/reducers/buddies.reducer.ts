@@ -21,16 +21,15 @@ export function buddyReducer (state = initialState, action: BuddyActions.Actions
 
 
     case BuddyActions.UPDATE_BUDDY:
-      console.log("updating")
       return state.map(buddy => {
-        return buddy._id === action.payload['_id']
+        return buddy.id === action.payload['id']
           ? Object.assign({}, buddy, action.payload) : buddy;
       }).sort(sortNames);
 
 
     case BuddyActions.DELETE_BUDDY:
       return state.filter(buddy => {
-        return buddy._id !== action.payload;
+        return buddy.id !== action.payload;
       });
 
 

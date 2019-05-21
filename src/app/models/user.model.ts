@@ -1,6 +1,6 @@
 //User Model
 export interface User{
-  _id?: string;
+  id?: string;
   username?: string;
   friends?: Array<string>;
   email?: string;

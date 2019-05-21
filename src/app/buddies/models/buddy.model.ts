@@ -1,5 +1,5 @@
 export interface Buddy {
-  _id?: number;
+  id?: number;
   name?: string;
   species?: string;
   binomial?: string;

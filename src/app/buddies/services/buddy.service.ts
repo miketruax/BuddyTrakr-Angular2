@@ -34,7 +34,7 @@ export class BuddyService{
 
   saveBuddy(buddy: Buddy) {
     this.rootStore.clearFlash();
-    buddy._id ? this.updateBuddy(buddy) : this.createBuddy(buddy);
+    buddy.id ? this.updateBuddy(buddy) : this.createBuddy(buddy);
   }
 
   createBuddy(buddy: Buddy) {
@@ -64,7 +64,7 @@ export class BuddyService{
       .append("Content-Type", "application/json")
       .append("Authorization", `JWT ${localStorage.getItem("authToken")}`);
     this.http
-      .put(`/api/buddy/${buddy._id}`, JSON.stringify(buddy), {
+      .put(`/api/buddy/${buddy.id}`, JSON.stringify(buddy), {
         headers: headers
       })
       .pipe(
@@ -74,7 +74,7 @@ export class BuddyService{
         }),
         catchError(err => throwError(err.error.err))
       )
-      .subscribe(buddy => this.buddyStore.updateBuddy(buddy), 
+      .subscribe(buddy => { console.log(buddy); this.buddyStore.updateBuddy(buddy)}, 
         err=> this.rootStore.addError(err ? err : 'Something went wrong, please try again later.'));
   }
 
@@ -85,11 +85,11 @@ export class BuddyService{
       `JWT ${localStorage.getItem("authToken")}`
     );
     this.http
-      .delete(`/api/buddy/${buddy._id}`, { headers: headers })
+      .delete(`/api/buddy/${buddy.id}`, { headers: headers })
       .pipe(
         map((res: BuddyResponse)=> {
           this.rootStore.addSuccess(`${buddy.name} successfully deleted`)
-          return buddy._id;
+          return buddy.id;
         }),
         catchError(err => throwError("Could not access, please check credentials and try again."))
       )

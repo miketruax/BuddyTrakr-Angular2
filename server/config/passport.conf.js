@@ -1,10 +1,9 @@
 // Load PassportJS strategies
 import {query} from '../config/pg.conf'
 import LocalStrategy from "passport-local";
-import User from "../models/user.model.js";
 import { Strategy } from "passport-jwt";
 import { ExtractJwt } from "passport-jwt";
-import bcrypt from "bcrypt-nodejs";
+import bcrypt from "bcrypt";
 let crypto = require("crypto");
 import jwt from "jsonwebtoken";
 
@@ -82,21 +81,20 @@ export default passport => {
         // User.findOne will not fire unless data is sent back
         process.nextTick(() => {
           //finds user with the person's email/username
-          query("SELECT * FROM USERS WHERE USERS.email = $1 OR USERS.username = $2", [username, req.body.email], (err, result)=>{
+          query("SELECT * FROM USERS WHERE USERS.email = $1 OR USERS.username = $2", [username, req.body.email], async (err, result)=>{
             if(err) {
               return done(err);
             }
-            if(result[0]){
+            if(result.rows[0]){
               //if a user does exist with either credential, send error
               return done(null, false, {
                 signupMessage: "That username/email is already taken."
               });
             } else {
-              let hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+              let hashPassword = await bcrypt.hash(password, 8);
               query("INSERT INTO USERS (username, email, password) VALUES ($1, $2, $3)", 
               [username.toLowerCase(), req.body.email.toLowerCase(), hashPassword], (err, result)=>{
-                console.log(result);
-                return done(null, result[0])
+                return done(null, result.rows[0])
               })
             }
           })
@@ -117,37 +115,39 @@ export default passport => {
         usernameField: "username",
         passwordField: "password"},
       (username, password, done) => {
-        query("SELECT username, id FROM USERS WHERE USERS.username = $1 OR USERS.email = $2", [username.toLowerCase, username.toLowerCase()], 
-        (err, user)=>{
+        let validPass;
+        query("SELECT * FROM USERS WHERE USERS.username = $1 OR USERS.email = $2", [username.toLowerCase(), username.toLowerCase()], 
+        async (err, userResult)=>{
+          let user = userResult.rows[0];
           if (err) return done(err);
-          if(!user[0]){
+          if(!user){
             //compares password to non-hash if no user found to help prevent timing attack
-            let randomHash = bcrypt.hashSync(
+            let randomHash = await bcrypt.hash(
               `${password}hash`,
-              bcrypt.genSaltSync(8),
-              null
+              bcrypt.genSaltSync(8)
             );
-            bcrypt.compareSync(password, randomHash);
-            return done(null, false, {
+            validPass = await bcrypt.compare(password, randomHash);
+            return done(null, validPass, {
               message: "Invalid username or password."
             });
           }
-          if(!bcrypt.compareSync(password, user[0].password)){
+          validPass = await bcrypt.compare(password, user.password)
+          if(!validPass){
             return done(null, false, {
               message: "Invalid username or password."
             });
           }
           let hash = crypto.randomBytes(20).toString("hex");
           let token = jwt.sign(
-            { user: user[0], hash: hash },
+            { user: user, hash: hash },
             process.env.SESSION_SECRET,
             { expiresIn: 259200 }
           );
-          query("UPDATE USERS SET jwthash = $1 WHERE id =  $2", [hash, user[0].id], (err, result)=>{
+          query("UPDATE USERS SET jwthash = $1, updatedat = now()  WHERE id = $2", [hash,  user.id], (err, result)=>{
             if (err) {
               done(err);
             } else {
-              done(null, user, { token: token });
+              done(null, {id: user.id, hash: user.hash, username: user.username, email: user.email}, { token: token });
             }
           })
         })
@@ -161,14 +161,17 @@ export default passport => {
   };
 
   passport.use( "jwt-auth", new Strategy(jwtOptions, function(jwt_payload, done) {
-    query("SELECT * FROM USERS where users.id = $1", [jwt_payload.user.id], (err, result)=>{
+    query("SELECT jwthash, username, email, id, updatedat FROM USERS where users.id = $1", [jwt_payload.user.id], (err, result)=>{
+      let user = result.rows[0];
       if (err) {
         return done(err, false);
       }
-      let timeDiff = (Date.now() - user[0].updatedAt.getTime()) / 36e5;
-      if (jwt_payload.hash === user[0].jwthash && timeDiff <= 48) {
-        return done(null, user[0]);
+      let timeDiff = (Date.now() - new Date(user.updatedat)) / 36e5;
+      if (jwt_payload.hash === user.jwthash && timeDiff <= 48) {
+        
+        return done(null, user);
       } else {
+        
         return done(null, false);
       }
     })

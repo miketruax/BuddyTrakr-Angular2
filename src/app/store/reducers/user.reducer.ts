@@ -23,7 +23,5 @@ export const getUser = (state: UserState) => state;
 
 export const getUsername = (state: UserState) => state.username;
 
-export const getFriends = (state: UserState) => state.friends;
-
-export const getId = (state: UserState) => state._id;
+export const getId = (state: UserState) => state.id;
 
