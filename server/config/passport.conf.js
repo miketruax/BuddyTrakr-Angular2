@@ -1,4 +1,5 @@
 // Load PassportJS strategies
+import {query} from '../config/pg.conf'
 import LocalStrategy from "passport-local";
 import User from "../models/user.model.js";
 import { Strategy } from "passport-jwt";
@@ -81,39 +82,26 @@ export default passport => {
         // User.findOne will not fire unless data is sent back
         process.nextTick(() => {
           //finds user with the person's email/username
-          User.findOne(
-            {
-              $or: [
-                { "local.username": username },
-                { "local.email": req.body.email }
-              ]
-            },
-            (err, user) => {
-              // If there are any errors, return the error
-              if (err) {
-                return done(err);
-              }
-
-              if (user) {
-                //if a user does exist with either credential, send error
-                return done(null, false, {
-                  signupMessage: "That username/email is already taken."
-                });
-              } else {
-                //if no errors to this point
-                let newUser = new User();
-                newUser.local.username = username.toLowerCase();
-                newUser.local.email = req.body.email.toLowerCase();
-                newUser.local.password = password;
-                newUser.save(err => {
-                  if (err) {
-                    throw err;
-                  }
-                  return done(null, newUser);
-                });
-              }
+          query("SELECT * FROM USERS WHERE USERS.email = $1 OR USERS.username = $2", [username, req.body.email], (err, result)=>{
+            if(err) {
+              return done(err);
             }
-          );
+            if(result[0]){
+              //if a user does exist with either credential, send error
+              return done(null, false, {
+                signupMessage: "That username/email is already taken."
+              });
+            } else {
+              let hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+              query("INSERT INTO USERS (username, email, password) VALUES ($1, $2, $3)", 
+              [username.toLowerCase(), req.body.email.toLowerCase(), hashPassword], (err, result)=>{
+                console.log(result);
+                return done(null, result[0])
+              })
+            }
+          })
+            
+                //if no errors to this point
         });
       }
     )
@@ -128,83 +116,43 @@ export default passport => {
         // By default, local strategy uses username and password
         usernameField: "username",
         passwordField: "password"},
-
       (username, password, done) => {
-        if (
-          !checkLength(
-            username,
-            bounds.username
-          )
-        ) {
-          // ### Verify Callback
-          return done(null, false, {
-            message: "Invalid username/email length."
-          });
-        }
-
-        // If the length of the password string is too long/short,
-        // invoke verify callback
-        if (
-          !checkLength(
-            password,
-            bounds.password
-          )
-        ) {
-          return done(null, false, { message: "Invalid password length." });
-        }
-        //finds user with given criteria (uses toLowerCase for case sensitivity issues)
-        User.findOne(
-          {
-            $or: [
-              { "local.username": username.toLowerCase() },
-              { "local.email": username.toLowerCase() }
-            ]
-          },
-          (err, user) => {
-            //sends errors back if err
-            if (err) return done(err);
-
-            //sends error back if no user found (most likely due to incorrect username spelling)
-            if (!user) {
-              //compares password to non-hash if no user found to help prevent timing attack
-              let randomHash = bcrypt.hashSync(
-                `${password}hash`,
-                bcrypt.genSaltSync(8),
-                null
-              );
-              bcrypt.compareSync(password, randomHash);
-              return done(null, false, {
-                message: "Invalid username or password."
-              });
-            }
-
-            //next is to validate the password is correct
-            if (!user.validPassword(password)) {
-              return done(null, false, {
-                message: "Invalid username or password."
-              });
-            }
-            //if all validations passed, YOU DID IT!
-            let hash = crypto.randomBytes(20).toString("hex");
-            //otherwise login using sanitized user (stripped of pswd hash and email hash)
-            user.jwthash = hash;
-            let token = jwt.sign(
-              { user: user.sanitize(), hash: hash },
-              process.env.SESSION_SECRET,
-              { expiresIn: 259200 }
+        query("SELECT username, id FROM USERS WHERE USERS.username = $1 OR USERS.email = $2", [username.toLowerCase, username.toLowerCase()], 
+        (err, user)=>{
+          if (err) return done(err);
+          if(!user[0]){
+            //compares password to non-hash if no user found to help prevent timing attack
+            let randomHash = bcrypt.hashSync(
+              `${password}hash`,
+              bcrypt.genSaltSync(8),
+              null
             );
-            user.save(err => {
-              if (err) {
-                done(err);
-              } else {
-                done(null, user, { token: token });
-              }
+            bcrypt.compareSync(password, randomHash);
+            return done(null, false, {
+              message: "Invalid username or password."
             });
           }
-        );
-      }
-    )
-  );
+          if(!bcrypt.compareSync(password, user[0].password)){
+            return done(null, false, {
+              message: "Invalid username or password."
+            });
+          }
+          let hash = crypto.randomBytes(20).toString("hex");
+          let token = jwt.sign(
+            { user: user[0], hash: hash },
+            process.env.SESSION_SECRET,
+            { expiresIn: 259200 }
+          );
+          query("UPDATE USERS SET jwthash = $1 WHERE id =  $2", [hash, user[0].id], (err, result)=>{
+            if (err) {
+              done(err);
+            } else {
+              done(null, user, { token: token });
+            }
+          })
+        })
+      })
+    );
 
   //JWT Authentication
   let jwtOptions = {
@@ -213,18 +161,17 @@ export default passport => {
   };
 
   passport.use( "jwt-auth", new Strategy(jwtOptions, function(jwt_payload, done) {
-    User.findOne({ _id: jwt_payload.user._id }, function(err, user) {
-        if (err) {
-          return done(err, false);
-        }
-        //gets how long since last user update. Extra cushion in case of jwt cracking and user's jwtHash wasn't reset
-        let timeDiff = (Date.now() - user.updatedAt.getTime()) / 36e5;
-        if (jwt_payload.hash === user.jwthash && timeDiff <= 48) {
-          return done(null, user);
-        } else {
-          return done(null, false);
-        }
-      });
+    query("SELECT * FROM USERS where users.id = $1", [jwt_payload.user.id], (err, result)=>{
+      if (err) {
+        return done(err, false);
+      }
+      let timeDiff = (Date.now() - user[0].updatedAt.getTime()) / 36e5;
+      if (jwt_payload.hash === user[0].jwthash && timeDiff <= 48) {
+        return done(null, user[0]);
+      } else {
+        return done(null, false);
+      }
+    })
     })
   );
 };

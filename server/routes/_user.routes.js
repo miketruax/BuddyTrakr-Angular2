@@ -4,13 +4,13 @@ import passport from 'passport';
 let router = express.Router();
 let crypto = require("crypto");
 import jwt from "jsonwebtoken";
+import {query} from '../config/pg.conf';
   
 
   //Admin routes
   let admin = (req, res, next) => {
     if (!req.isAuthenticated() || req.user.role !== 'admin')
       res.send(401);
-
     else
       next();
   };
@@ -49,25 +49,11 @@ router.post("/changeSettings", (req, res, next) => {
 
 //admin route to delete a user
 router.delete("/delete/:uid", admin, (req, res) => {
-  User.remove(
-    {
-      // Model.find `$or` Mongoose condition
-      $or: [
-        { "local.username": req.params.uid },
+  query("DELETE FROM USERs WHERE users.id = $1", [req.params.uid], (err, result)=>{
+    if (err) return next(err);
+    res.status(204);
 
-        { "local.email": req.params.uid },
-
-        { _id: ObjectId(req.params.uid) }
-      ]
-    },
-    err => {
-      // If there are any errors, return them
-      if (err) return next(err);
-
-      // HTTP Status code `204 No Content`
-      res.status(204);
-    }
-  );
-});
+  })
+}); 
 
 export default router;

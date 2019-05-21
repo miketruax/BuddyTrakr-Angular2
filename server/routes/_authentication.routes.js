@@ -1,4 +1,4 @@
-import User from "../models/user.model.js";
+import {query} from '../config/pg.conf';
 import passport from 'passport';
 var express = require('express');
 var router = express.Router();
@@ -37,15 +37,11 @@ var router = express.Router();
 
   router.get("/logout", passport.authenticate("jwt-auth", { session: false }),
     (req, res, next) => {
-      User.findOne(
-        User.findOne({ _id: req.user._id }, (err, user) => {
-          user.hash = crypto.randomBytes(20).toString("hex");
-          user.save(err => {
-            res.send({ success: true });
-          });
-        })
-      );
-    }
-  );
+      let hash = crypto.randomBytes(20).toString("hex");
+      query('UPDATE users set hash = $1 WHERE id = $2', [hash, req.user._id], (err, result)=>{
+        res.send({ success: true });
+      })
+
+    })
 
   export default router;

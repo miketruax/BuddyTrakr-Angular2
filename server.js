@@ -12,7 +12,6 @@ import http from 'http';
 let app = express();
 let server = http.createServer(app);
 let io = socketio.listen(server);
-import mongoose from 'mongoose';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import methodOverride from 'method-override';
@@ -23,8 +22,6 @@ base(io);
 // Set the port for this app
 let port = process.env.PORT || 8080;
 
-import mongooseConf from './server/config/mongoose.conf.js';
-mongooseConf(mongoose);
 import passportConf from './server/config/passport.conf.js';
 passportConf(passport);
 

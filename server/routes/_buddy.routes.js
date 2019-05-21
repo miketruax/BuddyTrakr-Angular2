@@ -1,57 +1,50 @@
-import Buddy from '../models/buddy.model';
 import * as express from 'express';
+import {query} from '../config/pg.conf'
 import passport from 'passport';
 let router = express.Router();
   
   router.route('/')
   .post(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
-      Buddy.create(
-        Object.assign(req.body, 
-          {owner : req.user._id,
-          dateAdded: Date.now()})
-      , (err, buddy) => {
-          return err ? res.send({err: 'An error occured, please try again later.'}) : res.status(200).send({buddy: buddy})
-      });
+    query(`INSERT INTO BUDDIES (name, species, binomial, userID, description, dateAdded) VALUES ($1, $2, $3, $4, $5, $6)`, 
+          [req.body.name, req.body.species, req.user.id, req.body.binomial, req.body.description, req.body.dateAdded], 
+          (err, result)=>{
+            let buddy = Object.assign(req.body, {userID: req.user.id})
+            return err ? res.send({err: 'And error occured please try again later.'}) : res.status(200).send({buddy: buddy})
+          }
+    )
     })
 
     
     // gets all buddies based off current owner from user object (currently logged in via passport)
     .get(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
-      Buddy.find({'owner' : req.user._id }, (err, buddy) => {
-        if(err) {
-          //sends error if there is an error
-          res.send({err: 'An error occured, please try again later.'});
+      query("SELECT * FROM BUDDIES where userID = $1", [req.user.id], (err, result)=>{
+        if(err){
+          return res.send({err: 'An error occured, please try again later.'})
         }
-        else {
-          res.json({buddies: buddy});
-        }
-      });
+        return res.json({buddies: buddy})
+      })
     });
 
 
   router.route('/:buddy_id')
     //gets a single buddy by their _id
     .get(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
-      Buddy.findOne(req.params.buddy_id, (err, buddy) => {
-
+      query("SELECT * FROM BUDDIES WHERE id = $1", [req.params.buddy_id], (err, result)=>{
         if(err)
           res.send({err: 'An error occured, please try again later.'});
 
         else
-          res.json({buddy: buddy});
-      });
+          res.json({buddy: result[0]});
+      })
     })
     //put request for updating buddies
     .put(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
-      Buddy.findOne({
-        '_id' : req.params.buddy_id,
-        'owner': req.user._id
-      }, (err, buddy) => {
-
+      query("SELECT * FROM BUDDIES WHERE BUDDIES.id = $1 AND BUDDIES.userID = $2", [req.params.buddy_id, req.user.id], 
+      (err, result)=>{
         if (err){
-          return res.send({err: 'An error occured, please try again later.'});
+          return res.send({err: 'An error occurred, please try again later.'});
         }
-        //Only update fields that have been edited
+        let buddy = result[0];
         let altered = false;
         let alterableFields = ['name', 'checkedOut', 'species', 'binomial', 'description'];
         alterableFields.forEach(v=>{
@@ -69,28 +62,27 @@ let router = express.Router();
         if(!altered){
           return res.send({buddy: buddy});
         }
-        return buddy.save((err) => {
-          //either send an error back to front-end or the buddy to be re-added to store
-          if (err){
-            res.status(500).send({err: 'An error occured, please try again later.'});
+
+        query("UPDATE BUDDIES SET (name, checkedOut, species, binomial, description) VALUES ($1, $2, $3, $4, $5)", 
+          [buddy.name, buddy.checkedOut, buddy.species, buddy.binomial, buddy.description], (err, result)=>{
+            if (err){
+              return res.status(500).send({err: 'An error occured, please try again later.'});
+            }
+              res.send({buddy: buddy});
           }
-          else {
-            res.send({buddy: buddy});
-          }
-        });
-      });
-    })
+        )
+
+      })
+      })
 
     //sad times to delete a buddy
     .delete(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
-      Buddy.remove({
-        _id : req.params.buddy_id,
-        'owner': req.user._id
-      }, (err, buddy) => {
+      query("DELETE FROM BUDDIES WHERE BUDDIES.id = $1 AND BUDDIES.userID = $2", [req.params.buddy_id, req.user.id], 
+      (err, result)=>{
         if (err){
           return res.status(500).send({err: 'An error occured, please try again later.'});
         }
-          res.json({buddy: buddy});
+          res.json({buddy: result[0]});
       });
     });
 
