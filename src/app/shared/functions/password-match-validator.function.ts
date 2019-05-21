@@ -2,7 +2,7 @@ import { FormGroup } from "@angular/forms";
 
 export const passwordMatchValidator = function(control: FormGroup) {
     let pswd = control.get('password');
-    let confirm = control.get('confirmpassword');
+    let confirm = control.get('confirmPassword');
     if(!pswd.value && !confirm.dirty && confirm.untouched){
       return null;
     }
