@@ -19,7 +19,7 @@
         Passwords must match.
     </mat-error>
   </mat-form-field>
-  <button ngClass="{{changePasswordForm.valid && changePasswordForm.touched ? '' : 'disabled'}}" mat-raised-button [color]="changePasswordForm.valid ? 'primary' : 'warning'" type="submit" class="submit-button">Save</button>
+  <button [class.disabled]="!changePasswordForm.valid && changePasswordForm.touched" mat-raised-button [color]="changePasswordForm.valid ? 'primary' : 'warning'" type="submit" class="submit-button">Save</button>
   <button mat-raised-button color="warning" [routerLink]="['/buddies']" class="cancel-button">Cancel</button>
 </form>
 </div>

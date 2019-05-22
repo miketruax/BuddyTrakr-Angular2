@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy, OnInit} from "@angular/core";
+import {Component,  OnInit} from "@angular/core";
 import {UserService} from "../services/user.service";
 import {FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { RootStoreFacade } from "../store";
@@ -10,8 +10,7 @@ import { CrossFieldMatcher } from "../shared/classes/cross-field-match.class";
 @Component({
   selector: 'settings',
   templateUrl: "./settings.html",
-  styleUrls: ["./settings.component.scss"],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ["./settings.component.scss"]
 })
 
 
@@ -19,7 +18,7 @@ export class SettingsComponent implements OnInit{
   user : Observable<User>;  
   changePasswordForm: FormGroup
   matcher: CrossFieldMatcher;
-  constructor(private userService: UserService, private rootStore: RootStoreFacade, public fb: FormBuilder){
+  constructor(private userService: UserService, private rootStore: RootStoreFacade, private formBuilder: FormBuilder){
     this.user = this.rootStore.user$;
     this.matcher = new CrossFieldMatcher();
   }
@@ -40,17 +39,14 @@ export class SettingsComponent implements OnInit{
     if(this.changePasswordForm.valid){
       this.userService.changePassword(this.currentPassword.value, this.newPassword.value)
     }
-    else{
-      this.rootStore.addError('Please fix the errors below');
-    }
   }
 
 
   ngOnInit(){
-    this.changePasswordForm = this.fb.group({
-      currentPassword: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(128)])],
-      newPassword: ['', Validators.compose([Validators.required, Validators.maxLength(6), Validators.minLength(8)])],
-      confirmPassword: ['']}, 
-      {validators: passwordMatchValidator});
+      this.changePasswordForm = this.formBuilder.group({
+        currentPassword: ['', Validators.compose([Validators.required, Validators.maxLength(128), Validators.minLength(8)])],
+        newPassword: ['', Validators.compose([Validators.required, Validators.maxLength(128), Validators.minLength(8)])],
+        confirmPassword: ['']
+      }, {validator: passwordMatchValidator});
     };
   }

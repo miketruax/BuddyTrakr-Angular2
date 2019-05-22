@@ -22,11 +22,6 @@ export class UserService{
     this.rootStore.selectUser(this.initUserService.user);
     this.isLoggedIn = this.initUserService.isLoggedIn;
   }
-    
-
-
-      
-
 
   login(username, password) {
     let headers = new HttpHeaders().append("Content-Type", "application/json");
@@ -37,20 +32,15 @@ export class UserService{
       })
       .pipe(
         map((res: UserResponse)=> {
-          if(res.token){
             localStorage.setItem("authToken", res.token);
             this.isLoggedIn = true;
             this.router.navigate(["/buddies"]);
             this.rootStore.selectUser(res.user)
-          }
-          return res.err
+            return `Welcome Back ${res.user.username}!`
           }),
-        catchError(error => throwError(error.error.err))
-      )
-      .subscribe(errMsg => {
-        if(errMsg){
-          this.rootStore.addError(errMsg)
-        }}, 
+        catchError(error => throwError(error.error || "Something Went Wrong. Please Try Again Later.")))
+        .subscribe(msg => 
+          this.rootStore.addSuccess(msg), 
         err=> {
           this.rootStore.addError(err)} );
   }
@@ -68,7 +58,7 @@ export class UserService{
              return "Successfully signed up, please log in!"
             }
         ), 
-        catchError(err=> throwError(err.error.err)))
+        catchError(err=> throwError(err.error || "Something went wrong. Please Try Again later.")))
       .subscribe(msg => this.rootStore.addSuccess(msg), 
       err=>this.rootStore.addError(err));
   }
@@ -80,19 +70,22 @@ export class UserService{
       .append("Authorization", `JWT ${localStorage.getItem("authToken")}`);
     this.http
       .post(
-        "/api/user/changeSettings",
+        "/api/user/update",
         JSON.stringify({ currentPassword, newPassword }),
         { headers: headers }
       )
       .pipe(
         map((res: UserResponse)=> {
+            localStorage.setItem("authToken", res.token);  
             this.router.navigate(["/buddies"]);
-            localStorage.setItem("authToken", res.token);
             return "Successfully updated password.";
         }), 
-        catchError(err=> throwError("Something went wrong, please check your entries and try again."))
+        catchError(err=> {
+          return throwError(err.error || "Something went wrong, please check your entries and try again.")
+        })
       )
-      .subscribe(msg=> this.rootStore.addSuccess(msg), 
+      .subscribe(msg=> {this.rootStore.addSuccess(msg);
+      }, 
       err=> this.rootStore.addError(err));
   }
 

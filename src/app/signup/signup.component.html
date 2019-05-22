@@ -31,7 +31,7 @@
       <mat-error class="form-error" *ngIf="signupForm.hasError('mismatch') && (confirmPassword.dirty || confirmPassword.touched || password.dirty || password.touched)">
         Passwords must match.</mat-error>
     </mat-form-field>
-    <button type="submit" mat-raised-button color="primary" ngClass="{{signupForm.valid && signupForm.touched ? '' : 'disabled'}}" class="signup-button">
+    <button type="submit" mat-raised-button color="primary" [class.disabled]="!changePasswordForm.valid && changePasswordForm.touched" class="signup-button">
       Sign-up! </button>
   </form>
   <div class="login-link text-center">

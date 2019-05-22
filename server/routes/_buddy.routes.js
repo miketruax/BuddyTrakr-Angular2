@@ -5,12 +5,12 @@ let router = express.Router();
   
   router.route('/')
   .post(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
-    req.body.dateAdded = req.body.dateAdded || (Date.now() / 1000);
+    dateAdded = req.body.dateAdded || (Date.now() / 1000);
     query(`INSERT INTO buddies ("name", "species", "binomial", "userID", "description", "dateAdded") VALUES ($1, $2, $3, $4, $5, to_timestamp($6))`, 
-          [req.body.name, req.body.species,  req.body.binomial, req.user.id, req.body.description, req.body.dateAdded], 
+          [req.body.name, req.body.species,  req.body.binomial, req.user.id, req.body.description, dateAdded], 
           (err, result)=>{
             let buddy = Object.assign(req.body, {userID: req.user.id})
-            return err ? res.send({err: 'An error occured please try again later.'}) : res.status(200).send({buddy: buddy})
+            return err ? res.send({err: 'An error occurred please try again later.'}) : res.status(200).send({buddy: buddy})
           }
     )
     })
@@ -20,7 +20,7 @@ let router = express.Router();
     .get(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
       query(`SELECT * FROM BUDDIES where "buddies"."userID" = $1`, [req.user.id], (err, result)=>{
         if(err){
-          return res.send({err: 'An error occured, please try again later.'})
+          return res.send({err: 'An error occurred, please try again later.'})
         }
         return res.json({buddies: result.rows})
       })
@@ -32,7 +32,7 @@ let router = express.Router();
     .get(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
       query("SELECT * FROM BUDDIES WHERE id = $1", [req.params.buddy_id], (err, result)=>{
         if(err)
-          res.send({err: 'An error occured, please try again later.'});
+          res.send({err: 'An error occurred, please try again later.'});
 
         else
           res.json({buddy: result.rows[0]});

@@ -34,8 +34,7 @@ export class SignupComponent {
     return this.signupForm.get('confirmPassword')
   }
 
-  signup(e) {
-    e.preventDefault();
+  signup() {
     if(this.signupForm.valid){
       this.userService.signup(this.username.value, this.password.value, this.email.value);
     }
