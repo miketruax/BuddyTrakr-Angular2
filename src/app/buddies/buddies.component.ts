@@ -102,7 +102,6 @@ export class BuddiesComponent {
   }
 
   checkBuddy(buddy: Buddy) {
-    buddy.checkedOut = !buddy.checkedOut;
     this.buddyService.checkBuddy(buddy);
   }
 

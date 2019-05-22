@@ -25,7 +25,7 @@ router.get("/", (req, res) => {
 //Changing settings (currently only password updates)
 router.post("/update", (req, res, next) => {
   passport.authenticate("jwt-auth", async (err, user, info) => {
-    if (err) {
+    if (err || !user) {
       return res.send({ err: err });
     }
     query("SELECT * FROM USERS WHERE id = $1", [user.id], async(err, result)=>{
@@ -55,10 +55,9 @@ router.post("/update", (req, res, next) => {
 
 //admin route to delete a user
 router.delete("/delete/:uid", admin, (req, res) => {
-  query("DELETE FROM USERs WHERE users.id = $1", [req.params.uid], (err, result)=>{
+  query("DELETE FROM USERS WHERE users.id = $1", [req.params.uid], (err, result)=>{
     if (err) return next(err);
     res.status(204);
-
   })
 }); 
 

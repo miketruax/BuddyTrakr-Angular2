@@ -5,12 +5,11 @@ let router = express.Router();
   
   router.route('/')
   .post(passport.authenticate('jwt-auth', ({session: false})), (req, res) => {
-    dateAdded = req.body.dateAdded || (Date.now() / 1000);
-    query(`INSERT INTO buddies ("name", "species", "binomial", "userID", "description", "dateAdded") VALUES ($1, $2, $3, $4, $5, to_timestamp($6))`, 
-          [req.body.name, req.body.species,  req.body.binomial, req.user.id, req.body.description, dateAdded], 
+    req.body.dateAdded = req.body.dateAdded || Date.now();
+    query(`INSERT INTO buddies ("name", "species", "binomial", "userID", "description", "dateAdded") VALUES ($1, $2, $3, $4, $5, to_timestamp($6)) RETURNING *`, 
+          [req.body.name, req.body.species,  req.body.binomial, req.user.id, req.body.description, req.body.dateAdded/1000], 
           (err, result)=>{
-            let buddy = Object.assign(req.body, {userID: req.user.id})
-            return err ? res.send({err: 'An error occurred please try again later.'}) : res.status(200).send({buddy: buddy})
+            return err ? res.send({err: 'An error occurred please try again later.'}) : res.status(200).send({buddy: result.rows[0]})
           }
     )
     })
@@ -56,7 +55,7 @@ let router = express.Router();
         "name" = $1, "checkedOut" = $2, "species" = $3, "binomial" = $4, "description"= $5, 
         "timesOut" = $6, "lastOutDays" = $7, "totalDaysOut" = $8, "lastOutDate" = to_timestamp($9) WHERE buddies.id =$10`, 
           [buddy.name, buddy.checkedOut, buddy.species, buddy.binomial, buddy.description, 
-            buddy.timesOut, buddy.lastOutDays, buddy.totalDaysOut, buddy.lastOutDate, req.params.buddy_id], 
+            buddy.timesOut, buddy.lastOutDays, buddy.totalDaysOut, buddy.lastOutDate/1000, req.params.buddy_id], 
           
           (err, result)=>{
             if (err){
@@ -91,10 +90,10 @@ function updateBuddy(newBuddy, currBuddy){
           altered = true;
           if(!newBuddy.checkedOut){
             currBuddy.timesOut++;
-            currBuddy.lastOutDays = Math.ceil((Date.now() - new Date(currBuddy.lastOutDate)) / (1000 * 60 * 60 * 24)) ;
+            currBuddy.lastOutDays = Math.ceil((Date.now() - new Date(currBuddy.lastOutDate)) / (1000 * 60 * 60 * 24));
             currBuddy.totalDaysOut += currBuddy.lastOutDays;
           }
-            currBuddy.lastOutDate = (Date.now() / 1000);
+            currBuddy.lastOutDate = Date.now();
             currBuddy.checkedOut = newBuddy.checkedOut;
         }
         alterableFields.forEach(v=>{

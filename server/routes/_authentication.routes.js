@@ -14,24 +14,20 @@ var router = express.Router();
   //log in route
   router.post("/login", (req, res, next) => {
     passport.authenticate("local-login", (err, user, info) => {
-      if(err)  return res.status(401).send("Something went wrong, please try again later")
-      if (!user) {
-          return res.status(401).send(info.message);
-        }
-        return res.send({ user: user, token: info.token });
+      if(err || !user)  return res.status(401).send(info.message || "Something went wrong, please try again later")
+      return res.send({ user: user, token: info.token });
       })(req,res,next);
   });
 
   router.post("/signup", (req, res, next) => {
     //utilizes local-signup information to ensure proper info
-    passport.authenticate("local-signup", (err, user, info) => {
-      let response = {};
+    passport.authenticate("local-signup", (err) => {
       //if error, add error message and move on
       if (err) {
         return res.status(500).send(err)
       }
       //if no errors, send response and move on.
-      res.send(response);
+      res.send({});
     })(req, res, next);
   });
 

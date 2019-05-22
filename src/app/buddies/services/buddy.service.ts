@@ -55,8 +55,10 @@ export class BuddyService{
   }
 
   checkBuddy(buddy){
-    let msg: string =  `${buddy.name} successfully checked ${buddy.checkedOut ? "out" : "in"}.`
-    this.updateBuddy(buddy, msg)
+    let updatedBuddy = JSON.parse(JSON.stringify(buddy))
+    updatedBuddy.checkedOut = !buddy.checkedOut;
+    let msg: string =  `${buddy.name} successfully checked ${buddy.checkedOut ? "in" : "out"}.`
+    this.updateBuddy(updatedBuddy, msg)
   }
 
   updateBuddy(buddy: Buddy, msg: string = `${buddy.name} successfully updated!`) {
@@ -74,7 +76,7 @@ export class BuddyService{
         }),
         catchError(err => throwError(err.error.err))
       )
-      .subscribe(buddy => { console.log(buddy); this.buddyStore.updateBuddy(buddy)}, 
+      .subscribe(buddy => { this.buddyStore.updateBuddy(buddy)}, 
         err=> this.rootStore.addError(err ? err : 'Something went wrong, please try again later.'));
   }
 
