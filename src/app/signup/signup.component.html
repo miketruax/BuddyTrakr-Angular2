@@ -2,7 +2,7 @@
   <img class="signup-img" src="/assets/img/logos/main_logo.png">
   <h2 class="text-center">Sign up</h2>
 
-  <form class="signup-form" role="form" (ngSubmit)="signup($event)" [formGroup]="signupForm">
+  <form class="signup-form" role="form" (ngSubmit)="signup()" [formGroup]="signupForm">
     <mat-form-field class="input">
       <input matInput  formControlName="username" type="text" class="" placeholder="Username">
       <mat-hint>Username must be between 3 and 16 characters</mat-hint>
@@ -31,7 +31,7 @@
       <mat-error class="form-error" *ngIf="signupForm.hasError('mismatch') && (confirmPassword.dirty || confirmPassword.touched || password.dirty || password.touched)">
         Passwords must match.</mat-error>
     </mat-form-field>
-    <button type="submit" mat-raised-button color="primary" [class.disabled]="!changePasswordForm.valid && changePasswordForm.touched" class="signup-button">
+    <button type="submit" mat-raised-button color="primary" [class.disabled]="!signupForm.valid && signupForm.touched" class="signup-button">
       Sign-up! </button>
   </form>
   <div class="login-link text-center">
