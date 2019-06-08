@@ -1,18 +1,20 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
   <meta charset="utf-8">
+  <meta name="Description" content="BuddyTrakr helps you organize your ever growing collection of buddies!">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index, follow">
   <title>Buddy Trakr</title>
   <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <link rel="icon" type="image/x-icon" href="./assets/img/logos/paw_logo.png">
   <style>
   body{
     background-image: url('./assets/img/backgrounds/main_background.png');
     background-attachment: fixed !important;
     background-repeat: repeat-y !important;
+    background-size: 100% auto; 
   }
   
   .loading{
@@ -41,11 +43,25 @@
   <app-root>
   <h1 class="center loading">Loading</h1>
   <div class="load-div">
-    <img class="load-img" src="./assets/img/logos/main_logo.png">
+    <img class="load-img" alt="Loading" src="./assets/img/logos/main_logo.png">
   </div>
   <h3 class="center">Please Stand By To Track...</h3>
 
 
   </app-root>
+  <script type="text/javascript">
+    let materialIcons = document.createElement('link');
+    materialIcons.rel = 'stylesheet';
+    materialIcons.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
+    materialIcons.type = 'text/css';
+    
+    let roboto = document.createElement('link');
+    roboto.rel = 'stylesheet';
+    roboto.href = 'https://fonts.googleapis.com/css?family=Roboto:300,400,500';
+    roboto.type = 'text/css';
+    let head = document.getElementsByTagName('head')[0];
+    head.appendChild(materialIcons);
+    head.appendChild(roboto);
+  </script>
 </body>
 </html>

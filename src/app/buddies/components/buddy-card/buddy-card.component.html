@@ -12,7 +12,8 @@
 
     <ng-container *ngIf="buddy.lastOutDate">
       <b class="text-secondary">Last Out:</b>
-      <span> {{buddy.lastOutDate | date}} for {{buddy.lastOutDays}} days.</span><br>
+      <span *ngIf="buddy.checkedOut"> Your buddy is currently out!</span><br>
+      <span *ngIf="!buddy.checkedOut"> {{buddy.lastOutDate | date}} for {{buddy.lastOutDays}} days.</span><br>
     </ng-container>
     <ng-container *ngIf="!buddy.checkedOut">
       <ng-container *ngIf="buddy.timesOut"> Out {{buddy.timesOut}} times for a total of {{buddy.totalDaysOut}} days.</ng-container>

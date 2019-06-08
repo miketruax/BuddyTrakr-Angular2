@@ -4,6 +4,7 @@ import helmet from 'helmet';
   envValidator();
 import express from 'express';
 import socketio from 'socket.io';
+import compression from 'compression';
 let cors = require('cors');
 
 
@@ -31,6 +32,7 @@ if (process.env.NODE_ENV === 'development' ||
   app.use(morgan('dev'));
 
 app.use(cors());
+app.use(compression())
 app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(bodyParser.urlencoded({ extended: true }));
