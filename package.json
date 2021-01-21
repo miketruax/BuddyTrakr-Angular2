@@ -51,7 +51,7 @@
     "pg": "^7.11.0",
     "raw-loader": "^0.5.1",
     "rxjs": "^6.3.3",
-    "socket.io": "^2.2.0",
+    "socket.io": "^2.4.0",
     "tether": "^1.4.0",
     "web-animations-js": "^2.3.1",
     "zone.js": "^0.8.26"
